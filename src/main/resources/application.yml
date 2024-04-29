@@ -1,0 +1,15 @@
+spring:
+  # 데이터 소스 설정
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_NAME}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+
+  jpa:
+    show-sql: true
+    database: mysql
+    open-in-view: false
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
