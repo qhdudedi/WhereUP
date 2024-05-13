@@ -1,4 +1,4 @@
-package com.project.whereup.member.entity;
+package com.project.whereup.user.entity;
 
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @Entity
 @NoArgsConstructor
-public class Member {
+public class User {
 
     @Id
     @Column(name="user_id")
@@ -33,7 +33,7 @@ public class Member {
     private String nickname;
 
     @Builder
-    public Member(Long id, String name, String email, String password, LocalDate birth, String nickname){
+    public User(Long id, String name, String email, String password, LocalDate birth, String nickname){
         this.id = id;
         this.name = name;
         this.email = email;

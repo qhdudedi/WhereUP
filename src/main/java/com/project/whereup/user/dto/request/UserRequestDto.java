@@ -1,6 +1,6 @@
-package com.project.whereup.member.dto.request;
+package com.project.whereup.user.dto.request;
 
-import com.project.whereup.member.entity.Member;
+import com.project.whereup.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MemberRequestDto {
+public class UserRequestDto {
     private String name;
 
     private String email;
@@ -23,8 +23,8 @@ public class MemberRequestDto {
 
     private String nickname;
 
-    public Member toEntity(){
-        return Member.builder()
+    public User toEntity(){
+        return User.builder()
                 .name(name)
                 .email(email)
                 .password(password)
