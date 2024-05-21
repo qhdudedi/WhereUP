@@ -4,6 +4,7 @@ import com.project.whereup.board.domain.Board;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -15,7 +16,9 @@ public class BoardRequest {
     private String subject;
     private String description;
     private String location;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate start_date;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate end_date;
     private String brand;
     private String image;

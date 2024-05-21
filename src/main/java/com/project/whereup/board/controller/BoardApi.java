@@ -29,7 +29,7 @@ public class BoardApi {
         return ResponseEntity.ok().body(new BoardResponse(board));
     }
     //add
-    @PostMapping("/postBoard")
+    @PostMapping(value = "/postBoard")
     public ResponseEntity<Board> postBoard(@RequestBody BoardRequest request) {
         Board postedBoard = boardService.postBoard(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(postedBoard);
