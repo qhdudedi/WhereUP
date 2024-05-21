@@ -8,13 +8,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 
 //전체 목록에서 띄울거
-//아이디, 이름, 뭐......
-//추가하면 repository 도 수정할 것
+//아이디, 이름, 날짜, 브랜드, 이미지
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class BoardList {
-    private Long boardId;
+    private Long id;
     private String subject;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate start_date;

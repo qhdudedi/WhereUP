@@ -39,6 +39,6 @@ public class BoardService {
     }
 
     public List<BoardList> summeryListBoard() {
-        return boardRepository.findAllSummery();
+        return boardRepository.findSummery();
     }
 }
