@@ -1,9 +1,12 @@
 package com.project.whereup.board.service;
 
 import com.project.whereup.board.domain.Board;
+import com.project.whereup.board.domain.BoardImage;
 import com.project.whereup.board.dto.BoardList;
+import com.project.whereup.board.repository.BoardImageRepository;
 import com.project.whereup.board.repository.BoardRepository;
 import com.project.whereup.board.dto.BoardRequest;
+import com.project.whereup.board.repository.BoardSummery;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final BoardImageRepository boardImageRepository;
 
     public List<Board> listBoard() {
         return boardRepository.findAll();
@@ -40,5 +44,13 @@ public class BoardService {
 
     public List<BoardList> summeryListBoard() {
         return boardRepository.findSummery();
+    }
+
+    public List<BoardImage> listImage(Long boardId) {
+        return boardImageRepository.findByBoardId(boardId);
+    }
+
+    public List<BoardImage> orderOneImage() {
+        return boardImageRepository.findByImageOrder(1);
     }
 }

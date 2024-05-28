@@ -33,22 +33,19 @@ public class Board {
     private LocalDate end_date;
     @Column(name = "brand", nullable = false)
     private String brand;
-    @Column(name = "image", nullable = false)
-    private String image;
     @Column(name = "ticket", nullable = false)
     private Boolean ticket;
     @Column(name = "link", nullable = false)
     private String link;
 
     @Builder
-    public Board(String subject, String description, String location, LocalDate start_date, LocalDate end_date, String brand, String image, Boolean ticket, String link) {
+    public Board(String subject, String description, String location, LocalDate start_date, LocalDate end_date, String brand, Boolean ticket, String link) {
         this.subject = subject;
         this.description = description;
         this.location = location;
         this.start_date = start_date;
         this.end_date = end_date;
         this.brand = brand;
-        this.image = image;
         this.ticket = ticket;
         this.link = link;
     }
@@ -60,7 +57,6 @@ public class Board {
         this.start_date = request.getStart_date();
         this.end_date = request.getEnd_date();
         this.brand = request.getBrand();
-        this.image = request.getImage();
         this.ticket = request.getTicket();
         this.link = request.getLink();
     }

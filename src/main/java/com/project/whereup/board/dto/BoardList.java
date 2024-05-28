@@ -8,7 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 
 //전체 목록에서 띄울거
-//아이디, 이름, 날짜, 브랜드, 이미지
+//아이디, 이름, 날짜, 브랜드
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,5 +20,4 @@ public class BoardList {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate end_date;
     private String brand;
-    private String image;
 }
