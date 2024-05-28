@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <title>Test</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body oncontextmenu="return false">
 <div th:each="url : ${img_url}">
 <!--    <img th:src="'data:image/png;base64,' + ${image}" />-->
-    <img th:src="${url}">
+    <img th:src="${url}" alt="https://via.placeholder.com/100x100.jpg">
 </div>
 <!--테스트용-->
 <!--<p th:text="${board.image_name}"></p>-->

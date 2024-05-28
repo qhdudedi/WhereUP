@@ -1,6 +1,5 @@
 package com.project.whereup.board.domain;
 
-import com.project.whereup.board.dto.BoardRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -50,14 +49,4 @@ public class Board {
         this.link = link;
     }
 
-    public void update(BoardRequest request) {
-        this.subject = request.getSubject();
-        this.description = request.getDescription();
-        this.location = request.getLocation();
-        this.start_date = request.getStart_date();
-        this.end_date = request.getEnd_date();
-        this.brand = request.getBrand();
-        this.ticket = request.getTicket();
-        this.link = request.getLink();
-    }
 }
