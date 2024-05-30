@@ -38,8 +38,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    String kakaoId;
+
     @Builder
-    public User(Long id, String name, String email, String password, LocalDate birth, String nickname, Role role) {
+    public User(Long id, String name, String email, String password, LocalDate birth, String nickname, Role role, String kakaoId) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -47,6 +49,7 @@ public class User {
         this.birth = birth;
         this.nickname = nickname;
         this.role = role;
+        this.kakaoId = kakaoId;
     }
 
     public void update(String name, String email, String password, LocalDate birth, String nickname){

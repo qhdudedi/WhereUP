@@ -24,6 +24,11 @@ public class UserService {
     public Long save(UserRequestDto requestDto) {
         return userRepository.save(requestDto.toEntity(bCryptPasswordEncoder)).getId();
     }
+    //소셜 회원가입
+    @Transactional
+    public void saved(User user){
+        userRepository.save(user);
+    }
 
     // 수정 update
     @Transactional
