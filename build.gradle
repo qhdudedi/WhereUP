@@ -29,10 +29,14 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.mysql:mysql-connector-j'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testAnnotationProcessor 'org.projectlombok:lombok'
 
     implementation platform('software.amazon.awssdk:bom:2.25.51')
     implementation 'software.amazon.awssdk:s3'
+
+    implementation 'org.commonmark:commonmark:0.17.2'
 
 }
 

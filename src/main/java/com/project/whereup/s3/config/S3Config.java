@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-// aws sdk java 2버전 기준
+// aws sdk java 2x 기준
 @Configuration
 public class S3Config {
     @Value("${aws.access-key}")
@@ -20,7 +20,7 @@ public class S3Config {
     private String region;
 
     @Bean
-    public S3Client s3Client() {
+    public S3Client s3Client() { // S3 서비스 쓸 때 필요한 거
         return S3Client.builder()
                 .credentialsProvider(StaticCredentialsProvider
                         .create(AwsBasicCredentials.create(accessKey, secretKey)))
@@ -29,7 +29,7 @@ public class S3Config {
     }
 
     @Bean
-    public S3Presigner s3Presigner(S3Client s3Client) {
+    public S3Presigner s3Presigner() { // S3 서비스 중 presignedurl 쓸 때 필요한 거
         return S3Presigner.builder()
                 .credentialsProvider(StaticCredentialsProvider
                         .create(AwsBasicCredentials.create(accessKey, secretKey)))

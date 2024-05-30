@@ -2,7 +2,7 @@ package com.project.whereup.board.controller;
 
 import com.project.whereup.board.domain.Board;
 import com.project.whereup.board.domain.BoardImage;
-import com.project.whereup.board.dto.BoardList;
+import com.project.whereup.board.dto.BoardSummary;
 import com.project.whereup.board.service.BoardService;
 import com.project.whereup.s3.service.S3Service;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class BoardView {
     //전체보기 페이지, 필요한 것만 추려서 리스트로 뽑는용도
     @GetMapping(value = "/boardList")
     public String board(Model model) {
-        List<BoardList> list = boardService.summeryListBoard();
+        List<BoardSummary> list = boardService.summeryListBoard();
         model.addAttribute("list", list);
         List<BoardImage> imgOrderOne = boardService.orderOneImage();
         List<String> imgList = new ArrayList<>();
