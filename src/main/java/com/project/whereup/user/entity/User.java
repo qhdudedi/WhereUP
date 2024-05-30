@@ -1,7 +1,7 @@
 package com.project.whereup.user.entity;
 
+import com.project.whereup.user.entity.eum.Role;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +11,7 @@ import java.time.LocalDate;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -35,14 +35,18 @@ public class User {
     @Column(name="nickname",nullable = false)
     private String nickname;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @Builder
-    public User(Long id, String name, String email, String password, LocalDate birth, String nickname){
+    public User(Long id, String name, String email, String password, LocalDate birth, String nickname, Role role) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.birth = birth;
         this.nickname = nickname;
+        this.role = role;
     }
 
     public void update(String name, String email, String password, LocalDate birth, String nickname){

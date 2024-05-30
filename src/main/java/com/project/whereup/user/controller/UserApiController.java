@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserApiController {
     private final UserService userService;
 
-    @PostMapping("/join")
-    public ResponseEntity<?> signup(@RequestBody UserRequestDto requestDto) {
+    @PostMapping("/signup")
+    public ResponseEntity<?> signup(UserRequestDto requestDto) {
         userService.save(requestDto);
         return ResponseEntity.ok("success");
     }

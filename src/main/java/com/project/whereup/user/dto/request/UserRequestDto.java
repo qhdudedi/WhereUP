@@ -1,16 +1,15 @@
 package com.project.whereup.user.dto.request;
 
 import com.project.whereup.user.entity.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.project.whereup.user.entity.eum.Role;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDate;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Setter
 public class UserRequestDto {
     private String name;
 
@@ -23,13 +22,14 @@ public class UserRequestDto {
 
     private String nickname;
 
-    public User toEntity(){
+    public User toEntity(BCryptPasswordEncoder encoder){
         return User.builder()
                 .name(name)
                 .email(email)
-                .password(password)
+                .password(encoder.encode(password))
                 .birth(birth)
                 .nickname(nickname)
+                .role(Role.USER)
                 .build();
 
     }
