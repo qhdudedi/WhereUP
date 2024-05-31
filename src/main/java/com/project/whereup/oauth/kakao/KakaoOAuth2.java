@@ -3,6 +3,7 @@ package com.project.whereup.oauth.kakao;
 import com.project.whereup.oauth.kakao.dto.KakaoUserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -15,6 +16,14 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 @Component
 public class KakaoOAuth2 {
+    @Value("${kakao.client-id}")
+    private String KAKAO_CLIENT_ID;
+
+    @Value("${kakao.client-secret}")
+    private String KAKAO_CLIENT_SECRET;
+
+    @Value("${kakao.redirect-uri}")
+    private String KAKAO_REDIRECT_URI;
 
     public KakaoUserInfo getUserInfo(String authorizedCode) {
         log.info("getUserInfo 호출");
@@ -35,9 +44,9 @@ public class KakaoOAuth2 {
         // HttpBody 생성
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
-        params.add("client_id", " ");    //REST_API
-        params.add("redirect_uri", " ");
-        params.add("client_secret", " ");
+        params.add("client_id", KAKAO_CLIENT_ID);    //REST_API
+        params.add("redirect_uri", KAKAO_REDIRECT_URI);
+        params.add("client_secret",KAKAO_CLIENT_SECRET);
         params.add("code", authorizedCode);
 
         // HttpHeader와 HttpBody를 하나로 담기
