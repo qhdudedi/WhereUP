@@ -43,6 +43,8 @@ public class PostController {
 //            }
 //        }
 //        model.addAttribute("imgList", imgList);
+
+        model.addAttribute("detail", "All");
         return "postList.html";
     }
     // 후기 상세 페이지
@@ -116,17 +118,5 @@ public class PostController {
         System.out.println(id);
         postService.delete(id);
         return "redirect:/post/postList";
-    }
-    @GetMapping(value = "/search/{keyword}")
-    public String search(@PathVariable String keyword, Model model) {
-        List<PostSummary> allList = postService.summeryListPost();
-        List<PostSummary> list = new ArrayList<>();
-        for (int i = 0; i < allList.size(); i++) {
-            if(allList.get(i).getTitle().toUpperCase().contains(keyword.toUpperCase())) {
-                list.add(allList.get(i));
-            }
-        }
-        model.addAttribute("list", list);
-        return "postList.html";
     }
 }

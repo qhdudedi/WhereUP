@@ -16,7 +16,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping(value = "/board")
-public class BoardView {
+public class BoardController {
     private final BoardService boardService;
     private final S3Service s3Service;
 
@@ -36,6 +36,7 @@ public class BoardView {
             }
         }
         model.addAttribute("imgList", imgList);
+        model.addAttribute("detail", "All");
         return "boardList.html";
     }
     //한개보기 페이지
@@ -52,27 +53,5 @@ public class BoardView {
         }
         model.addAttribute("img_url", img_url);
         return "board.html";
-    }
-    @GetMapping(value = "/search/{keyword}")
-    public String search(@PathVariable String keyword, Model model) {
-        List<BoardSummary> allList = boardService.summeryListBoard();
-        List<BoardImage> allImgOrderOne = boardService.orderOneImage();
-        List<BoardSummary> list = new ArrayList<>();
-        List<String> imgList = new ArrayList<>();
-        for (int i = 0; i < allList.size(); i++) {
-            if(allList.get(i).getSubject().toUpperCase().contains(keyword.toUpperCase())) {
-                list.add(allList.get(i));
-                try{
-                    String key = allImgOrderOne.get(i).getImageName();
-                    imgList.add(s3Service.getPresignedUrl(key));
-                } catch (Exception e) {
-                    imgList.add("https://via.placeholder.com/100x100.jpg");
-                }
-            }
-        }
-        model.addAttribute("list", list);
-        model.addAttribute("imgList", imgList);
-
-        return "boardList.html";
     }
 }
