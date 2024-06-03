@@ -13,6 +13,8 @@ import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequ
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -45,10 +47,9 @@ public class S3Service {
                 .bucket(bucketName)
                 .key(key)
                 .build();
-
         try {
-            PutObjectResponse response = s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
-            return "https://" + bucketName + ".s3.amazonaws.com/" + key;
+            s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
+            return "https://" + bucketName + ".s3.amazonaws.com/" + key; // S3에서 파일 기본 url
         } catch (IOException e) {
             return "https://via.placeholder.com/100x100.jpg";
         }
