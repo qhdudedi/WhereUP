@@ -8,9 +8,7 @@ import com.project.whereup.s3.service.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,5 +52,27 @@ public class BoardView {
         }
         model.addAttribute("img_url", img_url);
         return "board.html";
+    }
+    @GetMapping(value = "/search/{keyword}")
+    public String search(@PathVariable String keyword, Model model) {
+        List<BoardSummary> allList = boardService.summeryListBoard();
+        List<BoardImage> allImgOrderOne = boardService.orderOneImage();
+        List<BoardSummary> list = new ArrayList<>();
+        List<String> imgList = new ArrayList<>();
+        for (int i = 0; i < allList.size(); i++) {
+            if(allList.get(i).getSubject().toUpperCase().contains(keyword.toUpperCase())) {
+                list.add(allList.get(i));
+                try{
+                    String key = allImgOrderOne.get(i).getImageName();
+                    imgList.add(s3Service.getPresignedUrl(key));
+                } catch (Exception e) {
+                    imgList.add("https://via.placeholder.com/100x100.jpg");
+                }
+            }
+        }
+        model.addAttribute("list", list);
+        model.addAttribute("imgList", imgList);
+
+        return "boardList.html";
     }
 }

@@ -1,7 +1,6 @@
 package com.project.whereup.post.controller;
 
 import com.project.whereup.post.domain.Post;
-import com.project.whereup.post.domain.PostImage;
 import com.project.whereup.post.dto.PostSummary;
 import com.project.whereup.post.repository.PostRepository;
 import com.project.whereup.post.service.MarkdownService;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -118,5 +116,17 @@ public class PostController {
         System.out.println(id);
         postService.delete(id);
         return "redirect:/post/postList";
+    }
+    @GetMapping(value = "/search/{keyword}")
+    public String search(@PathVariable String keyword, Model model) {
+        List<PostSummary> allList = postService.summeryListPost();
+        List<PostSummary> list = new ArrayList<>();
+        for (int i = 0; i < allList.size(); i++) {
+            if(allList.get(i).getTitle().toUpperCase().contains(keyword.toUpperCase())) {
+                list.add(allList.get(i));
+            }
+        }
+        model.addAttribute("list", list);
+        return "postList.html";
     }
 }
