@@ -39,6 +39,15 @@ dependencies {
 
     implementation 'org.commonmark:commonmark:0.17.2'
 
+    // spring security
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+    implementation 'org.json:json:20231013'
 }
 
 tasks.named('test') {
