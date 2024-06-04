@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body oncontextmenu="return false">
+<!--<div th:each="url : ${img_url}">-->
+<!--    <img th:src="${url}" alt="https://via.placeholder.com/100x100.jpg">-->
+<!--</div>-->
+
+<p th:text="'후기 제목: ' + ${post.title}"></p>
+<p th:text="'작성자: ' + ${post.author}"></p>
+<p th:text="'작성일: ' + ${post.created_date}"></p>
+<p th:text="'수정일: ' + ${post.updated_date}"></p>
+<p th:text="'내용: '"></p>
+<div th:utext="${post.content}"></div>
+
+<form action="/post/deletePost" method="post">
+    <input type="hidden" name="id" id="id" th:value="${post.id}">
+    <button type="submit">삭제</button>
+</form>
+
+</body>
+</html>

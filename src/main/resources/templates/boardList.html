@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body oncontextmenu="return false">
+<div th:each="board, iterStat : ${list}">
+    <div>
+        <img th:src="${imgList[iterStat.index]}" alt="https://via.placeholder.com/100x100.jpg">
+        <p th:text="'팝업 이름: ' + ${board.subject}"></p>
+        <p th:text="'날짜: ' + ${board.start_date} + ' ~ ' + ${board.end_date}"></p>
+    </div>
+</div>
+</body>
+</html>
