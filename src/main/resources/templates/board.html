@@ -1,20 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <base href="http://localhost:8080/">
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="">
+    <meta name="author" content="HugeBinary">
+    <meta name="robots" content="">
+    <meta name="description" content="MoonCart Shop & eCommerce HTML Template">
+    <meta property="og:title" content="MoonCart Shop & eCommerce HTML Template">
+    <meta property="og:description" content="MoonCart Shop & eCommerce HTML Template">
+    <meta name="format-detection" content="telephone=no">
+
+    <!-- FAVICONS ICON -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.png">
+
+    <!-- PAGE TITLE HERE -->
+    <title>MoonCart Shop & eCommerce HTML Template</title>
+
+    <!-- MOBILE SPECIFIC -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- STYLESHEETS -->
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css">
+    <link rel="stylesheet" type="text/css" href="icons/fontawesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="icons/themify/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="icons/flaticon/flaticon_mooncart.css">
+    <link rel="stylesheet" type="text/css" href="vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/nouislider/nouislider.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="vendor/lightgallery/dist/css/lightgallery.css" >
+    <link rel="stylesheet" type="text/css" href="vendor/lightgallery/dist/css/lg-thumbnail.css">
+    <link rel="stylesheet" type="text/css" href="vendor/lightgallery/dist/css/lg-zoom.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <!-- GOOGLE FONTS-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
 </head>
-<body oncontextmenu="return false">
-<div th:each="url : ${img_url}">
-    <img th:src="${url}" alt="https://via.placeholder.com/100x100.jpg">
+
+<body>
+<div class="page-wraper">
+    <div id="loading-area" class="preloader-wrapper-1">
+        <div>
+            <span class="loader-2"></span>
+            <img src="images/logo.png" alt="/">
+            <span class="loader"></span>
+        </div>
+    </div>
+
+    <div class="page-content">
+
+        <div class="d-sm-flex justify-content-between container-fluid py-3">
+            <nav aria-label="breadcrumb" class="breadcrumb-row">
+                <ul class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="/board/boardList">BoardList</a></li>
+                    <li class="breadcrumb-item" th:text="${board.id}"></li>
+                </ul>
+            </nav>
+        </div>
+
+        <section class="content-inner py-0">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-4 col-md-4">
+                        <div class="dz-product-detail sticky-top">
+                            <div class="swiper-btn-center-lr">
+                                <div class="swiper product-gallery-swiper2" >
+                                    <div class="swiper-wrapper" id="lightgallery">
+                                        <div class="swiper-slide" th:each="url : ${img_url}">
+                                            <div class="dz-media DZoomImage">
+                                                <a class="mfp-link lg-item" th:href="${url}" th:data-src="${url}">
+                                                    <i class="feather icon-maximize dz-maximize top-left"></i>
+                                                </a>
+                                                <img th:src="${url}" alt="image">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper product-gallery-swiper thumb-swiper-lg">
+                                    <div class="swiper-wrapper" th:each="url : ${img_url}">
+                                        <div class="swiper-slide">
+                                            <img th:src="${url}" alt="image">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-8 col-md-8">
+                        <div class="row">
+                            <div class="col-xl-7">
+                                <div class="dz-product-detail style-2 p-t20 ps-0">
+                                    <div class="dz-content">
+                                        <div class="dz-content-footer">
+                                            <div class="dz-content-start">
+                                                <h4 class="title mb-1"><a th:text="${board.subject}"></a></h4>
+                                            </div>
+                                        </div>
+                                        <p class="para-text" th:text="${board.description}"></p>
+
+                                        <div class="dz-info">
+                                            <ul>
+                                                <li>
+                                                    <strong>장소: </strong>
+                                                    <span th:text="${location}"></span>
+                                                </li>
+                                                <li>
+                                                    <strong>날짜: </strong>
+                                                    <span th:text="${board.start_date} + ' ~ ' + ${board.end_date}"></span>
+                                                </li>
+                                                <li>
+                                                    <strong>브랜드: </strong>
+                                                    <span th:text="${board.brand}"></span>
+                                                </li>
+                                                <li>
+                                                    <strong>티켓 필요: </strong>
+                                                    <span th:text="${board.ticket} ? 'Yes' : 'No'"></span>
+                                                </li>
+                                                <li>
+                                                    <strong>링크: </strong>
+                                                    <span th:text="${board.link}"></span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>
+
 </div>
 
-<p th:text="'팝업 이름: ' + ${board.subject}"></p>
-<p th:text="'팝업 소개: ' + ${board.description}"></p>
-<p th:text="'장소: ' + ${board.location}"></p>
-<p th:text="'날짜: ' + ${board.start_date} + ' ~ ' + ${board.end_date}"></p>
-<p th:text="'브랜드: ' + ${board.brand}"></p>
-<p th:text="'티켓 필요: ' + (${board.ticket} ? 'Yes' : 'No')"></p>
-<p th:text="'링크: ' + ${board.link}"></p>
+<!-- JAVASCRIPT FILES ========================================= -->
+<script src="js/jquery.min.js"></script><!-- JQUERY MIN JS -->
+<script src="vendor/wow/wow.min.js"></script><!-- WOW JS -->
+<script src="vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script><!-- BOOTSTRAP MIN JS -->
+<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script><!-- BOOTSTRAP SELECT MIN JS -->
+<script src="vendor/bootstrap-touchspin/bootstrap-touchspin.js"></script><!-- BOOTSTRAP TOUCHSPIN JS -->
+
+<script src="vendor/counter/waypoints-min.js"></script><!-- WAYPOINTS JS -->
+<script src="vendor/counter/counterup.min.js"></script><!-- COUNTERUP JS -->
+<script src="vendor/swiper/swiper-bundle.min.js"></script><!-- SWIPER JS -->
+<script src="vendor/imagesloaded/imagesloaded.js"></script><!-- IMAGESLOADED-->
+<script src="vendor/masonry/masonry-4.2.2.js"></script><!-- MASONRY -->
+<script src="vendor/masonry/isotope.pkgd.min.js"></script><!-- ISOTOPE -->
+<script src="vendor/countdown/jquery.countdown.js"></script><!-- COUNTDOWN FUCTIONS  -->
+<script src="vendor/wnumb/wNumb.js"></script><!-- WNUMB -->
+<script src="vendor/nouislider/nouislider.min.js"></script><!-- NOUSLIDER MIN JS-->
+<script src="js/dz.carousel.js"></script><!-- DZ CAROUSEL JS -->
+<script src="vendor/lightgallery/dist/lightgallery.min.js"></script>
+<script src="vendor/lightgallery/dist/plugins/thumbnail/lg-thumbnail.min.js"></script>
+<script src="vendor/lightgallery/dist/plugins/zoom/lg-zoom.min.js"></script>
+<script src="js/dz.ajax.js"></script><!-- AJAX -->
+<script src="js/custom.js"></script><!-- CUSTOM JS -->
+
 </body>
 </html>
