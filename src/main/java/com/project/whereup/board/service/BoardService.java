@@ -2,7 +2,7 @@ package com.project.whereup.board.service;
 
 import com.project.whereup.board.domain.Board;
 import com.project.whereup.board.domain.BoardImage;
-import com.project.whereup.board.dto.BoardList;
+import com.project.whereup.board.dto.BoardSummary;
 import com.project.whereup.board.repository.BoardImageRepository;
 import com.project.whereup.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class BoardService {
         return boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("wrong boardId"));
     }
 
-    public List<BoardList> summeryListBoard() {
+    public List<BoardSummary> summeryListBoard() {
         return boardRepository.findSummery();
     }
 

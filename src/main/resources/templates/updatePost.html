@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>new post</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+</head>
+<body>
+<form method="post" action="/post/updatePost">
+    <input type="hidden" name="id" id="id" th:value="${post.id}">
+    <input type="hidden" name="created_date" id="created_date" th:value="${post.created_date}">
+    제목: <input type="text" name="title" id="title" th:value="${post.title}">
+    작성자: <input type="text" name="author" id="author" th:value="${post.author}">
+    <br>
+    내용:
+    <br>
+    <textarea name="content" id="content" th:text="${post.content}"></textarea>
+    <input type="submit" value="submit">
+</form>
+<input type="file" id="imageUpload" style="display:none" accept="image/*">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+<!--<script src="../static/js/simplemdeCustom.js"></script>-->
+<script src="/js/simplemdeCustom.js"></script>
+</body>
+</html>

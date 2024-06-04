@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body oncontextmenu="return false">
+<div th:each="post, iterStat : ${list}">
+    <div>
+<!--        <img th:src="${imgList[iterStat.index]}" alt="https://via.placeholder.com/100x100.jpg">-->
+        <p th:text="'후기 아이디: ' + ${post.id}"></p>
+        <p th:text="'후기 제목: ' + ${post.title}"></p>
+        <p th:text="'작성자: ' + ${post.author}"></p>
+        <p th:text="'작성일: ' + ${post.created_date}"></p>
+    </div>
+</div>
+</body>
+</html>

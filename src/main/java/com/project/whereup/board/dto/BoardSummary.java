@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardList {
+public class BoardSummary {
     private Long id;
     private String subject;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
