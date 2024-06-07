@@ -33,7 +33,8 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/", "/home", "/login","/signup","/**").permitAll()
+                                .requestMatchers("/", "/login","/signup","/**").permitAll()
+                                .requestMatchers("/mypage").hasRole("USER")
                                 .anyRequest().authenticated()
                 )
                 //커스텀 로그인 페이지
