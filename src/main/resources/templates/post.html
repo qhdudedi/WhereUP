@@ -1,127 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <base href="http://localhost:9000/">
-    <!-- Meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="keywords" content="">
-    <meta name="author" content="HugeBinary">
-    <meta name="robots" content="">
-    <meta name="description" content="MoonCart Shop & eCommerce HTML Template">
-    <meta property="og:title" content="MoonCart Shop & eCommerce HTML Template">
-    <meta property="og:description" content="MoonCart Shop & eCommerce HTML Template">
-    <meta name="format-detection" content="telephone=no">
-
-    <!-- FAVICONS ICON -->
-    <link rel="icon" type="image/x-icon" href="images/favicon.png">
-
-    <!-- PAGE TITLE HERE -->
-    <title>MoonCart Shop & eCommerce HTML Template</title>
-
-    <!-- MOBILE SPECIFIC -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- STYLESHEETS -->
-    <link rel="stylesheet" type="text/css" href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css">
-    <link rel="stylesheet" type="text/css" href="icons/fontawesome/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="icons/themify/themify-icons.css">
-    <link rel="stylesheet" type="text/css" href="icons/flaticon/flaticon_mooncart.css">
-    <link rel="stylesheet" type="text/css" href="vendor/swiper/swiper-bundle.min.css">
-    <link rel="stylesheet" type="text/css" href="vendor/nouislider/nouislider.min.css">
-    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-    <link rel="stylesheet" type="text/css" href="vendor/lightgallery/dist/css/lightgallery.css" >
-    <link rel="stylesheet" type="text/css" href="vendor/lightgallery/dist/css/lg-thumbnail.css">
-    <link rel="stylesheet" type="text/css" href="vendor/lightgallery/dist/css/lg-zoom.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-
-    <!-- GOOGLE FONTS-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
-
+    <meta charset="UTF-8">
+    <title>Post Details</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap">
+    <style>
+        body {
+            font-family: 'Gowun Dodum', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .page-wrapper {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #eff3fb;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .header ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        .header ul li {
+            display: inline;
+            margin-right: 10px;
+            position: relative;
+        }
+        .header ul li::after {
+            content: '>';
+            position: absolute;
+            right: -10px;
+            top: 0;
+        }
+        .header ul li:last-child::after {
+            content: '';
+        }
+        .header ul li a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        .header .btn-container {
+            display: flex;
+        }
+        .header .btn-container form {
+            margin-right: 10px;
+        }
+        .header button {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .header button:hover {
+            background-color: #0056b3;
+        }
+        .post-details {
+            margin-bottom: 20px;
+        }
+        .post-details h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        .post-details ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .post-details ul li {
+            margin-bottom: 10px;
+        }
+        .post-details strong {
+            display: inline-block;
+            width: 70px;
+        }
+        .post-content img {
+            max-width: 100%;
+            height: auto;
+        }
+        .comments {
+            margin-top: 40px;
+        }
+        .comments h3 {
+            margin-top: 0;
+        }
+        .comment-item {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .comment-item a {
+            color: #007bff;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+        .comment-item p {
+            margin: 10px 0 0 0;
+        }
+        .comment-item textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .comment-item input[type="submit"], .comment-item input[type="button"] {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+        }
+        .comment-item input[type="submit"]:hover, .comment-item input[type="button"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 
 <body>
-<div class="page-wraper">
-    <div id="loading-area" class="preloader-wrapper-1">
-        <div>
-            <span class="loader-2"></span>
-            <img src="images/logo.png" alt="/">
-            <span class="loader"></span>
+<div class="page-wrapper">
+    <div class="header">
+        <ul>
+            <li><a href="/post/postList">PostList</a></li>
+            <li th:text="${post.id}"></li>
+        </ul>
+        <div class="btn-container" th:if="${user} != null and ${user} == ${post.author}">
+            <form method="post" th:action="'/post/updatePost/' + ${post.id}">
+                <button type="submit">수정</button>
+            </form>
+            <form method="post" th:action="'/post/deletePost/' + ${post.id}">
+                <button type="submit">삭제</button>
+            </form>
         </div>
     </div>
 
-    <div th:if="${user} != null and ${user} == ${post.author}">
-        <form method="post" th:action="'/post/updatePost/' + ${post.id}">
-            <button type="submit">수정</button>
-        </form>
-        <form method="post" th:action="'/post/deletePost/' + ${post.id}">
-            <button type="submit">삭제</button>
-        </form>
+    <div class="post-details">
+        <h1 th:text="${post.title}"></h1>
+        <ul>
+            <li>
+                <strong>작성자: </strong>
+                <span th:text="${post.author}"></span>
+            </li>
+            <li>
+                <strong>작성일: </strong>
+                <span th:text="${post.created_date}"></span>
+            </li>
+            <li>
+                <strong>수정일: </strong>
+                <span th:text="${post.updated_date}"></span>
+            </li>
+            <li>
+                <strong>내용: </strong>
+                <div class="post-content" th:utext="${post.content}"></div>
+            </li>
+        </ul>
     </div>
 
-    <div class="page-content">
-
-        <div class="d-sm-flex justify-content-between container-fluid py-3">
-            <nav aria-label="breadcrumb" class="breadcrumb-row">
-                <ul class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="/post/postList">PostList</a></li>
-                    <li class="breadcrumb-item" th:text="${post.id}"></li>
-                </ul>
-            </nav>
-        </div>
-
-        <section class="content-inner py-0">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-xl-8 col-md-8">
-                        <div class="row">
-                            <div class="col-xl-7">
-                                <div class="dz-product-detail style-2 p-t20 ps-0">
-                                    <div class="dz-content">
-                                        <div class="dz-content-footer">
-                                            <div class="dz-content-start">
-                                                <h4 class="title mb-1"><a th:text="${post.title}"></a></h4>
-                                            </div>
-                                        </div>
-                                        <div class="dz-info">
-                                            <ul>
-                                                <li>
-                                                    <strong>작성자: </strong>
-                                                    <span th:text="${post.author}"></span>
-                                                </li>
-                                                <li>
-                                                    <strong>작성일: </strong>
-                                                    <span th:text="${post.created_date}"></span>
-                                                </li>
-                                                <li>
-                                                    <strong>수정일: </strong>
-                                                    <span th:text="${post.updated_date}"></span>
-                                                </li>
-                                                <li>
-                                                    <strong>내용: </strong>
-                                                </li>
-                                                <li>
-                                                    <div th:utext="${post.content}"></div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </div>
-    <div>
+    <div class="comments">
         <h3>comments</h3>
-        <div th:each="comment, iterStat : ${comments}">
+        <div th:if="${user} != null" id="add-form" class="comment-item">
+            <form action="/post/comment/add" method="post">
+                <input type="hidden" id="postId" name="postId" th:value="${post.id}">
+                <textarea id="text" name="text"></textarea>
+                <input type="submit" value="submit">
+            </form>
+        </div>
+        <div th:each="comment, iterStat : ${comments}" class="comment-item">
             <div th:if="${comment.user} == ${user}" th:id="${comment.id} + '-btn-area'">
-                <a href=javascript:void(0) th:id="${comment.id} + '-edit'" th:attr="onclick=|editComment(${comment.id})|">수정</a>
+                <a href="javascript:void(0)" th:id="${comment.id} + '-edit'" th:attr="onclick=|editComment(${comment.id})|">수정</a>
                 <a th:href="'/post/comment/delete/' + ${comment.id}" th:id="${comment.id} + '-delete'">삭제</a>
             </div>
             <div th:id="${comment.id} + '-comment-area'">
@@ -139,41 +209,9 @@
                 </form>
             </div>
         </div>
-        <div th:if="${user} != null" id="add-form">
-            <form action="/post/comment/add" method="post">
-                <input type="hidden" id="postId" name="postId" th:value="${post.id}">
-                <textarea id="text" name="text"></textarea>
-                <input type="submit" value="submit">
-            </form>
-        </div>
     </div>
 
-    <button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>
-
 </div>
-
-<!-- JAVASCRIPT FILES ========================================= -->
-<script src="js/jquery.min.js"></script><!-- JQUERY MIN JS -->
-<script src="vendor/wow/wow.min.js"></script><!-- WOW JS -->
-<script src="vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script><!-- BOOTSTRAP MIN JS -->
-<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script><!-- BOOTSTRAP SELECT MIN JS -->
-<script src="vendor/bootstrap-touchspin/bootstrap-touchspin.js"></script><!-- BOOTSTRAP TOUCHSPIN JS -->
-
-<script src="vendor/counter/waypoints-min.js"></script><!-- WAYPOINTS JS -->
-<script src="vendor/counter/counterup.min.js"></script><!-- COUNTERUP JS -->
-<script src="vendor/swiper/swiper-bundle.min.js"></script><!-- SWIPER JS -->
-<script src="vendor/imagesloaded/imagesloaded.js"></script><!-- IMAGESLOADED-->
-<script src="vendor/masonry/masonry-4.2.2.js"></script><!-- MASONRY -->
-<script src="vendor/masonry/isotope.pkgd.min.js"></script><!-- ISOTOPE -->
-<script src="vendor/countdown/jquery.countdown.js"></script><!-- COUNTDOWN FUCTIONS  -->
-<script src="vendor/wnumb/wNumb.js"></script><!-- WNUMB -->
-<script src="vendor/nouislider/nouislider.min.js"></script><!-- NOUSLIDER MIN JS-->
-<script src="js/dz.carousel.js"></script><!-- DZ CAROUSEL JS -->
-<script src="vendor/lightgallery/dist/lightgallery.min.js"></script>
-<script src="vendor/lightgallery/dist/plugins/thumbnail/lg-thumbnail.min.js"></script>
-<script src="vendor/lightgallery/dist/plugins/zoom/lg-zoom.min.js"></script>
-<script src="js/dz.ajax.js"></script><!-- AJAX -->
-<script src="js/custom.js"></script><!-- CUSTOM JS -->
 <script src="js/whereup-comment.js"></script>
 </body>
 </html>
