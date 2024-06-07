@@ -77,9 +77,13 @@
             <nav aria-label="breadcrumb" class="breadcrumb-row">
                 <ul class="breadcrumb mb-0">
                     <li class="breadcrumb-item"><a href="/post/postList">PostList</a></li>
-                    <li class="breadcrumb-item" th:text="${detail}"></li>
+                    <li class="breadcrumb-item">All</li>
                 </ul>
             </nav>
+        </div>
+
+        <div th:if="${user} != null">
+            <button type="button"><a href="/post/newPost">신규작성</a></button>
         </div>
 
         <!--Recommend Section Start-->
