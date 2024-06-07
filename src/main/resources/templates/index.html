@@ -1,25 +1,109 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="">
-<div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-            <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/login}">로그인</a>
-            <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/logout}">로그아웃</a>
-        </li>
-    </ul>
-</div>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로그인</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popup Store</title>
+    <!-- Google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-<hr>
-    <th:block sec:authorize="isAuthenticated()">
-        <span sec:authentication="principal"></span>
-    </th:block>
+<div class="body-container">
+    <div id="header-container">
+        <header>
+            <div class="logo">
+                <img src="/img/whereup.png">
+            </div>
+            <form class="search-container" th:action="@{/board/search/{keyword}}" method="get">
+                <input type="text" name="keyword" placeholder="Search">
+                <button type="submit">Search</button>
+            </form>
+            <nav>
+                <a href="/login">LOGIN</a>
+            </nav>
+        </header>
+    </div>
+    <main>
+        <div class="main-container">
+            <section class="content">
+                <div class="text-content">
+                    <div class ="text-c">
+                        <span class="label">POP-UP STORE</span>
+                    </div>
+                    <div class="h1-box">
+<!--                        <h1 th:text="${board.subject}" ></h1>-->
+                        <h1>A Cloud Traveler : 구름 위를 걷는 기분</h1>
+                    </div>
+<!--                    <p th:text="${board.description}"></p>-->
+                    <p>누구나 한번쯤은 상상해봤을 구름 속 세상. 플램피시트러스의 24SS Cloud Collection과 함께 상상 속 구름 여행을 떠나는 기차에 올라타 도착하는 순간까지 기분 좋은 설렘을 느껴보세요.</p>
+<!--                    <p th:text="${board.start_date} + ' ~ ' + ${board.end_date}"></p>-->
+                    <p>24.05.30 - 24.07.30 </p>
+                </div>
+                <div class="image-content">
+                    <img src="/img/whereup.png" alt="팝업이미지">
+                </div>
+            </section>
+        </div>
+    </main>
+    <!-- MENU ICON Section -->
+    <div class ="content-container">
+        <section class="options">
+            <div class="option" onclick="location.href='/board/boardList';">
+                <img src="/img/icon/map.png" alt="Location Icon">
+                <h2>지역별 팝업 스토어 보기</h2>
+                <p>원하는 지역에 팝업스토어를 확인해보세요 :0</p>
+            </div>
+            <div class="option" onclick="location.href='/post/postList';">
+                <img src="/img/icon/review.png" alt="Review Icon">
+                <h2>팝업스토어 리뷰 보기</h2>
+                <p>사람들의 다양한 후기를 만나보세요</p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Popup Stores Section -->
+    <section class="popup-stores">
+        <div class="store">
+            <img src="/image/pop/flct_1.jpg">
+            <div class="store-details">
+                <h2>A Cloud Traveler : 구름 위를 걷는 기분</h2>
+                <p>24.04.23 - 24.07.28</p>
+            </div>
+        </div>
+        <div class="store">
+            <img src="/image/pop/flct_2.jpg">
+            <div class="store-details">
+                <h2>팝업스토어 타이틀 더미</h2>
+                <p>24.0</p>
+            </div>
+        </div>
+        <div class="store">
+            <img src="/image/pop/flct_3.jpg" alt="Store Image 3">
+            <div class="store-details">
+                <h2>팝업스토어 더미 데이터</h2>
+                <p>~ 04. 30</p>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="footer-container">
+            <div>
+                <p> young35@skuniv.ac.kr</p>
+                <p> 8071han@skuniv.ac.kr</p>
+                <a href="#">Careers</a>
+                <a href="#">Change country</a>
+                <a href="#">FAQ</a>
+            </div>
+        </div>
+    </footer>
+</div>
+
+
 
 </body>
-</html>
-
 
 </html>
