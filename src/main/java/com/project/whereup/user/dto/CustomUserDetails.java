@@ -1,10 +1,13 @@
 package com.project.whereup.user.dto;
 
 import com.project.whereup.user.entity.User;
+import com.project.whereup.user.entity.eum.Role;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 
 public class CustomUserDetails implements UserDetails {
 
@@ -13,9 +16,14 @@ public class CustomUserDetails implements UserDetails {
         this.user = user;
 
     }
+    //유저 정보 반환을 위한 객체 선언
+    public User getUser(User user){
+        return user;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Collections.singleton(new SimpleGrantedAuthority(Role.USER.getAuthority()));
     }
 
     @Override
