@@ -4,112 +4,11 @@
     <meta charset="UTF-8">
     <title>Board</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap">
-    <style>
-        body {
-            font-family: 'Gowun Dodum', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #eff3fb;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            box-sizing: border-box;
-        }
-        .header ul {
-            list-style: none;
-            padding: 0;
-        }
-        .header ul li {
-            display: inline;
-            margin-right: 10px;
-            position: relative;
-        }
-        .header ul li::after {
-            content: '>';
-            position: absolute;
-            right: -10px;
-            top: 0;
-        }
-        .header ul li:last-child::after {
-            content: '';
-        }
-        .header ul li a {
-            text-decoration: none;
-            color: #007bff;
-        }
-        .board-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            justify-content: center;
-        }
-        .board-item {
-            width: 270px;
-            height: 400px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border: 1px solid #ddd;
-            padding: 20px;
-            border-radius: 10px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            background-color: #ffffff;
-            box-sizing: border-box;
-            margin: 0 auto;
-        }
-        .board-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        .board-item img {
-            width: 100%;
-            height: 260px;
-            object-fit: cover;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-        .board-item .details {
-            text-align: center;
-        }
-        .board-item .details h5, .board-item .details h6 {
-            margin: 5px 0;
-            color: #333;
-        }
-        .board-item .details h5 {
-            font-size: 1.25em;
-        }
-        .board-item .details h6 {
-            font-size: 1.1em;
-        }
-        .board-item .details h5 a {
-            text-decoration: none;
-            color: #007bff;
-        }
-        @media (max-width: 900px) {
-            .board-container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        @media (max-width: 600px) {
-            .board-container {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="/css/board.css">
 </head>
 <body>
 <div class="container">
-    <div class="header">
+    <div class="header-list">
         <ul>
             <li><a href="/board/boardList">BoardList</a></li>
             <li th:text="${detail} == null ? 'All' : ${detail}"></li>
@@ -125,5 +24,17 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const titles = document.querySelectorAll(".title");
+        titles.forEach(title => {
+            let fontSize = parseInt(window.getComputedStyle(title).fontSize);
+            while (title.scrollWidth > title.clientWidth && fontSize > 10) {
+                fontSize--;
+                title.style.fontSize = fontSize + "px";
+            }
+        });
+    });
+</script>
 </body>
 </html>
