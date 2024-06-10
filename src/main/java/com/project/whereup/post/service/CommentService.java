@@ -30,4 +30,11 @@ public class CommentService {
     public void delete(Long id) {
         commentRepository.deleteById(id);
     }
+
+    public void deleteByPostId(Long postId) {
+        List<Comment> comments = commentRepository.findByPostId(postId);
+        for (Comment comment : comments) {
+            commentRepository.delete(comment);
+        }
+    }
 }

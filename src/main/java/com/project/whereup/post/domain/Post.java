@@ -27,13 +27,16 @@ public class Post {
     @Column(name = "updated_date", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate updated_date;
+    @Column(name = "thumbnail")
+    private String thumbnail;
 
     @Builder
-    public Post(String author, String title, String content, LocalDate created_date, LocalDate updated_date) {
+    public Post(String author, String title, String content, LocalDate created_date, LocalDate updated_date, String thumbnail) {
         this.author = author;
         this.title = title;
         this.content = content;
         this.created_date = created_date;
         this.updated_date = updated_date;
+        this.thumbnail = thumbnail;
     }
 }

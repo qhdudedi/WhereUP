@@ -1,15 +1,16 @@
 let simplemde = new SimpleMDE({
+    spellChecker: false,
     element: document.getElementById("content"),
     toolbar: [
         "bold", "italic", "heading", "|", "heading-smaller", "heading-bigger", "|",
         "code", "quote", "ordered-list", "unordered-list", "horizontal-rule", "|",
-        "link", "image",
+        "link",
         {
             name: "image-upload",
             action: function customFunction(){
                 document.getElementById('imageUpload').click();
             },
-            className: "fa fa-external-link-square",
+            className: "fa fa-picture-o",
             title: "Image Upload"
         },
         "|", "preview", "side-by-side", "fullscreen", "|",
@@ -25,8 +26,11 @@ document.getElementById('imageUpload').addEventListener('change', function(){
             alert('이미지 파일만 선택할 수 있습니다.');
             return;
         }
+        let newFileName = file.name.replaceAll("(", "_").replaceAll(")", "_").replaceAll(" ", "_");
+        console.log(newFileName);
+        let renamedFile = new File([file], newFileName, { type: file.type });
         let formData = new FormData();
-        formData.append('file', file);
+        formData.append('file', renamedFile);
 
         fetch('/post/upload', {
             method: 'POST',

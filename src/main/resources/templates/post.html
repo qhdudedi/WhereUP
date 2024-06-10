@@ -25,44 +25,44 @@
             border-radius: 10px;
             box-sizing: border-box;
         }
-        .header {
+        .header-list {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
         }
-        .header ul {
+        .header-list ul {
             list-style: none;
             padding: 0;
             margin: 0;
             display: flex;
         }
-        .header ul li {
+        .header-list ul li {
             display: inline;
             margin-right: 10px;
             position: relative;
         }
-        .header ul li::after {
+        .header-list ul li::after {
             content: '>';
             position: absolute;
             right: -10px;
             top: 0;
         }
-        .header ul li:last-child::after {
+        .header-list ul li:last-child::after {
             content: '';
         }
-        .header ul li a {
+        .header-list ul li a {
             text-decoration: none;
             color: #007bff;
         }
-        .header .btn-container {
+        .header-list .btn-container {
             display: flex;
         }
-        .header .btn-container form {
+        .header-list .btn-container form {
             margin-right: 10px;
         }
-        .header button {
-            background-color: #007bff;
+        .header-list button {
+            background-color: #98accf;
             color: #ffffff;
             border: none;
             padding: 10px 20px;
@@ -70,7 +70,7 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-        .header button:hover {
+        .header-list button:hover {
             background-color: #0056b3;
         }
         .post-details {
@@ -109,6 +109,11 @@
             border-radius: 5px;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
+        .comment-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
         .comment-item a {
             color: #007bff;
             text-decoration: none;
@@ -116,6 +121,7 @@
         }
         .comment-item p {
             margin: 10px 0 0 0;
+            font-size: 1.5em;
         }
         .comment-item textarea {
             width: 100%;
@@ -124,9 +130,10 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             box-sizing: border-box;
+            resize: none;
         }
         .comment-item input[type="submit"], .comment-item input[type="button"] {
-            background-color: #007bff;
+            background-color: #98accf;
             color: #ffffff;
             border: none;
             padding: 10px 20px;
@@ -138,12 +145,15 @@
         .comment-item input[type="submit"]:hover, .comment-item input[type="button"]:hover {
             background-color: #0056b3;
         }
+        .btn-area, .form-buttons {
+            text-align: right;
+        }
     </style>
 </head>
 
 <body>
 <div class="page-wrapper">
-    <div class="header">
+    <div class="header-list">
         <ul>
             <li><a href="/post/postList">PostList</a></li>
             <li th:text="${post.id}"></li>
@@ -186,26 +196,34 @@
             <form action="/post/comment/add" method="post">
                 <input type="hidden" id="postId" name="postId" th:value="${post.id}">
                 <textarea id="text" name="text"></textarea>
-                <input type="submit" value="submit">
+                <div class="form-buttons">
+                    <input type="submit" value="submit">
+                </div>
             </form>
         </div>
         <div th:each="comment, iterStat : ${comments}" class="comment-item">
-            <div th:if="${comment.user} == ${user}" th:id="${comment.id} + '-btn-area'">
-                <a href="javascript:void(0)" th:id="${comment.id} + '-edit'" th:attr="onclick=|editComment(${comment.id})|">수정</a>
-                <a th:href="'/post/comment/delete/' + ${comment.id}" th:id="${comment.id} + '-delete'">삭제</a>
+            <div class="comment-item-header">
+                <div>
+                    <a th:text="${comment.user}"></a>
+                    <a th:text="${comment.created_date}"></a>
+                    <a th:text="${comment.updated_date}"></a>
+                </div>
+                <div th:if="${comment.user} == ${user}" th:id="${comment.id} + '-btn-area'" class="btn-area">
+                    <a href="javascript:void(0)" th:id="${comment.id} + '-edit'" th:attr="onclick=|editComment(${comment.id})|">수정</a>
+                    <a th:href="'/post/comment/delete/' + ${comment.id}" th:id="${comment.id} + '-delete'">삭제</a>
+                </div>
             </div>
             <div th:id="${comment.id} + '-comment-area'">
-                <a th:text="${comment.user}"></a>
-                <a th:text="${comment.created_date}"></a>
-                <a th:text="${comment.updated_date}"></a>
                 <p th:text="${comment.text}" th:id="${comment.id} + '-text'"></p>
             </div>
             <div th:id="${comment.id} + '-edit-area'" style="display:none;">
                 <form action="/post/comment/edit" method="post" id="edit-form">
                     <input type="hidden" th:id="${comment.id} + '-id'" name="commentId" th:value="${comment.id}">
                     <textarea th:id="${comment.id} + '-textarea'" name="commentText"></textarea>
-                    <input type="submit" value="submit">
-                    <input type="button" value="cancel" th:attr="onclick=|cancelComment(${comment.id})|">
+                    <div class="form-buttons">
+                        <input type="submit" value="submit">
+                        <input type="button" value="cancel" th:attr="onclick=|cancelComment(${comment.id})|">
+                    </div>
                 </form>
             </div>
         </div>

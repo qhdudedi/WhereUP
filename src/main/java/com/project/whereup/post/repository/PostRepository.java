@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
-    @Query(value = "select new com.project.whereup.post.dto.PostSummary(id, author, title, created_date) from Post")
+    @Query(value = "select new com.project.whereup.post.dto.PostSummary(id, author, title, created_date, thumbnail) from Post")
     List<PostSummary> findSummary();
 
 }

@@ -25,40 +25,40 @@
             border-radius: 10px;
             box-sizing: border-box;
         }
-        .header {
+        .header-list {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .header ul {
+        .header-list ul {
             list-style: none;
             padding: 0;
             margin: 0;
             display: flex;
         }
-        .header ul li {
+        .header-list ul li {
             display: inline;
             margin-right: 10px;
             position: relative;
         }
-        .header ul li::after {
+        .header-list ul li::after {
             content: '>';
             position: absolute;
             right: -10px;
             top: 0;
         }
-        .header ul li:last-child::after {
+        .header-list ul li:last-child::after {
             content: '';
         }
-        .header ul li a {
+        .header-list ul li a {
             text-decoration: none;
             color: #007bff;
         }
-        .header .btn-container {
+        .header-list .btn-container {
             margin-left: auto;
         }
-        .header .btn-container button {
-            background-color: #007bff;
+        .header-list .btn-container button {
+            background-color: #98accf;
             color: #ffffff;
             border: none;
             padding: 10px 20px;
@@ -67,11 +67,11 @@
             transition: background-color 0.3s ease;
             margin-right: 10px;
         }
-        .header .btn-container button a {
+        .header-list .btn-container button a {
             color: #ffffff;
             text-decoration: none;
         }
-        .header .btn-container button:hover {
+        .header-list .btn-container button:hover {
             background-color: #0056b3;
         }
         .post-container {
@@ -136,7 +136,7 @@
 </head>
 <body>
 <div class="container">
-    <div class="header">
+    <div class="header-list">
         <ul>
             <li><a href="/post/postList">PostList</a></li>
             <li th:text="${detail} == null ? 'All' : ${detail}"></li>
@@ -147,8 +147,8 @@
         </div>
     </div>
     <div class="post-container">
-        <div th:each="post, iterStat : ${list}" class="post-item">
-            <img src="https://via.placeholder.com/100x100.jpg" alt="image">
+        <div th:each="post : ${list}" class="post-item">
+            <img th:src="${post.thumbnail != null ? post.thumbnail : 'https://via.placeholder.com/100x100.jpg'}">
             <div class="details">
                 <h5 class="title"><a th:href="'/post/' + ${post.id}" th:text="${post.title}"></a></h5>
                 <h6 class="price" th:text="${post.author}"></h6>
