@@ -124,7 +124,6 @@ main {
 .store img {
     width: 100%;
     height: auto;
-    /* border-radius: 10px; */
     margin-bottom: 10px;
 }
 
@@ -144,9 +143,10 @@ header {
     justify-content: space-between;
     padding:0px 10px 0px 10px;
     background-color: #ffffff;
+    margin: 0 200px 0 200px;
 }
 .header-container{
-    padding:20px 10px 0px 10px;
+    padding:10px 10px 0px 10px;
 }
 .logo {
     display: flex;
@@ -154,8 +154,7 @@ header {
 }
 
 .logo img {
-    height: 150px;
-    /*margin-right: 10px;*/
+    height: 100px;
 }
 
 .search-container {
@@ -198,6 +197,7 @@ footer {
     color: #fff;
     padding: 20px 0;
     text-align: center;
+    margin: 0 200px 0 200px;
 }
 
 .footer-container {
