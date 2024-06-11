@@ -1,168 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Post Details</title>
+    <title>post</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap">
-    <style>
-        body {
-            font-family: 'Gowun Dodum', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .page-wrapper {
-            width: 90%;
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #eff3fb;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            box-sizing: border-box;
-        }
-        .header-list {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .header-list ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-        }
-        .header-list ul li {
-            display: inline;
-            margin-right: 10px;
-            position: relative;
-        }
-        .header-list ul li::after {
-            content: '>';
-            position: absolute;
-            right: -10px;
-            top: 0;
-        }
-        .header-list ul li:last-child::after {
-            content: '';
-        }
-        .header-list ul li a {
-            text-decoration: none;
-            color: #007bff;
-        }
-        .header-list .btn-container {
-            display: flex;
-        }
-        .header-list .btn-container form {
-            margin-right: 10px;
-        }
-        .header-list button {
-            background-color: #98accf;
-            color: #ffffff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .header-list button:hover {
-            background-color: #0056b3;
-        }
-        .post-details {
-            margin-bottom: 20px;
-        }
-        .post-details h1 {
-            margin: 0;
-            font-size: 2em;
-        }
-        .post-details ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .post-details ul li {
-            margin-bottom: 10px;
-        }
-        .post-details strong {
-            display: inline-block;
-            width: 70px;
-        }
-        .post-content img {
-            max-width: 100%;
-            height: auto;
-        }
-        .comments {
-            margin-top: 40px;
-        }
-        .comments h3 {
-            margin-top: 0;
-        }
-        .comment-item {
-            margin-bottom: 20px;
-            padding: 10px;
-            background-color: #ffffff;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        }
-        .comment-item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .comment-item a {
-            color: #007bff;
-            text-decoration: none;
-            margin-right: 10px;
-        }
-        .comment-item p {
-            margin: 10px 0 0 0;
-            font-size: 1.5em;
-        }
-        .comment-item textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-            resize: none;
-        }
-        .comment-item input[type="submit"], .comment-item input[type="button"] {
-            background-color: #98accf;
-            color: #ffffff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-right: 10px;
-        }
-        .comment-item input[type="submit"]:hover, .comment-item input[type="button"]:hover {
-            background-color: #0056b3;
-        }
-        .btn-area, .form-buttons {
-            text-align: right;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/post.css">
 </head>
 
 <body>
-<div class="page-wrapper">
+<div class="container">
     <div class="header-list">
         <ul>
-            <li><a href="/post/postList">PostList</a></li>
+            <li><a href="/post/postList">postList</a></li>
             <li th:text="${post.id}"></li>
         </ul>
         <div class="btn-container" th:if="${user} != null and ${user} == ${post.author}">
             <form method="post" th:action="'/post/updatePost/' + ${post.id}">
                 <button type="submit">수정</button>
             </form>
-            <form method="post" th:action="'/post/deletePost/' + ${post.id}">
+            <form method="post" th:action="'/post/deletePost/' + ${post.id}" onsubmit="return confirmDeletion();">
                 <button type="submit">삭제</button>
             </form>
         </div>
@@ -191,13 +47,13 @@
     </div>
 
     <div class="comments">
-        <h3>comments</h3>
+        <h3>댓글</h3>
         <div th:if="${user} != null" id="add-form" class="comment-item">
-            <form action="/post/comment/add" method="post">
+            <form id="commentForm" action="/post/comment/add" method="post">
                 <input type="hidden" id="postId" name="postId" th:value="${post.id}">
                 <textarea id="text" name="text"></textarea>
                 <div class="form-buttons">
-                    <input type="submit" value="submit">
+                    <input type="submit" value="제출">
                 </div>
             </form>
         </div>
@@ -210,25 +66,25 @@
                 </div>
                 <div th:if="${comment.user} == ${user}" th:id="${comment.id} + '-btn-area'" class="btn-area">
                     <a href="javascript:void(0)" th:id="${comment.id} + '-edit'" th:attr="onclick=|editComment(${comment.id})|">수정</a>
-                    <a th:href="'/post/comment/delete/' + ${comment.id}" th:id="${comment.id} + '-delete'">삭제</a>
+                    <a th:href="'/post/comment/delete/' + ${comment.id}" th:id="${comment.id} + '-delete'" onclick="return confirmDeletion();">삭제</a>
                 </div>
             </div>
             <div th:id="${comment.id} + '-comment-area'">
                 <p th:text="${comment.text}" th:id="${comment.id} + '-text'"></p>
             </div>
             <div th:id="${comment.id} + '-edit-area'" style="display:none;">
-                <form action="/post/comment/edit" method="post" id="edit-form">
+                <form id="editForm-${comment.id}" action="/post/comment/edit" method="post">
                     <input type="hidden" th:id="${comment.id} + '-id'" name="commentId" th:value="${comment.id}">
                     <textarea th:id="${comment.id} + '-textarea'" name="commentText"></textarea>
                     <div class="form-buttons">
-                        <input type="submit" value="submit">
-                        <input type="button" value="cancel" th:attr="onclick=|cancelComment(${comment.id})|">
+                        <input type="submit" value="제출">
+                        <input type="button" value="취소" th:attr="onclick=|cancelComment(${comment.id})|">
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-<script src="/js/whereup-comment.js"></script>
+<script src="/js/whereup-postWithcomment.js"></script>
 </body>
 </html>
