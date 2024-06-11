@@ -6,25 +6,20 @@ import com.project.whereup.post.dto.PostSummary;
 import com.project.whereup.post.service.CommentService;
 import com.project.whereup.post.service.MarkdownService;
 import com.project.whereup.post.service.PostService;
-import com.project.whereup.s3.service.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping(value = "/post")
 public class PostController {
     private final MarkdownService markdownService;
-    private final S3Service s3Service;
     private final PostService postService;
     private final CommentService commentService;
 
@@ -56,20 +51,6 @@ public class PostController {
         }
         model.addAttribute("author", principal.getName());
         return "newPost";
-    }
-    // 이미지 파일 업로드
-    @PostMapping("/upload")
-    @ResponseBody
-    public Map<String, Object> uploadFile(@RequestParam("file") MultipartFile file) {
-        Map<String, Object> response = new HashMap<>();
-        if (file.isEmpty()) {
-            response.put("success", false);
-            response.put("url", "https://via.placeholder.com/100x100.jpg");
-        } else {
-            response.put("success", true);
-            response.put("url", s3Service.upload(file));
-        }
-        return response;
     }
     // 신규 후기 작성 후 제출하고 나서 처리하는 거
     @PostMapping(value = "/newPost")

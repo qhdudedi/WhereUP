@@ -3,55 +3,44 @@ package com.project.whereup.s3.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.*;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
-import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
-import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
+import software.amazon.awssdk.services.s3.presigner.model.*;
 
-import java.io.IOException;
+import java.net.URL;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class S3Service {
     @Value("${aws.s3.bucket-name}")
     private String bucketName;
+    @Value("${aws.cloudfront.url}")
+    private String cloudfrontDomain;
     private final S3Presigner s3Presigner;
     private final S3Client s3Client;
 
-    //파일이름으로 presignedurl 얻기
+    // 파일이름으로 presignedurl 얻기, 이미지 보는 용도 + cloudefront
     public String getPresignedUrl(String key) {
-        GetObjectRequest getObjectRequest = GetObjectRequest.builder()
-                .bucket(bucketName)
-                .key(key)
-                .build();
-
-        GetObjectPresignRequest getObjectPresignRequest = GetObjectPresignRequest.builder()
-                .getObjectRequest(getObjectRequest)
-                .signatureDuration(Duration.ofSeconds(5)) // url 유효기간
-                .build();
-
-        PresignedGetObjectRequest presignedGetObjectRequest = s3Presigner.presignGetObject(getObjectPresignRequest);
-
-        return presignedGetObjectRequest.url().toString();
+        PresignedGetObjectRequest presignedGetObjectRequest =
+                s3Presigner.presignGetObject(pgo -> pgo.signatureDuration(Duration.ofSeconds(5)) // url 만료 시간
+                        .getObjectRequest(gor -> gor.bucket(bucketName).key(key)));
+        String url = presignedGetObjectRequest.url().toString();
+        String bucketurl = String.format("%s.s3.amazonaws.com", bucketName);
+        return url.replace(bucketurl, cloudfrontDomain);
     }
-    // S3에 파일올리고 파일 url 리턴, 파일명 공백 _로 교체
-    public String upload(MultipartFile file) {
-        String key = System.currentTimeMillis() + "_" + file.getOriginalFilename().replaceAll(" ", "_");
-        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                .bucket(bucketName)
-                .key(key)
-                .build();
-        try {
-            s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
-            return "https://" + bucketName + ".s3.amazonaws.com/" + key; // S3에서 파일 기본 url
-        } catch (IOException e) {
-            return "https://via.placeholder.com/100x100.jpg";
-        }
+    //파일명으로 url얻기 + cloudefront
+    public String getImageUrl(String key) {
+        String url = s3Client.utilities().getUrl(gu -> gu.bucket(bucketName).key(key)).toExternalForm();
+        String bucketurl = String.format("%s.s3.amazonaws.com", bucketName);
+        return url.replace(bucketurl, cloudfrontDomain);
+    }
+    // 파일이름으로 presignedurl 얻기, 이미지 업로드하는 용도, front -> s3, 이미지파일이 서버 경유x
+    public URL generatePresignedUrl(String key) {
+        PresignedPutObjectRequest putObjectRequest =
+                s3Presigner.presignPutObject(ppo -> ppo.signatureDuration(Duration.ofMinutes(60)) // url 만료 시간
+                        .putObjectRequest(por -> por.bucket(bucketName).key(key)));
+
+        return putObjectRequest.url();
     }
 }

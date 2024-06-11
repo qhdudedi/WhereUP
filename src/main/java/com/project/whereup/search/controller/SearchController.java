@@ -54,7 +54,7 @@ public class SearchController {
                 list.add(allList.get(i));
                 try{
                     String key = allImgOrderOne.get(i).getImageName();
-                    imgList.add(s3Service.getPresignedUrl(key));
+                    imgList.add(s3Service.getImageUrl(key));
                 } catch (Exception e) {
                     imgList.add("https://via.placeholder.com/100x100.jpg");
                 }
