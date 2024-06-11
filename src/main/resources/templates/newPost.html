@@ -26,33 +26,33 @@
             border-radius: 10px;
             box-sizing: border-box;
         }
-        .header {
+        .header-list {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
         }
-        .header ul {
+        .header-list ul {
             list-style: none;
             padding: 0;
             margin: 0;
             display: flex;
         }
-        .header ul li {
+        .header-list ul li {
             display: inline;
             margin-right: 10px;
             position: relative;
         }
-        .header ul li::after {
+        .header-list ul li::after {
             content: '>';
             position: absolute;
             right: -10px;
             top: 0;
         }
-        .header ul li:last-child::after {
+        .header-list ul li:last-child::after {
             content: '';
         }
-        .header ul li a {
+        .header-list ul li a {
             text-decoration: none;
             color: #007bff;
         }
@@ -72,13 +72,15 @@
             box-sizing: border-box;
         }
         form input[type="submit"] {
-            background-color: #007bff;
+            width: 25%;
+            background-color: #98accf;
             color: #ffffff;
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            align-self: flex-end;
         }
         form input[type="submit"]:hover {
             background-color: #0056b3;
@@ -87,7 +89,7 @@
 </head>
 <body>
 <div class="container">
-    <div class="header">
+    <div class="header-list">
         <ul>
             <li><a href="/post/postList">PostList</a></li>
             <li>newPost</li>

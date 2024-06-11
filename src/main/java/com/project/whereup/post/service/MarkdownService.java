@@ -5,6 +5,9 @@ import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.stereotype.Service;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @Service
 public class MarkdownService {
     private final Parser parser;
@@ -18,5 +21,17 @@ public class MarkdownService {
     public String renderMarkdownToHtml(String markdown) {
         Node document = parser.parse(markdown);
         return renderer.render(document);
+    }
+
+    // content 뒤져서 이미지 있나 찾는거, 있으면 첫번째꺼 반환
+    public String isImageInContent(String content) {
+        String regex = "!\\[[^\\[\\]]*\\]\\(([^\\(\\)]+)\\)";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(content);
+
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+        return null;
     }
 }

@@ -3,6 +3,7 @@ package com.project.whereup.post.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -16,4 +17,6 @@ public class PostSummary { // 후기 전체 보기 페이지에서 띄울 내용
     private String title;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate created_date;
+    @Setter
+    private String thumbnail;
 }
