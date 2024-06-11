@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendar with Modal</title>
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.min.js'></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="/css/fullcalendar.css" rel="stylesheet"/>
+</head>
+<body>
+<div id="calendar"></div>
+
+<div id="eventModal">
+  <div id="modalContent">
+    <span class="close">&times;</span>
+    <h2 id="modalTitle">Create Event</h2>
+    <form id="eventForm">
+      <input type="hidden" id="eventId">
+      <label for="title">Title:</label>
+      <input type="text" id="title" name="title" required><br><br>
+
+      <label for="summary">Summary:</label>
+      <input type="text" id="summary" name="summary" required><br><br>
+
+      <label for="startDate">Start Date:</label>
+      <input type="date" id="startDate" name="startDate" required><br><br>
+
+      <label for="endDate">End Date:</label>
+      <input type="date" id="endDate" name="endDate" required><br><br>
+
+      <button type="submit">등록</button>
+      <button id="deleteEventBtn" style="display: none;">삭제</button>
+    </form>
+  </div>
+</div>
+<script src="/js/calendar.js"></script>
+</body>
+</html>
