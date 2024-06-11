@@ -2,137 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Post</title>
+    <title>PostList</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap">
-    <style>
-        body {
-            font-family: 'Gowun Dodum', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #eff3fb;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            box-sizing: border-box;
-        }
-        .header-list {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .header-list ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-        }
-        .header-list ul li {
-            display: inline;
-            margin-right: 10px;
-            position: relative;
-        }
-        .header-list ul li::after {
-            content: '>';
-            position: absolute;
-            right: -10px;
-            top: 0;
-        }
-        .header-list ul li:last-child::after {
-            content: '';
-        }
-        .header-list ul li a {
-            text-decoration: none;
-            color: #007bff;
-        }
-        .header-list .btn-container {
-            margin-left: auto;
-        }
-        .header-list .btn-container button {
-            background-color: #98accf;
-            color: #ffffff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-right: 10px;
-        }
-        .header-list .btn-container button a {
-            color: #ffffff;
-            text-decoration: none;
-        }
-        .header-list .btn-container button:hover {
-            background-color: #0056b3;
-        }
-        .post-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            justify-content: center;
-        }
-        .post-item {
-            display: flex;
-            align-items: stretch;
-            border: 1px solid #ddd;
-            padding: 0;
-            border-radius: 10px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            background-color: #ffffff;
-            box-sizing: border-box;
-        }
-        .post-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        .post-item img {
-            width: 150px;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 5px 0 0 5px;
-            margin: 0;
-        }
-        .post-item .details {
-            flex: 1;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .post-item .details h5, .post-item .details h6 {
-            margin: 5px 0;
-            color: #333;
-        }
-        .post-item .details h5 {
-            font-size: 1.25em;
-        }
-        .post-item .details h6 {
-            font-size: 1.1em;
-        }
-        .post-item .details h5 a {
-            text-decoration: none;
-            color: #007bff;
-        }
-        @media (max-width: 900px) {
-            .post-container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        @media (max-width: 600px) {
-            .post-container {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="/css/post.css">
 </head>
 <body>
 <div class="container">
@@ -143,7 +15,7 @@
         </ul>
 
         <div class="btn-container" th:if="${user} != null">
-            <button type="button"><a href="/post/newPost">신규작성</a></button>
+            <input type="button" value="신규작성" onclick="location.href='/post/newPost'">
         </div>
     </div>
     <div class="post-container">

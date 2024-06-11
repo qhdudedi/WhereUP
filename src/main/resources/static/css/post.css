@@ -1,0 +1,248 @@
+body {
+    font-family: 'Gowun Dodum', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #eff3fb;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+.header-list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.header-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+.header-list ul li {
+    display: inline;
+    margin-right: 10px;
+    position: relative;
+}
+.header-list ul li::after {
+    content: '>';
+    position: absolute;
+    right: -10px;
+    top: 0;
+}
+.header-list ul li:last-child::after {
+    content: '';
+}
+.header-list ul li a {
+    text-decoration: none;
+    color: #007bff;
+}
+.header-list .btn-container, .header-list .btn-container input[type="button"], .header-list button {
+    display: flex;
+    margin-left: auto;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: 'Gowun Dodum', sans-serif;
+}
+.header-list .btn-container input[type="button"], .header-list button {
+    background-color: #98accf;
+    color: #ffffff;
+}
+.header-list .btn-container input[type="button"]:hover, .header-list button:hover {
+    background-color: #0056b3;
+}
+.header-list button {
+    background-color: #98accf;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 10px; /* 수정된 부분 */
+}
+.header-list .btn-container form {
+    margin-right: 10px; /* 수정된 부분 */
+}
+.header-list button:hover {
+    background-color: #0056b3;
+}
+.post-details {
+    margin-bottom: 20px;
+}
+.post-details h1 {
+    margin: 0;
+    font-size: 2em;
+}
+.post-details ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.post-details ul li {
+    margin-bottom: 10px;
+}
+.post-details strong {
+    display: inline-block;
+    width: 70px;
+}
+.post-content img {
+    max-width: 100%;
+    height: auto;
+}
+.comments {
+    margin-top: 40px;
+}
+.comments h3 {
+    margin-top: 0;
+}
+.comment-item {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+.comment-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.comment-item a {
+    color: #007bff;
+    text-decoration: none;
+    margin-right: 10px;
+}
+.comment-item p {
+    margin: 10px 0 0 0;
+    font-size: 1.5em;
+}
+.comment-item textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    resize: none;
+}
+.comment-item input[type="submit"], .comment-item input[type="button"] {
+    background-color: #98accf;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+}
+.comment-item input[type="submit"] {
+    width: auto; /* 추가된 부분 */
+}
+.comment-item input[type="submit"]:hover, .comment-item input[type="button"]:hover {
+    background-color: #0056b3;
+}
+.btn-area, .form-buttons {
+    text-align: right;
+}
+.post-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    justify-content: center;
+}
+.post-item {
+    display: flex;
+    align-items: stretch;
+    border: 1px solid #ddd;
+    padding: 0;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #ffffff;
+    box-sizing: border-box;
+}
+.post-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+.post-item img {
+    width: 150px;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px 0 0 5px;
+    margin: 0;
+}
+.post-item .details {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.post-item .details h5, .post-item .details h6 {
+    margin: 5px 0;
+    color: #333;
+}
+.post-item .details h5 {
+    font-size: 1.25em;
+}
+.post-item .details h6 {
+    font-size: 1.1em;
+}
+.post-item .details h5 a {
+    text-decoration: none;
+    color: #007bff;
+}
+@media (max-width: 900px) {
+    .post-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 600px) {
+    .post-container {
+        grid-template-columns: 1fr;
+    }
+}
+form {
+    display: flex;
+    flex-direction: column;
+}
+form h4 {
+    margin: 0 0 20px;
+}
+form input[type="text"], form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+form input[type="submit"] {
+    width: 25%;
+    background-color: #98accf;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-self: flex-end;
+}
+form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
