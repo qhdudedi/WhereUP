@@ -5,6 +5,7 @@ import com.project.whereup.user.entity.User;
 import com.project.whereup.user.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +19,7 @@ public class UserApiController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(UserRequestDto requestDto) {
+    public ResponseEntity<?> signup(@Valid UserRequestDto requestDto) {
         userService.save(requestDto);
         return ResponseEntity.ok("success");
     }
@@ -37,6 +38,12 @@ public class UserApiController {
     public ResponseEntity<Void> delete(@PathVariable Long userId){
         userService.deleteById(userId);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/check-nickname")
+    public ResponseEntity<Boolean> checkNickname(@RequestParam String nickname){
+        boolean nicknameDuplicate = userService.checkNicknameDuplicate(nickname);
+        return ResponseEntity.ok(nicknameDuplicate);
     }
 
 }

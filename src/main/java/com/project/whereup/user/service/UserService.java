@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
-//@Transactional
 @RequiredArgsConstructor
 public class UserService {
 
@@ -21,7 +20,11 @@ public class UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     //가입 signup
+    @Transactional
     public Long save(UserRequestDto requestDto) {
+        if(userRepository.existsByEmail(requestDto.getEmail())){
+            throw new IllegalArgumentException("동일한 이메일이 존재합니다.");
+        }
         return userRepository.save(requestDto.toEntity(bCryptPasswordEncoder)).getId();
     }
     //소셜 회원가입
@@ -40,6 +43,10 @@ public class UserService {
     // 삭제
     public void deleteById(Long id){
         userRepository.deleteById(id);
+    }
+    @Transactional
+    public boolean checkNicknameDuplicate(String nickname){
+        return userRepository.existsByNickname(nickname);
     }
 
 }
