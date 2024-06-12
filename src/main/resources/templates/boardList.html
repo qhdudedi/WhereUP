@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <title>Board</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap">
+    <link rel="stylesheet" href="/css/boardAndPost.css">
     <link rel="stylesheet" href="/css/board.css">
+    <link rel="stylesheet" href="/css/headerAndFooter.css">
 </head>
 <body>
+<header th:replace="fragments/header::header"></header>
 <div class="container">
     <div class="header-list">
         <ul>
@@ -24,6 +27,7 @@
         </div>
     </div>
 </div>
+<footer th:replace="fragments/footer::footer"></footer>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const titles = document.querySelectorAll(".title");
