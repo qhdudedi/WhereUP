@@ -1,5 +1,7 @@
 package com.project.whereup.user.controller;
 
+import com.project.whereup.board.dto.BoardRequestDto;
+import com.project.whereup.board.service.BoardLikeService;
 import com.project.whereup.oauth.kakao.KakaoService;
 import com.project.whereup.user.entity.User;
 import com.project.whereup.user.service.UserService;
@@ -8,10 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class UserViewController {
 
+    private final BoardLikeService boardLikeService;
     private final KakaoService kakaoService;
     private final UserService userService;
 
@@ -38,8 +43,11 @@ public class UserViewController {
     //마이페이지 정보 조회
     @GetMapping("/mypage")
     public String getMypage(Model model){
-        User loggedInUser = userService.getMyPage();
+        User loggedInUser = userService.getMyPage();                            //  유저 정보
         model.addAttribute("user",loggedInUser);
+
+        List<BoardRequestDto> likeBoards = boardLikeService.findBoardByUser();  // 관심 팝업 목록
+        model.addAttribute("likeBoards", likeBoards);
         return "mypage";
     }
 }
