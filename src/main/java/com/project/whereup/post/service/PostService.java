@@ -1,11 +1,13 @@
 package com.project.whereup.post.service;
 
+import com.project.whereup.board.dto.BoardSummary;
 import com.project.whereup.post.domain.Post;
 import com.project.whereup.post.repository.PostRepository;
 import com.project.whereup.post.dto.PostSummary;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,5 +33,42 @@ public class PostService {
     // 후기 삭제
     public void delete(Long postId) {
         postRepository.deleteById(postId);
+    }
+
+    public List<PostSummary> summaryListPage(String keyword, int page) {
+        int howManyOnePage = 18;
+        List<PostSummary> allSummaries = new ArrayList<>();
+        if(keyword.equals("")) {
+            allSummaries = postRepository.findSummary();
+        } else {
+            allSummaries = search(keyword);
+        }
+        int totalSummeryCount = allSummaries.size();
+        int end = Math.min(page * howManyOnePage, totalSummeryCount);
+        return allSummaries.subList((page - 1) * howManyOnePage, end);
+    }
+
+    public List<PostSummary> search(String keyword) {
+        List<PostSummary> allSummaries = postRepository.findSummary();
+        List<PostSummary> summaries = new ArrayList<>();
+        for (PostSummary posts : allSummaries) {
+            if(posts.getTitle().toUpperCase().contains(keyword.toUpperCase())) {
+                summaries.add(posts);
+            }
+        }
+        return summaries;
+    }
+    public int pageCount(String keyword) {
+        int howManyOnePage = 18;
+        List<PostSummary> posts = new ArrayList<>();
+        if(keyword.equals("")) {
+            posts = postRepository.findSummary();
+        } else {
+            posts = search(keyword);
+        }
+        return posts.size() % howManyOnePage == 0 ? posts.size() / howManyOnePage : posts.size() / howManyOnePage + 1;
+    }
+    public List<PostSummary> allSummariesMyPage(String author) {
+        return postRepository.findSummaryByAuthor(author);
     }
 }
