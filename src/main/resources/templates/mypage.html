@@ -13,77 +13,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/css/mypage.css" rel="stylesheet"/>
-    <style>
-        .post-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            justify-content: center;
-        }
-
-        .post-item {
-            display: flex;
-            align-items: stretch;
-            border: 1px solid #ddd;
-            padding: 0;
-            border-radius: 10px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            background-color: #ffffff;
-            box-sizing: border-box;
-        }
-
-        .post-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .post-item img {
-            width: 150px;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 5px 0 0 5px;
-            margin: 0;
-        }
-
-        .post-item .details {
-            flex: 1;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .post-item .details h5,
-        .post-item .details h6 {
-            margin: 5px 0;
-            color: #333;
-        }
-
-        .post-item .details h5 {
-            font-size: 1.25em;
-        }
-
-        .post-item .details h6 {
-            font-size: 1.1em;
-        }
-
-        .post-item .details h5 a {
-            text-decoration: none;
-            color: #007bff;
-        }
-
-        @media (max-width: 900px) {
-            .post-container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 600px) {
-            .post-container {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
 
 </head>
 <body id="page-top">
@@ -236,16 +165,6 @@
             <h2 class="mb-5">마이 후기 </h2>
             <p>Apart from being a web developer, I enjoy most of my time being outdoors. In the winter, I am an avid skier and novice ice climber. During the warmer months here in Colorado, I enjoy mountain biking, free climbing, and kayaking.</p>
             <p class="mb-0">When forced indoors, I follow a number of sci-fi and fantasy genre movies and television shows, I am an aspiring chef, and I spend a large amount of my free time exploring the latest technology advancements in the front-end web development world.</p>
-            <div class="post-container">
-                <div th:each="post : ${list}" class="post-item">
-                    <img th:src="${post.thumbnail != null ? post.thumbnail : 'https://via.placeholder.com/100x100.jpg'}">
-                    <div class="details">
-                        <h5><a th:href="'/post/' + ${post.id}" th:text="${post.title}"></a></h5>
-                        <h6 th:text="${post.author}"></h6>
-                        <h6 th:text="${post.created_date}"></h6>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
     <hr class="m-0" />
@@ -254,15 +173,6 @@
         <div class="resume-section-content">
             <h2 class="mb-5">알림서비스 정보 수정</h2>
             <ul class="fa-ul mb-0">
-                <li><a href="https://t.me/whereupbot" target="_blank">텔레그램 알림서비스 접속</a></li>
-                <li><P>텔레그램 실행 > 시작하기</P></li>
-                <form>
-                    <P>채팅 아이디: <input type="text" name="chatId"></P>
-                    <P>키워드1: <input type="text" name="keyword1"></P>
-                    <P>키워드2: <input type="text" name="keyword2"></P>
-                    <P>키워드3: <input type="text" name="keyword3"></P>
-                    <input type="submit">
-                </form>
                 <li>
                     <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
                     Google Analytics Certified Developer

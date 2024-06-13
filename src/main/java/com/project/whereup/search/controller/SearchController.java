@@ -17,10 +17,8 @@ import org.thymeleaf.util.StringUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -28,6 +26,11 @@ public class SearchController {
     private final BoardService boardService;
     private final PostService postService;
     private final S3Service s3Service;
+
+    @GetMapping(value = "/search")
+    public String test() {
+        return "search.html";
+    }
 
     @PostMapping(value = "/search")
     public String search(@RequestParam String what, @RequestParam String keyword) {
@@ -40,41 +43,41 @@ public class SearchController {
         return "redirect:/" + what.toLowerCase() + "/search/" + keyword;
     }
     @GetMapping(value = "/board/search/{keyword}")
-    public String searchBoard(@PathVariable String keyword, Model model, @RequestParam int page) {
+    public String searchBoard(@PathVariable String keyword, Model model) {
         keyword = keyword.replaceAll("_____", " ");
-        Map<BoardSummary, String> map = boardService.summaryListPage(keyword, page);
-
-        List<BoardSummary> summaries = new ArrayList<>(map.keySet());
-        List<String> images = new ArrayList<>();
-
-        for (String imageName : map.values()) {
-            images.add(s3Service.getImageUrl(imageName));
+        List<BoardSummary> allList = boardService.summeryListBoard();
+        List<BoardImage> allImgOrderOne = boardService.orderOneImage();
+        List<BoardSummary> list = new ArrayList<>();
+        List<String> imgList = new ArrayList<>();
+        for (int i = 0; i < allList.size(); i++) {
+            if(allList.get(i).getSubject().toUpperCase().contains(keyword.toUpperCase())) {
+                list.add(allList.get(i));
+                try{
+                    String key = allImgOrderOne.get(i).getImageName();
+                    imgList.add(s3Service.getImageUrl(key));
+                } catch (Exception e) {
+                    imgList.add("https://via.placeholder.com/100x100.jpg");
+                }
+            }
         }
-
-        int pageCount = boardService.pageCount(keyword);
-        model.addAttribute("summaries", summaries);
-        model.addAttribute("images", images);
-        model.addAttribute("detail", "Search");
-        model.addAttribute("keyword", keyword);
-        model.addAttribute("page", page);
-        model.addAttribute("pageCount", pageCount);
-
-        return "boardList";
-    }
-
-
-    @GetMapping(value = "/post/search/{keyword}")
-    public String searchPost(@PathVariable String keyword, Model model, Principal principal, @RequestParam int page) {
-        model.addAttribute("user", principal != null ? principal.getName() : null);
-        keyword = keyword.replaceAll("_____", " ");
-        List<PostSummary> list = postService.summaryListPage(keyword, page);
-
-        int pageCount = postService.pageCount(keyword);
         model.addAttribute("list", list);
-        model.addAttribute("detail", "Search");
-        model.addAttribute("keyword", keyword);
-        model.addAttribute("page", page);
-        model.addAttribute("pageCount", pageCount);
-        return "postList";
+        model.addAttribute("imgList", imgList);
+        model.addAttribute("detail", "search(" + keyword + ")");
+
+        return "boardList.html";
+    }
+    @GetMapping(value = "/post/search/{keyword}")
+    public String searchPost(@PathVariable String keyword, Model model) {
+        keyword = keyword.replaceAll("_____", " ");
+        List<PostSummary> allList = postService.summeryListPost();
+        List<PostSummary> list = new ArrayList<>();
+        for (int i = 0; i < allList.size(); i++) {
+            if(allList.get(i).getTitle().toUpperCase().contains(keyword.toUpperCase())) {
+                list.add(allList.get(i));
+            }
+        }
+        model.addAttribute("list", list);
+        model.addAttribute("detail", "search(" + keyword + ")");
+        return "postList.html";
     }
 }

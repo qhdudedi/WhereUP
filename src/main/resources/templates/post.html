@@ -14,7 +14,7 @@
 <div class="container">
     <div class="header-list">
         <ul>
-            <li><a href="/post/postList?page=1">postList</a></li>
+            <li><a href="/post/postList">postList</a></li>
             <li th:text="${post.id}"></li>
         </ul>
         <div class="btn-container" th:if="${user} != null and ${user} == ${post.author}">

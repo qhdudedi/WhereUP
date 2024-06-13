@@ -10,7 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -21,36 +22,37 @@ public class BoardController {
 
     //전체보기 페이지, 필요한 것만 추려서 리스트로 뽑는용도
     @GetMapping(value = "/boardList")
-    public String board(Model model, @RequestParam int page) {
-        Map<BoardSummary, String> map = boardService.summaryListPage("", page);
-        List<BoardSummary> summaries = new ArrayList<>(map.keySet());
-        List<String> images = new ArrayList<>();
-
-        for (String imageName : map.values()) {
-            images.add(s3Service.getImageUrl(imageName));
+    public String board(Model model) {
+        List<BoardSummary> list = boardService.summeryListBoard();
+        model.addAttribute("list", list);
+        List<BoardImage> imgOrderOne = boardService.orderOneImage();
+        List<String> imgList = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            try{
+                String key = imgOrderOne.get(i).getImageName();
+//                imgList.add(s3Service.getPresignedUrl(key));
+                imgList.add(s3Service.getImageUrl(key));
+            } catch(Exception e) {
+                imgList.add("https://via.placeholder.com/100x100.jpg");
+            }
         }
-
-        int pageCount = boardService.pageCount("");
-        model.addAttribute("summaries", summaries);
-        model.addAttribute("images", images);
+        model.addAttribute("imgList", imgList);
         model.addAttribute("detail", "All");
-        model.addAttribute("page", page);
-        model.addAttribute("pageCount", pageCount);
-        return "boardList";
+        return "boardList.html";
     }
     //한개보기 페이지
     @GetMapping(value = "/{boardId}")
     public String board(@PathVariable Long boardId, Model model) {
         Board board = boardService.getBoard(boardId);
+        model.addAttribute("board", board);
         List<BoardImage> imgList = boardService.listImage(boardId);
 
-        String[] img_url = new String[imgList.size()];
+        String img_url[] = new String[imgList.size()];
         for (int i = 0; i < img_url.length; i++) {
             String key = imgList.get(i).getImageName();
             img_url[i] = s3Service.getImageUrl(key);
         }
         model.addAttribute("img_url", img_url);
-        model.addAttribute("board", board);
-        return "board";
+        return "board.html";
     }
 }
