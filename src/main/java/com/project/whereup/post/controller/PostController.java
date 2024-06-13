@@ -25,11 +25,15 @@ public class PostController {
 
     // 후기 전체 보기 페이지
     @GetMapping(value = "/postList")
-    public String post(Model model, Principal principal) {
+    public String post(Model model, Principal principal, @RequestParam int page) {
         model.addAttribute("user", principal != null ? principal.getName() : null);
-        System.out.println(principal != null ? principal.getName() : null);
-        List<PostSummary> list = postService.summeryListPost();
+        List<PostSummary> list = postService.summaryListPage("", page);
+
+        int pageCount = postService.pageCount("");
         model.addAttribute("list", list);
+        model.addAttribute("detail", "All");
+        model.addAttribute("page", page);
+        model.addAttribute("pageCount", pageCount);
         return "postList";
     }
     // 후기 상세 페이지
