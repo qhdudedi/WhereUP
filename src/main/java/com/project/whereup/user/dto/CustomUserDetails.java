@@ -17,7 +17,7 @@ public class CustomUserDetails implements UserDetails {
 
     }
     //유저 정보 반환을 위한 객체 선언
-    public User getUser(User user){
+    public User getUser(){
         return user;
     }
 
