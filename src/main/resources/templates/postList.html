@@ -13,46 +13,23 @@
 <div class="container">
     <div class="header-list">
         <ul>
-            <li><a th:href="'/post/postList?page=1'">PostList</a></li>
-            <div th:if="${detail} == All">
-                <li th:text="'page(' + ${page} + ')'"></li>
-            </div>
-            <div th:if="${detail} == Search">
-                <li><a th:text="${detail} + '(' + ${keyword} + ')'"  th:href="'/post/search/' + ${keyword} + '?page=1'"></a></li>
-                <li th:text="'page(' + ${page} + ')'"></li>
-            </div>
-            <div th:if="${detail} == MyPost">
-                <li><a th:text="${detail} + '(' + ${author} + ')'"  th:href="'/post/MyPost?page=1'"></a></li>
-                <li th:text="'page(' + ${page} + ')'"></li>
-            </div>
+            <li><a href="/post/postList">PostList</a></li>
+            <li th:text="${detail} == null ? 'All' : ${detail}"></li>
         </ul>
 
         <div class="btn-container" th:if="${user} != null">
-            <button onclick="location.href='/post/newPost'">신규작성</button>
+            <input type="button" value="신규작성" onclick="location.href='/post/newPost'">
         </div>
     </div>
     <div class="post-container">
         <div th:each="post : ${list}" class="post-item">
-            <img th:src="${post.thumbnail != null ? post.thumbnail : '/img/whereup.png'}">
+            <img th:src="${post.thumbnail != null ? post.thumbnail : 'https://via.placeholder.com/100x100.jpg'}">
             <div class="details">
-                <h5 ><a th:href="'/post/' + ${post.id}" th:text="${post.title}"></a></h5>
-                <h6 th:text="${post.author}"></h6>
-                <h6 th:text="${post.created_date}"></h6>
+                <h5 class="title"><a th:href="'/post/' + ${post.id}" th:text="${post.title}"></a></h5>
+                <h6 class="price" th:text="${post.author}"></h6>
+                <h6 class="price" th:text="${post.created_date}"></h6>
             </div>
         </div>
-    </div>
-    <div class="page-list">
-        <ul>
-            <div th:if="${detail} == All">
-                <li th:each="i : ${#numbers.sequence(1, pageCount)}"><a th:href="'/post/postList?page=' + ${i}" th:text="${i}"></a></li>
-            </div>
-            <div th:if="${detail} == Search">
-                <li th:each="i : ${#numbers.sequence(1, pageCount)}"><a th:href="'/post/search/'+ ${keyword} + '?page=' + ${i}" th:text="${i}"></a></li>
-            </div>
-            <div th:if="${detail} == MyPost">
-                <li th:each="i : ${#numbers.sequence(1, pageCount)}"><a th:href="'/post/myPost' + '?page=' + ${i}" th:text="${i}"></a></li>
-            </div>
-        </ul>
     </div>
 </div>
 <footer th:replace="fragments/footer::footer"></footer>

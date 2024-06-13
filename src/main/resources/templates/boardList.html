@@ -13,34 +13,18 @@
 <div class="container">
     <div class="header-list">
         <ul>
-            <li><a th:href="'/board/boardList?page=1'">BoardList</a></li>
-            <div th:if="${detail} == Search">
-                <li><a th:text="${detail} + '(' + ${keyword} + ')'"  th:href="'/board/search/' + ${keyword} + '?page=1'"></a></li>
-                <li th:text="'page(' + ${page} + ')'"></li>
-            </div>
-            <div th:if="${detail} == All">
-                <li th:text="'page(' + ${page} + ')'"></li>
-            </div>
+            <li><a href="/board/boardList">BoardList</a></li>
+            <li th:text="${detail} == null ? 'All' : ${detail}"></li>
         </ul>
     </div>
     <div class="board-container">
-        <div th:each="board, iterStat : ${summaries}" class="board-item">
-            <img th:src="${images[iterStat.index]}">
+        <div th:each="board, iterStat : ${list}" class="board-item">
+            <img th:src="${imgList[iterStat.index]}" alt="image">
             <div class="details">
-                <h5><a th:href="'/board/' + ${board.id}" th:text="${board.subject}"></a></h5>
-                <h6 th:text="${board.start_date} + ' ~ ' + ${board.end_date}"></h6>
+                <h5 class="title"><a th:href="'/board/' + ${board.id}" th:text="${board.subject}"></a></h5>
+                <h6 class="price" th:text="${board.start_date} + ' ~ ' + ${board.end_date}"></h6>
             </div>
         </div>
-    </div>
-    <div class="page-list">
-        <ul>
-            <div th:if="${detail} == All">
-                <li th:each="i : ${#numbers.sequence(1, pageCount)}"><a th:href="'/board/boardList?page=' + ${i}" th:text="${i}"></a></li>
-            </div>
-            <div th:if="${detail} == Search">
-                <li th:each="i : ${#numbers.sequence(1, pageCount)}"><a th:href="'/board/search/'+ ${keyword} +'?page=' + ${i}" th:text="${i}"></a></li>
-            </div>
-        </ul>
     </div>
 </div>
 <footer th:replace="fragments/footer::footer"></footer>
