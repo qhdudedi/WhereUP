@@ -1,5 +1,6 @@
 package com.project.whereup.search.controller;
 
+import com.project.whereup.board.dto.BoardSummary;
 import com.project.whereup.board.service.BoardService;
 import com.project.whereup.post.dto.PostSummary;
 import com.project.whereup.post.service.PostService;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -34,6 +37,29 @@ public class SearchController {
         }
         return "redirect:/" + what.toLowerCase() + "/search/" + keyword + "?page=1";
     }
+    @GetMapping(value = "/board/search/{keyword}")
+    public String searchBoard(@PathVariable String keyword, Model model, @RequestParam int page) {
+        keyword = keyword.replaceAll("_____", " ");
+        Map<BoardSummary, String> map = boardService.summaryListPage(keyword, page);
+
+        List<BoardSummary> summaries = new ArrayList<>(map.keySet());
+        List<String> images = new ArrayList<>();
+
+        for (String imageName : map.values()) {
+            images.add(s3Service.getImageUrl(imageName));
+        }
+
+        int pageCount = boardService.pageCount(keyword);
+        model.addAttribute("summaries", summaries);
+        model.addAttribute("images", images);
+        model.addAttribute("detail", "Search");
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("page", page);
+        model.addAttribute("pageCount", pageCount);
+
+        return "boardList";
+    }
+
 
     @GetMapping(value = "/post/search/{keyword}")
     public String searchPost(@PathVariable String keyword, Model model, Principal principal, @RequestParam int page) {
