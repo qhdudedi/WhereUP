@@ -29,6 +29,10 @@ public class BoardController {
         List<BoardSummary> summaries = new ArrayList<>(map.keySet());
         List<String> images = new ArrayList<>();
 
+        for(String imageName : map.values()){
+            images.add(s3Service.getImageUrl(imageName));
+        }
+
         int pageCount = boardService.pageCount("");
         model.addAttribute("summaries", summaries);
         model.addAttribute("images", images);
