@@ -2,6 +2,8 @@ package com.project.whereup.user.controller;
 
 import com.project.whereup.board.dto.BoardRequestDto;
 import com.project.whereup.board.service.BoardLikeService;
+import com.project.whereup.post.dto.PostSummary;
+import com.project.whereup.post.service.PostService;
 import com.project.whereup.oauth.kakao.KakaoService;
 import com.project.whereup.user.entity.User;
 import com.project.whereup.user.service.UserService;
@@ -19,6 +21,7 @@ public class UserViewController {
     private final BoardLikeService boardLikeService;
     private final KakaoService kakaoService;
     private final UserService userService;
+    private final PostService postService;
 
     @GetMapping("/")
     public String main() {
@@ -45,6 +48,9 @@ public class UserViewController {
     public String getMypage(Model model){
         User loggedInUser = userService.getMyPage();                            //  유저 정보
         model.addAttribute("user",loggedInUser);
+
+        List<PostSummary> list = postService.allSummariesMyPage(loggedInUser.getEmail());
+        model.addAttribute("list",list);
 
         List<BoardRequestDto> likeBoards = boardLikeService.findBoardByUser();  // 관심 팝업 목록
         model.addAttribute("likeBoards", likeBoards);
