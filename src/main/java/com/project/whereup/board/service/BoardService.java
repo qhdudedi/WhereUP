@@ -9,6 +9,7 @@ import com.project.whereup.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -80,6 +81,19 @@ public class BoardService {
                 String imageName = (boardImage != null) ? boardImage.getImageName() : "whereup.png";
                 map.put(loc, imageName);
             }
+        }
+        return map;
+    }
+    /////일주일 전부터 일주일 후까지
+    public Map<BoardSummary, String> dateRangeBoard() {
+        LocalDate startDate = LocalDate.now().minusWeeks(1);
+        LocalDate endDate = LocalDate.now().plusWeeks(1);
+        List<BoardSummary> summaries = boardRepository.findBoardSummariesWithinDateRange(startDate, endDate);
+        Map<BoardSummary, String> map = new LinkedHashMap<>();
+        for (BoardSummary summary : summaries) {
+            BoardImage boardImage = boardImageRepository.findByBoardIdAndImageOrder(summary.getId(), 1);
+            String imageName = (boardImage != null) ? boardImage.getImageName() : "whereup.png";
+            map.put(summary, imageName);
         }
         return map;
     }
