@@ -3,6 +3,7 @@ package com.project.whereup.board.service;
 import com.project.whereup.board.domain.Board;
 import com.project.whereup.board.domain.BoardImage;
 import com.project.whereup.board.dto.BoardSummary;
+import com.project.whereup.board.dto.BoardSummaryLoc;
 import com.project.whereup.board.repository.BoardImageRepository;
 import com.project.whereup.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -66,5 +67,20 @@ public class BoardService {
             }
         }
         return summaries;
+    }
+
+    public Map<BoardSummaryLoc, String> locSearch(String location) {
+        List<BoardSummaryLoc> summaries = boardRepository.findSummeryLoc();
+        summaries.sort(Comparator.comparing(BoardSummaryLoc::getStart_date)
+                .thenComparing(BoardSummaryLoc::getEnd_date));
+        Map<BoardSummaryLoc, String> map = new LinkedHashMap<>();
+        for (BoardSummaryLoc loc : summaries) {
+            if(loc.getLocation().toUpperCase().contains(location.toUpperCase())) {
+                BoardImage boardImage = boardImageRepository.findByBoardIdAndImageOrder(loc.getId(), 1);
+                String imageName = (boardImage != null) ? boardImage.getImageName() : "whereup.png";
+                map.put(loc, imageName);
+            }
+        }
+        return map;
     }
 }

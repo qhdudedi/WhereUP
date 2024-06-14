@@ -3,6 +3,7 @@ package com.project.whereup.board.controller;
 import com.project.whereup.board.domain.Board;
 import com.project.whereup.board.domain.BoardImage;
 import com.project.whereup.board.dto.BoardSummary;
+import com.project.whereup.board.dto.BoardSummaryLoc;
 import com.project.whereup.board.service.BoardLikeService;
 import com.project.whereup.board.service.BoardService;
 import com.project.whereup.s3.service.S3Service;
@@ -70,6 +71,22 @@ public class BoardController {
         String email = principal.getName();
         boardLikeService.createBoardLike(email, boardId);
         return "redirect:/board/" + boardId; // 좋아요 후 현재 페이지로 리다이렉트
+    }
+    @GetMapping(value = "/loc")
+    public String locationBoard(Model model) {
+        String[] locations = {"강남", "잠실", "성수"};
+        model.addAttribute("locationCount", locations.length);
+        for (int i = 0; i < locations.length; i++) {
+            Map<BoardSummaryLoc, String> map = boardService.locSearch(locations[i]);
+            List<BoardSummaryLoc> summaries = new ArrayList<>(map.keySet());
+            List<String> images = new ArrayList<>();
+            for (String imageName : map.values()) {
+                images.add(s3Service.getImageUrl(imageName));
+            }
+            model.addAttribute(locations[i], summaries);
+            model.addAttribute(locations[i] + "images", images);
+        }
+        return "locationBoard";
     }
 
 }
