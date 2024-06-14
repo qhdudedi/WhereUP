@@ -12,6 +12,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.min.js'></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="/css/fullcalendar.css" rel="stylesheet"/>
     <link href="/css/mypage.css" rel="stylesheet"/>
 
 </head>
@@ -20,14 +23,14 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
     <a class="navbar-brand js-scroll-trigger" href="#page-top">
         <span class="d-block d-lg-none">Clarence Taylor</span>
-        <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="/img/icon/profile.jpeg" alt="..." /></span>
+        <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="/img/icon/user.png" alt="..." /></span>
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav">
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#myaccount">내 정보 수정</a></li>
-            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#calendar">내 일정</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#schedule">내 일정</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#liked">관심팝업</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#mypost">BLOG_후기</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#alarm">알림 서비스</a></li>
@@ -125,17 +128,40 @@
     </section>
     <hr class="m-0" />
     <!-- 내 일정 -->
-    <section class="resume-section" id="calendar">
+    <section class="resume-section" id="schedule">
         <div class="resume-section-content">
             <h2 class="mb-5">MY CALENDAR</h2>
-            <iframe src="calendar.html"></iframe>
+            <div id="calendar"></div>
+            <div id="eventModal">
+                <div id="modalContent">
+                    <span class="close">&times;</span>
+                    <h2 id="modalTitle">Create Event</h2>
+                    <form id="eventForm">
+                        <input type="hidden" id="eventId">
+                        <label for="title">Title:</label>
+                        <input type="text" id="title" name="title" required><br><br>
+
+                        <label for="summary">Summary:</label>
+                        <input type="text" id="summary" name="summary" required><br><br>
+
+                        <label for="startDate">Start Date:</label>
+                        <input type="date" id="startDate" name="startDate" required><br><br>
+
+                        <label for="endDate">End Date:</label>
+                        <input type="date" id="endDate" name="endDate" required><br><br>
+
+                        <button type="submit">등록</button>
+                        <button id="deleteEventBtn" style="display: none;">삭제</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </section>
     <hr class="m-0" />
     <!-- 관심 팝업 -->
     <section class="resume-section" id="liked">
         <div class="resume-section-content">
-            <h2 class="mb-5">Skills</h2>
+            <h2 class="mb-5">관심 팝업</h2>
             <ul class="fa-ul mb-0">
                 <li th:each="board : ${likeBoards}">
                     <span class="fa-li"><i class="fas fa-check"></i></span>
@@ -156,8 +182,6 @@
     <section class="resume-section" id="mypost">
         <div class="resume-section-content">
             <h2 class="mb-5">마이 후기 </h2>
-            <p>Apart from being a web developer, I enjoy most of my time being outdoors. In the winter, I am an avid skier and novice ice climber. During the warmer months here in Colorado, I enjoy mountain biking, free climbing, and kayaking.</p>
-            <p class="mb-0">When forced indoors, I follow a number of sci-fi and fantasy genre movies and television shows, I am an aspiring chef, and I spend a large amount of my free time exploring the latest technology advancements in the front-end web development world.</p>
             <div class="post-container">
                 <div th:each="post : ${list}" class="post-item">
                     <img th:src="${post.thumbnail != null ? post.thumbnail : 'https://via.placeholder.com/100x100.jpg'}">
@@ -234,5 +258,7 @@
         console.log("success");
     });
 </script>
+<script src="/js/calendar.js"></script>
 </body>
 </html>
+
