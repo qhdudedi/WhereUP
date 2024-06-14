@@ -57,6 +57,16 @@ public class PostService {
         }
         return summaries;
     }
+    public int pageCount(String keyword) {
+        int howManyOnePage = 18;
+        List<PostSummary> posts = new ArrayList<>();
+        if(keyword.equals("")) {
+            posts = postRepository.findSummary();
+        } else {
+            posts = search(keyword);
+        }
+        return posts.size() % howManyOnePage == 0 ? posts.size() / howManyOnePage : posts.size() / howManyOnePage + 1;
+    }
     public List<PostSummary> allSummariesMyPage(String author) {
         return postRepository.findSummaryByAuthor(author);
     }
