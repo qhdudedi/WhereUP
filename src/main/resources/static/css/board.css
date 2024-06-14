@@ -153,6 +153,12 @@
     text-decoration: none;
 }
 
+.details ul li img{
+    height: 100%;
+    width: 100px;
+    object-fit: cover;
+}
+
 @media (max-width: 900px) {
     .content-wrapper {
         flex-direction: column;
