@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/boardAndPost.css">
     <link rel="stylesheet" href="/css/board.css">
     <link rel="stylesheet" href="/css/headerAndFooter.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <header th:replace="fragments/header::header"></header>
@@ -52,6 +53,12 @@
                             <a th:href="${board.link}" th:text="${board.link}"></a>
                         </span>
                     </li>
+                    <li>
+                        <button type="button" th:attr="data-board-id=${board.id}" class="like-btn">
+                            <img th:if="${isLiked}" src="/img/icon/fullheart.png" alt="Liked" />
+                            <img th:unless="${isLiked}" src="/img/icon/empheart.png" alt="Not Liked" />
+                        </button>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -59,5 +66,24 @@
 </div>
 <footer th:replace="fragments/footer::footer"></footer>
 <script src="/js/whereup-boardImgNext.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.like-btn').on('click', function() {
+            var button = $(this);
+            var boardId = button.data('board-id');
+            $.post("/board/" + boardId + "/like", function() {
+                var img = button.find('img');
+                if (img.attr('src') === '/img/icon/empheart.png') {
+                    img.attr('src', '/img/icon/fullheart.png');
+                    img.attr('alt', 'Liked');
+                } else {
+                    img.attr('src', '/img/icon/empheart.png');
+                    img.attr('alt', 'Not Liked');
+                }
+            });
+        });
+    });
+
+</script>
 </body>
 </html>
