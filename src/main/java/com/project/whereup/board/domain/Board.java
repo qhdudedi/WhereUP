@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -36,6 +37,9 @@ public class Board {
     private Boolean ticket;
     @Column(name = "link", nullable = false)
     private String link;
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BoardLike> boardLikes;
 
     @Builder
     public Board(String subject, String description, String location, LocalDate start_date, LocalDate end_date, String brand, Boolean ticket, String link) {
