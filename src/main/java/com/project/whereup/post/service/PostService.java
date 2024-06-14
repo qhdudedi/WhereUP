@@ -57,4 +57,7 @@ public class PostService {
         }
         return summaries;
     }
+    public List<PostSummary> allSummariesMyPage(String author) {
+        return postRepository.findSummaryByAuthor(author);
+    }
 }
