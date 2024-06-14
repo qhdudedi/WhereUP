@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 //@RequestMapping(value = "/api/user")
 public class UserApiController {
+
     private final UserService userService;
 
     @PostMapping("/signup")
@@ -51,4 +52,9 @@ public class UserApiController {
     public ResponseEntity<User> updateMyPagePost(@ModelAttribute UserRequestDto userRequestDto) {
         return updateMyPage(userRequestDto);
     }
+
+//    @GetMapping("/mypage/likeBoard")
+//    public List<BoardRequestDto> getMyLikeBoards(){
+//        return boardLikeService.findBoardByUser();
+//    }
 }
