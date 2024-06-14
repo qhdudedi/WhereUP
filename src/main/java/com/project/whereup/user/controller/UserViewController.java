@@ -1,10 +1,13 @@
 package com.project.whereup.user.controller;
 
 import com.project.whereup.board.dto.BoardRequestDto;
+import com.project.whereup.board.dto.BoardSummary;
 import com.project.whereup.board.service.BoardLikeService;
+import com.project.whereup.board.service.BoardService;
 import com.project.whereup.post.dto.PostSummary;
 import com.project.whereup.post.service.PostService;
 import com.project.whereup.oauth.kakao.KakaoService;
+import com.project.whereup.s3.service.S3Service;
 import com.project.whereup.user.entity.User;
 import com.project.whereup.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -22,9 +27,20 @@ public class UserViewController {
     private final KakaoService kakaoService;
     private final UserService userService;
     private final PostService postService;
+    private final BoardService boardService;
+    private final S3Service s3Service;
 
     @GetMapping("/")
-    public String main() {
+    public String main(Model model) {
+        Map<BoardSummary, String> map = boardService.dateRangeBoard();
+        List<BoardSummary> summaries = new ArrayList<>(map.keySet());
+        List<String> images = new ArrayList<>();
+        for(String imageName : map.values()){
+            images.add(s3Service.getImageUrl(imageName));
+        }
+        model.addAttribute("summaries", summaries);
+        model.addAttribute("images", images);
+
         return "index";
     }
 
