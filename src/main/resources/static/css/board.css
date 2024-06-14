@@ -68,14 +68,14 @@
     padding: 20px;
 }
 
-.slideshow-container {
+.content-wrapper .slideshow-container {
     position: relative;
     flex: 1;
     min-width: 300px;
     margin: 10px;
 }
 
-.slideshow-image {
+.content-wrapper .slideshow-image {
     width: 100%;
     height: auto;
     max-height: 500px;
@@ -84,11 +84,11 @@
     display: none;
 }
 
-.slideshow-image.active {
+.content-wrapper .slideshow-image.active {
     display: block;
 }
 
-.prev, .next {
+.content-wrapper .prev, .content-wrapper .next {
     cursor: pointer;
     position: absolute;
     top: 50%;
@@ -102,58 +102,58 @@
     transform: translateY(-50%);
 }
 
-.next {
+.content-wrapper .next {
     right: 0;
     border-radius: 3px 0 0 3px;
 }
 
-.prev {
+.content-wrapper .prev {
     left: 0;
     border-radius: 0 3px 3px 0;
 }
 
-.content {
+.content-wrapper .content {
     flex: 1;
     min-width: 300px;
     margin: 10px;
 }
 
-.content h1 {
+.content-wrapper .content h1 {
     font-size: 2em;
     color: #333;
     margin-bottom: 20px;
 }
 
-.content p {
+.content-wrapper .content p {
     font-size: 1.2em;
     color: #555;
     margin-bottom: 20px;
 }
 
-.details ul {
+.content-wrapper .details ul {
     list-style: none;
     padding: 0;
 }
 
-.details ul li {
+.content-wrapper .details ul li {
     margin-bottom: 10px;
     text-align: left;
 }
 
-.details ul li strong {
+.content-wrapper .details ul li strong {
     color: #333;
 }
 
-.details ul li span {
+.content-wrapper .details ul li span {
     color: #555;
 }
 
-.details ul li a {
+.content-wrapper .details ul li a {
     color: #007bff;
     text-decoration: none;
 }
 
-.details ul li img{
+.content-wrapper .details ul li img{
     height: 100%;
     width: 100px;
     object-fit: cover;
@@ -164,19 +164,19 @@
         flex-direction: column;
         align-items: center;
     }
-    .content h1 {
+    .content-wrapper .content h1 {
         font-size: 1.75em;
     }
-    .content p {
+    .content-wrapper .content p {
         font-size: 1em;
     }
 }
 
 @media (max-width: 600px) {
-    .content h1 {
+    .content-wrapper .content h1 {
         font-size: 1.5em;
     }
-    .content p {
+    .content-wrapper .content p {
         font-size: 0.9em;
     }
 }
