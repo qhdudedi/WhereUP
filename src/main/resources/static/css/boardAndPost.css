@@ -21,6 +21,9 @@ body {
     border-radius: 10px;
 }
 .header-list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
 }
 .header-list ul {
@@ -47,4 +50,43 @@ body {
 .header-list ul li a {
     text-decoration: none;
     color: #007bff;
+}
+
+header-list button {
+    background-color: #98accf;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: auto;
+    margin-top: 5px;
+}
+.header-list button:hover {
+    background-color: #0056b3;
+}
+
+.page-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+.page-list ul {
+    list-style: none;
+    padding: 0;
+}
+.page-list li {
+    display: inline;
+    margin: 0 10px;
+}
+.page-list a {
+    text-decoration: none;
+    font-size: 2em;
+    color: #000;
+}
+.page-list a:hover {
+    text-decoration: underline;
+    color: #007BFF;
 }
