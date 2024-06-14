@@ -30,9 +30,9 @@ public class BoardService {
         int howManyOnePage = 6;
         List<BoardSummary> allSummaries = new ArrayList<>();
         if (keyword.equals("")) {
-            allSummaries = boardRepository.findSummery();
+            allSummaries = sortSummaries(boardRepository.findSummery());
         } else {
-            allSummaries = search(keyword);
+            allSummaries = sortSummaries(search(keyword));
         }
         int totalSummeryCount = allSummaries.size();
         int end = Math.min(page * howManyOnePage, totalSummeryCount);
@@ -60,7 +60,7 @@ public class BoardService {
     }
 
     public List<BoardSummary> search(String keyword) {
-        List<BoardSummary> boards = boardRepository.findSummery();
+        List<BoardSummary> boards = sortSummaries(boardRepository.findSummery());
         List<BoardSummary> summaries = new ArrayList<>();
         for (BoardSummary board : boards) {
             if (board.getSubject().toUpperCase().contains(keyword.toUpperCase())) {
@@ -88,7 +88,7 @@ public class BoardService {
     public Map<BoardSummary, String> dateRangeBoard() {
         LocalDate startDate = LocalDate.now().minusWeeks(1);
         LocalDate endDate = LocalDate.now().plusWeeks(1);
-        List<BoardSummary> summaries = boardRepository.findBoardSummariesWithinDateRange(startDate, endDate);
+        List<BoardSummary> summaries = sortSummaries(boardRepository.findBoardSummariesWithinDateRange(startDate, endDate));
         Map<BoardSummary, String> map = new LinkedHashMap<>();
         for (BoardSummary summary : summaries) {
             BoardImage boardImage = boardImageRepository.findByBoardIdAndImageOrder(summary.getId(), 1);
@@ -97,4 +97,10 @@ public class BoardService {
         }
         return map;
     }
+    public List<BoardSummary> sortSummaries(List<BoardSummary> summaries) {
+        summaries.sort(Comparator.comparing(BoardSummary::getStart_date)
+                .thenComparing(BoardSummary::getEnd_date));
+        return summaries;
+    }
+
 }
