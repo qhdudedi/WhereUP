@@ -5,21 +5,6 @@
     justify-content: center;
 }
 
-.board-item {
-    width: 100%;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    background-color: #fff;
-    box-sizing: border-box;
-    margin: 0 auto;
-    height: 450px;
-}
-
 .board-item:hover {
     transform: translateY(-10px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
@@ -27,10 +12,14 @@
 
 .board-item img {
     width: 100%;
-    height: auto;
+    height: 350px;
     object-fit: cover;
     margin-bottom: 10px;
 }
+/*.board-item img.small{*/
+/*    padding-top: 20px;*/
+/*    padding-bottom: 20px;*/
+/*}*/
 
 .board-item .details {
     text-align: center;
@@ -62,7 +51,20 @@
     text-decoration: none;
     color: #000000;
 }
-
+.board-item {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+    box-sizing: border-box;
+    margin: 0 auto;
+    height: 450px;
+}
 .content-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -182,3 +184,14 @@
         font-size: 0.9em;
     }
 }
+/*!* 이미지 높이에 따라 여백을 추가하는 @supports *!*/
+/*@supports (aspect-ratio: 1 / 1) {*/
+/*    .board-item img {*/
+/*        aspect-ratio: 4 / 5; !* 기본 비율 설정 *!*/
+/*    }*/
+/*    .board-item img.small {*/
+/*        aspect-ratio: auto; !* 작아질 때 자동으로 비율 설정 *!*/
+/*        padding-top: 20px;*/
+/*        padding-bottom: 20px;*/
+/*    }*/
+/*}*/
