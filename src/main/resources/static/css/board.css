@@ -70,6 +70,7 @@
     flex-wrap: wrap;
     align-items: flex-start;
     padding: 20px;
+    /*background-color: white;*/
 }
 
 .content-wrapper .slideshow-container {
@@ -143,24 +144,27 @@
     margin-bottom: 10px;
     text-align: left;
 }
-
 .content-wrapper .details ul li strong {
     color: #333;
 }
-
 .content-wrapper .details ul li span {
     color: #555;
 }
-
 .content-wrapper .details ul li a {
     color: #007bff;
     text-decoration: none;
 }
-
-.content-wrapper .details ul li img{
-    height: 100%;
-    width: 100px;
-    object-fit: cover;
+.content-wrapper .details ul li button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: auto;
+    display: flex; /* Flexbox 적용 */
+    align-items: center; /* 세로 중앙 정렬 */
+    justify-content: flex-end; /* 아이콘을 오른쪽으로 정렬 */
+}
+.content-wrapper .details ul li button i {
+    font-size: 40px;
 }
 
 @media (max-width: 900px) {
