@@ -1,25 +1,23 @@
 .board-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 10px;
     justify-content: center;
-    padding: 20px;
 }
 
 .board-item {
     width: 100%;
-    max-width: 270px;
-    height: 400px;
+    max-width: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
     border: 1px solid #ddd;
-    padding: 20px;
     border-radius: 10px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     background-color: #fff;
     box-sizing: border-box;
     margin: 0 auto;
+    height: 450px;
 }
 
 .board-item:hover {
@@ -29,36 +27,40 @@
 
 .board-item img {
     width: 100%;
-    height: 260px;
+    height: auto;
     object-fit: cover;
-    border-radius: 5px;
     margin-bottom: 10px;
 }
 
 .board-item .details {
     text-align: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
-.board-item .details h5, .board-item .details h6 {
+.board-item .details  pre {
     margin: 5px 0;
-    color: #333;
-}
-
-.board-item .details h5 {
+    color: #000000;
     font-size: 1.25em;
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
+    white-space: pre-wrap; /* 줄바꿈과 공백을 그대로 유지 */
+    word-wrap: break-word; /* 단어가 길면 자동으로 줄바꿈 */
+    text-decoration: none;
 }
 
 .board-item .details h6 {
-    font-size: 1.1em;
+    margin: 0;
+    padding-top: 5px;
+    font-size: 1em;
+    color: #555;
 }
 
-.board-item .details h5 a {
+.board-item .details a {
     text-decoration: none;
-    color: #007bff;
+    color: #000000;
 }
 
 .content-wrapper {
