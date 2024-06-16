@@ -28,12 +28,9 @@ public class BoardService {
 
     public Map<BoardSummary, String> summaryListPage(String keyword, int page) {
         int howManyOnePage = 6;
-        List<BoardSummary> allSummaries = new ArrayList<>();
-        if (keyword.equals("")) {
-            allSummaries = sortSummaries(boardRepository.findSummery());
-        } else {
-            allSummaries = sortSummaries(search(keyword));
-        }
+        List<BoardSummary> allSummaries = keyword.isEmpty() ?
+                sortSummaries(boardRepository.findSummery()) :
+                sortSummaries(search(keyword));
         int totalSummeryCount = allSummaries.size();
         int end = Math.min(page * howManyOnePage, totalSummeryCount);
         List<BoardSummary> summeryList = allSummaries.subList((page - 1) * howManyOnePage, end);
@@ -50,24 +47,13 @@ public class BoardService {
 
     public int pageCount(String keyword) {
         int howManyOnePage = 6;
-        List<BoardSummary> boards = new ArrayList<>();
-        if (keyword.equals("")) {
-            boards = boardRepository.findSummery();
-        } else {
-            boards = search(keyword);
-        }
-        return boards.size() % howManyOnePage == 0 ? boards.size() / howManyOnePage : boards.size() / howManyOnePage + 1;
+        List<BoardSummary> boards = keyword.isEmpty() ? boardRepository.findSummery() : search(keyword);
+        return (boards.size() + howManyOnePage - 1) / howManyOnePage;
     }
-
+    // end_date가 오늘보다 전이면 제외
     public List<BoardSummary> search(String keyword) {
-        List<BoardSummary> boards = sortSummaries(boardRepository.findSummery());
-        List<BoardSummary> summaries = new ArrayList<>();
-        for (BoardSummary board : boards) {
-            if (board.getSubject().toUpperCase().contains(keyword.toUpperCase())) {
-                summaries.add(board);
-            }
-        }
-        return summaries;
+        LocalDate today = LocalDate.now();
+        return sortSummaries(boardRepository.findBoardSummariesByKeywordAftetDate(keyword, today));
     }
 
     public Map<BoardSummaryLoc, String> locSearch(String location) {
