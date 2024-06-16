@@ -20,20 +20,27 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @Query("SELECT new com.project.whereup.board.dto.BoardSummaryLoc(id, subject, start_date, end_date, brand, location)" +
             "FROM Board")
     List<BoardSummaryLoc> findSummeryLoc();
-    // 팝업의 시작날짜가 입력한 날짜들 범위에 있는거
+    // 팝업의 시작날짜가 입력한 날짜들 범위에 있는거, 날짜 정렬
     @Query("SELECT new com.project.whereup.board.dto.BoardSummary(b.id, b.subject, b.start_date, b.end_date, b.brand) " +
             "FROM Board b " +
-            "WHERE b.start_date BETWEEN :startDate AND :endDate")
+            "WHERE b.start_date BETWEEN :startDate AND :endDate " +
+            "ORDER BY b.start_date ASC, b.end_date ASC")
     List<BoardSummary> findBoardSummariesWithinDateRange(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
-    // 키워드 검색 전부 찾는거
-    @Query("SELECT new com.project.whereup.board.dto.BoardSummary(b.id, b.subject, b.start_date, b.end_date, b.brand) " +
-            "FROM Board b " +
-            "WHERE b.subject LIKE %:keyword%")
-    List<BoardSummary> findBoardSummariesByKeyword(@Param("keyword") String keyword);
-    // 키워드 검색 끝날짜가 입력한 날짜보다 전인거 제외
+    // 키워드 검색 전부 찾는거, 날짜 정렬
     @Query("SELECT new com.project.whereup.board.dto.BoardSummary(b.id, b.subject, b.start_date, b.end_date, b.brand) " +
             "FROM Board b " +
             "WHERE b.subject LIKE %:keyword% " +
-            "AND b.end_date >= :today")
+            "ORDER BY b.start_date ASC, b.end_date ASC")
+    List<BoardSummary> findBoardSummariesByKeyword(@Param("keyword") String keyword);
+    // 키워드 검색 끝날짜가 입력한 날짜보다 전인거 제외, 날짜 정렬
+    @Query("SELECT new com.project.whereup.board.dto.BoardSummary(b.id, b.subject, b.start_date, b.end_date, b.brand) " +
+            "FROM Board b " +
+            "WHERE b.subject LIKE %:keyword% " +
+            "AND b.end_date >= :today " +
+            "ORDER BY b.start_date ASC, b.end_date ASC")
     List<BoardSummary> findBoardSummariesByKeywordAftetDate(@Param("keyword") String keyword, @Param("today") LocalDate today);
+    // 전부 찾는거, 날짜로 정렬
+    @Query("SELECT new com.project.whereup.board.dto.BoardSummary(b.id, b.subject, b.start_date, b.end_date, b.brand) " +
+            "FROM Board b ORDER BY b.start_date ASC, b.end_date ASC")
+    List<BoardSummary> findSortedSummaries();
 }

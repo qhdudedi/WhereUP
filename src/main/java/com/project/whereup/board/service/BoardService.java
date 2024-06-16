@@ -29,8 +29,8 @@ public class BoardService {
     public Map<BoardSummary, String> summaryListPage(String keyword, int page) {
         int howManyOnePage = 6;
         List<BoardSummary> allSummaries = keyword.isEmpty() ?
-                sortSummaries(boardRepository.findSummery()) :
-                sortSummaries(search(keyword));
+                boardRepository.findSortedSummaries() :
+                search(keyword);
         int totalSummeryCount = allSummaries.size();
         int end = Math.min(page * howManyOnePage, totalSummeryCount);
         List<BoardSummary> summeryList = allSummaries.subList((page - 1) * howManyOnePage, end);
@@ -53,7 +53,7 @@ public class BoardService {
     // end_date가 오늘보다 전이면 제외
     public List<BoardSummary> search(String keyword) {
         LocalDate today = LocalDate.now();
-        return sortSummaries(boardRepository.findBoardSummariesByKeywordAftetDate(keyword, today));
+        return boardRepository.findBoardSummariesByKeywordAftetDate(keyword, today);
     }
 
     public Map<BoardSummaryLoc, String> locSearch(String location) {
@@ -74,7 +74,7 @@ public class BoardService {
     public Map<BoardSummary, String> dateRangeBoard() {
         LocalDate startDate = LocalDate.now().minusWeeks(1);
         LocalDate endDate = LocalDate.now().plusWeeks(1);
-        List<BoardSummary> summaries = sortSummaries(boardRepository.findBoardSummariesWithinDateRange(startDate, endDate));
+        List<BoardSummary> summaries = boardRepository.findBoardSummariesWithinDateRange(startDate, endDate);
         Map<BoardSummary, String> map = new LinkedHashMap<>();
         for (BoardSummary summary : summaries) {
             BoardImage boardImage = boardImageRepository.findByBoardIdAndImageOrder(summary.getId(), 1);
@@ -82,11 +82,6 @@ public class BoardService {
             map.put(summary, imageName);
         }
         return map;
-    }
-    public List<BoardSummary> sortSummaries(List<BoardSummary> summaries) {
-        summaries.sort(Comparator.comparing(BoardSummary::getStart_date)
-                .thenComparing(BoardSummary::getEnd_date));
-        return summaries;
     }
 
 }
