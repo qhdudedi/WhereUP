@@ -1,25 +1,8 @@
 .board-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 10px;
     justify-content: center;
-    padding: 20px;
-}
-
-.board-item {
-    width: 100%;
-    max-width: 270px;
-    height: 400px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid #ddd;
-    padding: 20px;
-    border-radius: 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    background-color: #fff;
-    box-sizing: border-box;
-    margin: 0 auto;
 }
 
 .board-item:hover {
@@ -29,43 +12,65 @@
 
 .board-item img {
     width: 100%;
-    height: 260px;
+    height: 350px;
     object-fit: cover;
-    border-radius: 5px;
     margin-bottom: 10px;
 }
+/*.board-item img.small{*/
+/*    padding-top: 20px;*/
+/*    padding-bottom: 20px;*/
+/*}*/
 
 .board-item .details {
     text-align: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
-.board-item .details h5, .board-item .details h6 {
+.board-item .details  pre {
     margin: 5px 0;
-    color: #333;
-}
-
-.board-item .details h5 {
+    color: #000000;
     font-size: 1.25em;
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
+    white-space: pre-wrap; /* 줄바꿈과 공백을 그대로 유지 */
+    word-wrap: break-word; /* 단어가 길면 자동으로 줄바꿈 */
+    text-decoration: none;
 }
 
 .board-item .details h6 {
-    font-size: 1.1em;
+    margin: 0;
+    padding-top: 5px;
+    font-size: 1em;
+    color: #555;
 }
 
-.board-item .details h5 a {
+.board-item .details a {
     text-decoration: none;
-    color: #007bff;
+    color: #000000;
 }
-
+.board-item {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+    box-sizing: border-box;
+    margin: 0 auto;
+    height: 450px;
+}
 .content-wrapper {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
     padding: 20px;
+    /*background-color: white;*/
 }
 
 .content-wrapper .slideshow-container {
@@ -139,24 +144,27 @@
     margin-bottom: 10px;
     text-align: left;
 }
-
 .content-wrapper .details ul li strong {
     color: #333;
 }
-
 .content-wrapper .details ul li span {
     color: #555;
 }
-
 .content-wrapper .details ul li a {
     color: #007bff;
     text-decoration: none;
 }
-
-.content-wrapper .details ul li img{
-    height: 100%;
-    width: 100px;
-    object-fit: cover;
+.content-wrapper .details ul li button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: auto;
+    display: flex; /* Flexbox 적용 */
+    align-items: center; /* 세로 중앙 정렬 */
+    justify-content: flex-end; /* 아이콘을 오른쪽으로 정렬 */
+}
+.content-wrapper .details ul li button i {
+    font-size: 40px;
 }
 
 @media (max-width: 900px) {
@@ -180,3 +188,14 @@
         font-size: 0.9em;
     }
 }
+/*!* 이미지 높이에 따라 여백을 추가하는 @supports *!*/
+/*@supports (aspect-ratio: 1 / 1) {*/
+/*    .board-item img {*/
+/*        aspect-ratio: 4 / 5; !* 기본 비율 설정 *!*/
+/*    }*/
+/*    .board-item img.small {*/
+/*        aspect-ratio: auto; !* 작아질 때 자동으로 비율 설정 *!*/
+/*        padding-top: 20px;*/
+/*        padding-bottom: 20px;*/
+/*    }*/
+/*}*/

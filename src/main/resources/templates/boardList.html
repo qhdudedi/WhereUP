@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <title>Board</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/css/boardAndPost.css">
     <link rel="stylesheet" href="/css/board.css">
     <link rel="stylesheet" href="/css/headerAndFooter.css">
 </head>
 <body>
-<header th:replace="fragments/header::header"></header>
+<header th:replace="~{fragments/header::header}"></header>
 <div class="container">
     <div class="header-list">
         <ul>
@@ -27,7 +28,7 @@
         <div th:each="board, iterStat : ${summaries}" class="board-item">
             <img th:src="${images[iterStat.index]}">
             <div class="details">
-                <h5><a th:href="'/board/' + ${board.id}" th:text="${board.subject}"></a></h5>
+                <pre><a th:href="'/board/' + ${board.id}" th:text="${board.subject}"></a></pre>
                 <h6 th:text="${board.start_date} + ' ~ ' + ${board.end_date}"></h6>
             </div>
         </div>
@@ -43,7 +44,7 @@
         </ul>
     </div>
 </div>
-<footer th:replace="fragments/footer::footer"></footer>
+<footer th:replace="~{fragments/footer::footer}"></footer>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const titles = document.querySelectorAll(".title");
