@@ -3,6 +3,7 @@ package com.project.whereup.board.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -20,4 +21,6 @@ public class BoardSummary {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate end_date;
     private String brand;
+    @Setter
+    private String imageUrl;
 }
