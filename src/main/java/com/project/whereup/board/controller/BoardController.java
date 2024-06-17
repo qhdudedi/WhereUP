@@ -26,17 +26,10 @@ public class BoardController {
     //전체보기 페이지, 필요한 것만 추려서 리스트로 뽑는용도
     @GetMapping(value = "/boardList")
     public String board(Model model, @RequestParam int page) {
-        Map<BoardSummary, String> map = boardService.summaryListPage("", page);
-        List<BoardSummary> summaries = new ArrayList<>(map.keySet());
-        List<String> images = new ArrayList<>();
-
-        for(String imageName : map.values()){
-            images.add(s3Service.getImageUrl(imageName));
-        }
-
+        List<BoardSummary> summaries = boardService.summaryListPage("", page);
         int pageCount = boardService.pageCount("");
+
         model.addAttribute("summaries", summaries);
-        model.addAttribute("images", images);
         model.addAttribute("detail", "All");
         model.addAttribute("page", page);
         model.addAttribute("pageCount", pageCount);
@@ -77,14 +70,8 @@ public class BoardController {
         String[] locations = {"강남", "잠실", "성수"};
         model.addAttribute("locationCount", locations.length);
         for (int i = 0; i < locations.length; i++) {
-            Map<BoardSummaryLoc, String> map = boardService.locSearch(locations[i]);
-            List<BoardSummaryLoc> summaries = new ArrayList<>(map.keySet());
-            List<String> images = new ArrayList<>();
-            for (String imageName : map.values()) {
-                images.add(s3Service.getImageUrl(imageName));
-            }
+            List<BoardSummaryLoc> summaries = boardService.locSearch(locations[i]);
             model.addAttribute(locations[i], summaries);
-            model.addAttribute(locations[i] + "images", images);
         }
         return "locationBoard";
     }

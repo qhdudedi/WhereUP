@@ -6,6 +6,7 @@ import com.project.whereup.board.dto.BoardSummary;
 import com.project.whereup.board.dto.BoardSummaryLoc;
 import com.project.whereup.board.repository.BoardImageRepository;
 import com.project.whereup.board.repository.BoardRepository;
+import com.project.whereup.s3.service.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.*;
 public class BoardService {
     private final BoardRepository boardRepository;
     private final BoardImageRepository boardImageRepository;
+    private final S3Service s3Service;
 
     public Board getBoard(Long id) {
         return boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("wrong boardId"));
@@ -26,81 +28,62 @@ public class BoardService {
         return boardImageRepository.findByBoardId(boardId);
     }
 
-    public Map<BoardSummary, String> summaryListPage(String keyword, int page) {
+    public List<BoardSummary> summaryListPage(String keyword, int page) {
         int howManyOnePage = 6;
-        List<BoardSummary> allSummaries = new ArrayList<>();
-        if (keyword.equals("")) {
-            allSummaries = sortSummaries(boardRepository.findSummery());
-        } else {
-            allSummaries = sortSummaries(search(keyword));
-        }
+        List<BoardSummary> allSummaries = keyword.isEmpty() ?
+                boardRepository.findSortedSummaries() :
+                search(keyword);
         int totalSummeryCount = allSummaries.size();
         int end = Math.min(page * howManyOnePage, totalSummeryCount);
-        List<BoardSummary> summeryList = allSummaries.subList((page - 1) * howManyOnePage, end);
+        List<BoardSummary> summaries = allSummaries.subList((page - 1) * howManyOnePage, end);
 
-        Map<BoardSummary, String> map = new LinkedHashMap<>();
-        for (BoardSummary summary : summeryList) {
-            BoardImage boardImage = boardImageRepository.findByBoardIdAndImageOrder(summary.getId(), 1);
-            String imageName = (boardImage != null) ? boardImage.getImageName() : "whereup.png";
-            map.put(summary, imageName);
-        }
-
-        return map;
+        summaries = imgFromNameToUrl(summaries);
+        return summaries;
     }
 
     public int pageCount(String keyword) {
         int howManyOnePage = 6;
-        List<BoardSummary> boards = new ArrayList<>();
-        if (keyword.equals("")) {
-            boards = boardRepository.findSummery();
-        } else {
-            boards = search(keyword);
-        }
-        return boards.size() % howManyOnePage == 0 ? boards.size() / howManyOnePage : boards.size() / howManyOnePage + 1;
+        List<BoardSummary> boards = keyword.isEmpty() ? boardRepository.findSummery() : search(keyword);
+        return (boards.size() + howManyOnePage - 1) / howManyOnePage;
     }
-
+    // end_date가 오늘보다 전이면 제외
     public List<BoardSummary> search(String keyword) {
-        List<BoardSummary> boards = sortSummaries(boardRepository.findSummery());
-        List<BoardSummary> summaries = new ArrayList<>();
-        for (BoardSummary board : boards) {
-            if (board.getSubject().toUpperCase().contains(keyword.toUpperCase())) {
-                summaries.add(board);
-            }
-        }
-        return summaries;
+        LocalDate today = LocalDate.now();
+        return boardRepository.findBoardSummariesByKeywordAftetDate(keyword, today);
     }
-
-    public Map<BoardSummaryLoc, String> locSearch(String location) {
+    // 지역포함 된거, 나중에 BoardSummary랑 BoardSummaryLoc이랑 합치던지 해야됨
+    public List<BoardSummaryLoc> locSearch(String location) {
         List<BoardSummaryLoc> summaries = boardRepository.findSummeryLoc();
         summaries.sort(Comparator.comparing(BoardSummaryLoc::getStart_date)
                 .thenComparing(BoardSummaryLoc::getEnd_date));
-        Map<BoardSummaryLoc, String> map = new LinkedHashMap<>();
-        for (BoardSummaryLoc loc : summaries) {
-            if(loc.getLocation().toUpperCase().contains(location.toUpperCase())) {
-                BoardImage boardImage = boardImageRepository.findByBoardIdAndImageOrder(loc.getId(), 1);
-                String imageName = (boardImage != null) ? boardImage.getImageName() : "whereup.png";
-                map.put(loc, imageName);
+        for (BoardSummaryLoc summary : summaries) {
+            if (summary.getImgUrl() != null) {
+                summary.setImgUrl(s3Service.getImageUrl(summary.getImgUrl()));
+            } else {
+                summary.setImgUrl(s3Service.getImageUrl("whereup.png"));
             }
         }
-        return map;
+
+        return summaries;
     }
     /////일주일 전부터 일주일 후까지
-    public Map<BoardSummary, String> dateRangeBoard() {
+    public List<BoardSummary> dateRangeBoard() {
         LocalDate startDate = LocalDate.now().minusWeeks(1);
         LocalDate endDate = LocalDate.now().plusWeeks(1);
-        List<BoardSummary> summaries = sortSummaries(boardRepository.findBoardSummariesWithinDateRange(startDate, endDate));
-        Map<BoardSummary, String> map = new LinkedHashMap<>();
-        for (BoardSummary summary : summaries) {
-            BoardImage boardImage = boardImageRepository.findByBoardIdAndImageOrder(summary.getId(), 1);
-            String imageName = (boardImage != null) ? boardImage.getImageName() : "whereup.png";
-            map.put(summary, imageName);
-        }
-        return map;
-    }
-    public List<BoardSummary> sortSummaries(List<BoardSummary> summaries) {
-        summaries.sort(Comparator.comparing(BoardSummary::getStart_date)
-                .thenComparing(BoardSummary::getEnd_date));
+        List<BoardSummary> summaries = boardRepository.findBoardSummariesWithinDateRange(startDate, endDate);
+        summaries = imgFromNameToUrl(summaries);
         return summaries;
     }
 
+    // 이미지 이름인거 url로 바꿔주기
+    public List<BoardSummary> imgFromNameToUrl(List<BoardSummary> summaries) {
+        for (BoardSummary summary : summaries) {
+            if (summary.getImageUrl() != null) {
+                summary.setImageUrl(s3Service.getImageUrl(summary.getImageUrl()));
+            } else {
+                summary.setImageUrl(s3Service.getImageUrl("whereup.png"));
+            }
+        }
+        return summaries;
+    }
 }
