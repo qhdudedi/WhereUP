@@ -35,12 +35,7 @@ public class BoardService {
         int end = Math.min(page * howManyOnePage, totalSummeryCount);
         List<BoardSummary> summeryList = allSummaries.subList((page - 1) * howManyOnePage, end);
 
-        Map<BoardSummary, String> map = new LinkedHashMap<>();
-        for (BoardSummary summary : summeryList) {
-            BoardImage boardImage = boardImageRepository.findByBoardIdAndImageOrder(summary.getId(), 1);
-            String imageName = (boardImage != null) ? boardImage.getImageName() : "whereup.png";
-            map.put(summary, imageName);
-        }
+        Map<BoardSummary, String> map = boardAndImgMap(summeryList);
 
         return map;
     }
@@ -55,11 +50,12 @@ public class BoardService {
         LocalDate today = LocalDate.now();
         return boardRepository.findBoardSummariesByKeywordAftetDate(keyword, today);
     }
-
+    // 지역포함 된거, 나중에 BoardSummary랑 BoardSummaryLoc이랑 합치던지 해야됨
     public Map<BoardSummaryLoc, String> locSearch(String location) {
         List<BoardSummaryLoc> summaries = boardRepository.findSummeryLoc();
         summaries.sort(Comparator.comparing(BoardSummaryLoc::getStart_date)
                 .thenComparing(BoardSummaryLoc::getEnd_date));
+
         Map<BoardSummaryLoc, String> map = new LinkedHashMap<>();
         for (BoardSummaryLoc loc : summaries) {
             if(loc.getLocation().toUpperCase().contains(location.toUpperCase())) {
@@ -75,6 +71,12 @@ public class BoardService {
         LocalDate startDate = LocalDate.now().minusWeeks(1);
         LocalDate endDate = LocalDate.now().plusWeeks(1);
         List<BoardSummary> summaries = boardRepository.findBoardSummariesWithinDateRange(startDate, endDate);
+
+        Map<BoardSummary, String> map = boardAndImgMap(summaries);
+        return map;
+    }
+    // BoardSummary랑 이미지 url 같이 뭐 할거
+    public Map<BoardSummary, String> boardAndImgMap(List<BoardSummary> summaries) {
         Map<BoardSummary, String> map = new LinkedHashMap<>();
         for (BoardSummary summary : summaries) {
             BoardImage boardImage = boardImageRepository.findByBoardIdAndImageOrder(summary.getId(), 1);
@@ -83,5 +85,4 @@ public class BoardService {
         }
         return map;
     }
-
 }
