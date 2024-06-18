@@ -27,9 +27,10 @@ public class PostController {
     @GetMapping(value = "/postList")
     public String post(Model model, Principal principal, @RequestParam int page) {
         model.addAttribute("user", principal != null ? principal.getName() : null);
-        List<PostSummary> list = postService.summaryListPage("", page);
+        int howManyOnePage = 18;
+        List<PostSummary> list = postService.summaryListPage("", page, howManyOnePage);
 
-        int pageCount = postService.pageCount("");
+        int pageCount = postService.pageCount("",howManyOnePage);
         model.addAttribute("list", list);
         model.addAttribute("detail", "All");
         model.addAttribute("page", page);
