@@ -1,10 +1,10 @@
 package com.project.whereup.post.service;
 
 import lombok.RequiredArgsConstructor;
-import org.commonmark.node.AbstractVisitor;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.regex.Matcher;
@@ -15,6 +15,10 @@ import java.util.regex.Pattern;
 public class MarkdownService {
     private final Parser parser;
     private final HtmlRenderer renderer;
+    @Value("${aws.cloudfront.url}")
+    private String cloudfrontDomain;
+    @Value("${aws.s3.url}")
+    private String s3Domain;
 
     public MarkdownService() {
         this.parser = Parser.builder().build();
@@ -37,5 +41,10 @@ public class MarkdownService {
             return matcher.group(1);
         }
         return null;
+    }
+
+    // content 뒤져서 S3 도메인 CloudFront 도메인으로 바꾸기
+    public String domainChange(String content) {
+        return content.replaceAll(s3Domain, cloudfrontDomain);
     }
 }
