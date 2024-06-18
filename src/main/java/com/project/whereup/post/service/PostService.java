@@ -6,7 +6,6 @@ import com.project.whereup.post.dto.PostSummary;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,38 +33,21 @@ public class PostService {
         postRepository.deleteById(postId);
     }
 
-    public List<PostSummary> summaryListPage(String keyword, int page) {
-        int howManyOnePage = 18;
-        List<PostSummary> allSummaries = new ArrayList<>();
-        if(keyword.equals("")) {
-            allSummaries = postRepository.findSummary();
-        } else {
-            allSummaries = search(keyword);
-        }
+    public List<PostSummary> summaryListPage(String keyword, int page, int howMany) {
+        List<PostSummary> allSummaries = keyword.isEmpty() ? postRepository.findSummary() : search(keyword);
+
         int totalSummeryCount = allSummaries.size();
-        int end = Math.min(page * howManyOnePage, totalSummeryCount);
-        return allSummaries.subList((page - 1) * howManyOnePage, end);
+        int end = Math.min(page * howMany, totalSummeryCount);
+        return allSummaries.subList((page - 1) * howMany, end);
     }
 
     public List<PostSummary> search(String keyword) {
-        List<PostSummary> allSummaries = postRepository.findSummary();
-        List<PostSummary> summaries = new ArrayList<>();
-        for (PostSummary posts : allSummaries) {
-            if(posts.getTitle().toUpperCase().contains(keyword.toUpperCase())) {
-                summaries.add(posts);
-            }
-        }
-        return summaries;
+        return postRepository.findPostSummariesByKeyword(keyword);
     }
-    public int pageCount(String keyword) {
-        int howManyOnePage = 18;
-        List<PostSummary> posts = new ArrayList<>();
-        if(keyword.equals("")) {
-            posts = postRepository.findSummary();
-        } else {
-            posts = search(keyword);
-        }
-        return posts.size() % howManyOnePage == 0 ? posts.size() / howManyOnePage : posts.size() / howManyOnePage + 1;
+    public int pageCount(String keyword, int howMany) {
+        List<PostSummary> posts = keyword.equals("") ? postRepository.findSummary() : search(keyword);
+
+        return (posts.size() + howMany - 1) / howMany;
     }
     public List<PostSummary> allSummariesMyPage(String author) {
         return postRepository.findSummaryByAuthor(author);

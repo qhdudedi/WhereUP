@@ -3,7 +3,6 @@ package com.project.whereup.board.service;
 import com.project.whereup.board.domain.Board;
 import com.project.whereup.board.domain.BoardImage;
 import com.project.whereup.board.dto.BoardSummary;
-import com.project.whereup.board.dto.BoardSummaryLoc;
 import com.project.whereup.board.repository.BoardImageRepository;
 import com.project.whereup.board.repository.BoardRepository;
 import com.project.whereup.s3.service.S3Service;
@@ -19,6 +18,8 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final BoardImageRepository boardImageRepository;
     private final S3Service s3Service;
+
+    private LocalDate today = LocalDate.now();
 
     public Board getBoard(Long id) {
         return boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("wrong boardId"));
@@ -48,28 +49,18 @@ public class BoardService {
     }
     // end_date가 오늘보다 전이면 제외
     public List<BoardSummary> search(String keyword) {
-        LocalDate today = LocalDate.now();
         return boardRepository.findBoardSummariesByKeywordAftetDate(keyword, today);
     }
-    // 지역포함 된거, 나중에 BoardSummary랑 BoardSummaryLoc이랑 합치던지 해야됨
-    public List<BoardSummaryLoc> locSearch(String location) {
-        List<BoardSummaryLoc> summaries = boardRepository.findSummeryLoc();
-        summaries.sort(Comparator.comparing(BoardSummaryLoc::getStart_date)
-                .thenComparing(BoardSummaryLoc::getEnd_date));
-        for (BoardSummaryLoc summary : summaries) {
-            if (summary.getImgUrl() != null) {
-                summary.setImgUrl(s3Service.getImageUrl(summary.getImgUrl()));
-            } else {
-                summary.setImgUrl(s3Service.getImageUrl("whereup.png"));
-            }
-        }
-
+    // 지역포함 된거, 나중에 BoardSummary로 바꾸는중
+    public List<BoardSummary> locSearch(String location) {
+        List<BoardSummary> summaries = boardRepository.findSummariesByLocation(location, today);
+        summaries = imgFromNameToUrl(summaries);
         return summaries;
     }
     /////일주일 전부터 일주일 후까지
     public List<BoardSummary> dateRangeBoard() {
-        LocalDate startDate = LocalDate.now().minusWeeks(1);
-        LocalDate endDate = LocalDate.now().plusWeeks(1);
+        LocalDate startDate = today.minusWeeks(1);
+        LocalDate endDate = today.plusWeeks(1);
         List<BoardSummary> summaries = boardRepository.findBoardSummariesWithinDateRange(startDate, endDate);
         summaries = imgFromNameToUrl(summaries);
         return summaries;
