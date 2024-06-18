@@ -26,37 +26,76 @@ document.getElementById('imageUpload').addEventListener('change', function(){
             alert('이미지 파일만 선택할 수 있습니다.');
             return;
         }
-        fetch(`/presigned-url?key=${encodeURIComponent(file.name)}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.url) {
-                    fetch(data.url, {
-                        method: 'PUT',
-                        body: file,
-                        headers: {
-                            'Content-Type': file.type
-                        }
-                    })
-                        .then(response => {
-                            if (response.ok) {
-                                let cm = simplemde.codemirror;
-                                let output = `![](${data.url.split('?')[0]})`;
-                                cm.replaceSelection(output);
-                            } else {
-                                alert('이미지 업로드 실패');
+        ////// 이미지 사이즈 최대 400px
+        resizeImage(file, 400, function(resizedBlob) {
+            fetch(`/presigned-url?key=${encodeURIComponent(file.name)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.url) {
+                        fetch(data.url, {
+                            method: 'PUT',
+                            body: resizedBlob,
+                            headers: {
+                                'Content-Type': file.type
                             }
                         })
-                        .catch(error => {
-                            console.error('이미지 업로드 중 오류 발생:', error);
-                            alert('이미지 업로드 실패');
-                        });
-                } else {
-                    alert('Presigned URL 리턴 실패');
-                }
-            })
-            .catch(error => {
-                console.error('Presigned URL 요청 실패: ', error);
-                alert('Presigned URL 요청 실패');
-            });
+                            .then(response => {
+                                if (response.ok) {
+                                    let cm = simplemde.codemirror;
+                                    let output = `![](${data.url.split('?')[0]})`;
+                                    cm.replaceSelection(output);
+                                } else {
+                                    alert('이미지 업로드 실패');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('이미지 업로드 중 오류 발생:', error);
+                                alert('이미지 업로드 실패');
+                            });
+                    } else {
+                        alert('Presigned URL 리턴 실패');
+                    }
+                })
+                .catch(error => {
+                    console.error('Presigned URL 요청 실패: ', error);
+                    alert('Presigned URL 요청 실패');
+                });
+        });
     }
 });
+
+function resizeImage(file, maxSize, callback) {
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        const img = new Image();
+        img.onload = function() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            let width = img.width;
+            let height = img.height;
+
+            if (width > height) {
+                if (width > maxSize) {
+                    height *= maxSize / width;
+                    width = maxSize;
+                }
+            } else {
+                if (height > maxSize) {
+                    width *= maxSize / height;
+                    height = maxSize;
+                }
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            ctx.drawImage(img, 0, 0, width, height);
+
+            canvas.toBlob(function(blob) {
+                callback(blob);
+            }, file.type);
+        };
+        img.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+}
