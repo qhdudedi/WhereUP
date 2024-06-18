@@ -165,18 +165,52 @@
         grid-template-columns: 1fr;
     }
 }
+/*form {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*}*/
 
-form {
+/*form h4 {*/
+/*    margin: 0 0 20px;*/
+/*}*/
+
+/*form input[type="text"],*/
+/*form textarea {*/
+/*    width: 100%;*/
+/*    padding: 10px;*/
+/*    margin: 10px 0;*/
+/*    border: 1px solid #ddd;*/
+/*    border-radius: 5px;*/
+/*    box-sizing: border-box;*/
+/*}*/
+
+/*form input[type="submit"] {*/
+/*    width: 25%;*/
+/*    background-color: #98accf;*/
+/*    color: #ffffff;*/
+/*    border: none;*/
+/*    padding: 10px 20px;*/
+/*    border-radius: 5px;*/
+/*    cursor: pointer;*/
+/*    transition: background-color 0.3s ease;*/
+/*    align-self: flex-end;*/
+/*}*/
+
+/*form input[type="submit"]:hover {*/
+/*    background-color: #0056b3;*/
+/*}*/
+/* form 스타일 */
+form.form-styled {
     display: flex;
     flex-direction: column;
 }
 
-form h4 {
+form.form-styled h4 {
     margin: 0 0 20px;
 }
 
-form input[type="text"],
-form textarea {
+form.form-styled input[type="text"],
+form.form-styled textarea {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
@@ -185,7 +219,7 @@ form textarea {
     box-sizing: border-box;
 }
 
-form input[type="submit"] {
+form.form-styled input[type="submit"] {
     width: 25%;
     background-color: #98accf;
     color: #ffffff;
@@ -197,6 +231,6 @@ form input[type="submit"] {
     align-self: flex-end;
 }
 
-form input[type="submit"]:hover {
+form.form-styled input[type="submit"]:hover {
     background-color: #0056b3;
 }
