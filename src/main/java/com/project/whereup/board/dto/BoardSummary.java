@@ -21,6 +21,7 @@ public class BoardSummary {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate end_date;
     private String brand;
+    private String location;
     @Setter
     private String imageUrl;
 }
