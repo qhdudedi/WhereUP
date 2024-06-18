@@ -7,6 +7,7 @@ import com.project.whereup.post.service.CommentService;
 import com.project.whereup.post.service.MarkdownService;
 import com.project.whereup.post.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,7 @@ public class PostController {
     private final MarkdownService markdownService;
     private final PostService postService;
     private final CommentService commentService;
+
 
     // 후기 전체 보기 페이지
     @GetMapping(value = "/postList")
@@ -69,7 +71,7 @@ public class PostController {
         }
         Post post = Post.builder()
                 .title(title)
-                .content(content)
+                .content(markdownService.domainChange(content))
                 .author(author)
                 .created_date(LocalDate.now())
                 .updated_date(LocalDate.now())
@@ -99,7 +101,7 @@ public class PostController {
 
         Post post = postService.getPost(id);
         post.setTitle(title);
-        post.setContent(content);
+        post.setContent(markdownService.domainChange(content));
         post.setAuthor(author);
         post.setCreated_date(created_date);
         post.setUpdated_date(LocalDate.now());
