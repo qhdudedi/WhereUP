@@ -2,11 +2,14 @@ package com.project.whereup.board.service;
 
 import com.project.whereup.board.domain.Board;
 import com.project.whereup.board.domain.BoardImage;
+import com.project.whereup.board.domain.Category;
 import com.project.whereup.board.dto.BoardSummary;
 import com.project.whereup.board.repository.BoardImageRepository;
 import com.project.whereup.board.repository.BoardRepository;
 import com.project.whereup.s3.service.S3Service;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -76,5 +79,13 @@ public class BoardService {
             }
         }
         return summaries;
+    }
+
+    @Transactional
+    public List<Board> getBoardsByCategory(Category category) {
+        List<Board> boards = boardRepository.findByCategory(category);
+        // 지연 로딩된 컬렉션 초기화
+        boards.forEach(board -> Hibernate.initialize(board.getBoardLikes()));
+        return boards;
     }
 }

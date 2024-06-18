@@ -1,6 +1,7 @@
 package com.project.whereup.board.repository;
 
 import com.project.whereup.board.domain.Board;
+import com.project.whereup.board.domain.Category;
 import com.project.whereup.board.dto.BoardSummary;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,6 +13,8 @@ import java.util.List;
 
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {
+    List<Board> findByCategory(Category category);
+
     // 전부 찾는거
     @Query("SELECT new com.project.whereup.board.dto.BoardSummary(b.id, b.subject, b.start_date, b.end_date, b.brand, b.location, bi.imageName) " +
             "FROM Board b " +
