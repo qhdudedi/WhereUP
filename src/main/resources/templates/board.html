@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Board</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/css/boardAndPost.css">
     <link rel="stylesheet" href="/css/board.css">
     <link rel="stylesheet" href="/css/headerAndFooter.css">
@@ -21,7 +22,8 @@
     <div class="content-wrapper">
         <div class="slideshow-container">
             <div th:each="url, stat : ${img_url}">
-                <img th:src="${url}" alt="image" class="slideshow-image" th:classappend="${stat.index == 0} ? ' active' : ''">
+                <img th:src="${url}" alt="image" class="slideshow-image"
+                     th:classappend="${stat.index == 0} ? ' active' : ''">
             </div>
             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
             <a class="next" onclick="plusSlides(1)">&#10095;</a>
@@ -55,8 +57,8 @@
                     </li>
                     <li>
                         <button type="button" th:attr="data-board-id=${board.id}" class="like-btn">
-                            <img th:if="${isLiked}" src="/img/icon/fullheart.png" alt="Liked" />
-                            <img th:unless="${isLiked}" src="/img/icon/empheart.png" alt="Not Liked" />
+                            <i th:classappend="${isLiked} ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"
+                               th:style="${isLiked} ? 'color: #e03e3e;' : 'color: #000;'"></i>
                         </button>
                     </li>
                 </ul>
@@ -67,23 +69,25 @@
 <footer th:replace="fragments/footer::footer"></footer>
 <script src="/js/whereup-boardImgNext.js"></script>
 <script>
-    $(document).ready(function() {
-        $('.like-btn').on('click', function() {
+    $(document).ready(function () {
+        $('.like-btn').on('click', function () {
             var button = $(this);
             var boardId = button.data('board-id');
-            $.post("/board/" + boardId + "/like", function() {
-                var img = button.find('img');
-                if (img.attr('src') === '/img/icon/empheart.png') {
-                    img.attr('src', '/img/icon/fullheart.png');
-                    img.attr('alt', 'Liked');
+            $.post("/board/" + boardId + "/like", function () {
+                var icon = button.find('i');
+                if (icon.hasClass('fa-regular')) {
+                    icon.removeClass('fa-regular fa-heart');
+                    icon.addClass('fa-solid fa-heart');
+                    icon.css('color', '#e03e3e');
                 } else {
-                    img.attr('src', '/img/icon/empheart.png');
-                    img.attr('alt', 'Not Liked');
+                    icon.removeClass('fa-solid fa-heart');
+                    icon.addClass('fa-regular fa-heart');
+                    icon.css('color', '#000');
                 }
             });
         });
     });
-
 </script>
+
 </body>
 </html>
