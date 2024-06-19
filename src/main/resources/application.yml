@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_NAME}
-    username: ${MYSQL_USERNAME}
-    password: ${MYSQL_PASSWORD}
+    url: jdbc:mysql://whereup.c23up8mnq53r.ap-northeast-2.rds.amazonaws.com:3306/whereupdb
+    username: upadmin
+    password: skuwhereup
 
   jpa:
     show-sql: true
@@ -17,18 +17,18 @@ spring:
       ddl-auto: update
       
 aws:
-  access-key: ${AWS_ACCESS_KEY}
-  secret-key: ${AWS_SECRET_KEY}
-  region: ${AWS_REGION}
+  access-key: AKIATQGI7YZS43KECDEB
+  secret-key: 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
+  region: ap-northeast-2
   s3:
-    bucket-name: ${AWS_S3_BUCKET_NAME}
-    url: ${AWS_S3_URL}
+    bucket-name: whereupp-s3
+    url: whereupp-s3.s3.ap-northeast-2.amazonaws.com
   cloudfront:
-    url: ${AWS_CLOUDFRONT_URL}
+    url: d1pssi2485491c.cloudfront.net
 
 kakao:
-  client-id: ${KAKAO_CLIENT_ID}
-  client-secret: ${KAKAO_CLIENT_SECRET}
+  client-id: 86196b89e589d2d9a6a911881aacb3c2
+  client-secret: GWhpk5o3xavmHFtwn5aXVKht2ey0RiwW
   client-authentication-method: client_secret_post # 인가코드로 엑세스 토근 요청할 때 방법 정의
   authorization-grant-type: authorization_code
-  redirect-uri: ${KAKAO_REDIRECT_URI}
+  redirect-uri: http://localhost:9000/auth/kakao/callback
