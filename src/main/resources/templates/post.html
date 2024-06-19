@@ -20,35 +20,38 @@
         </ul>
         <div class="btn-container" th:if="${user} != null and ${user} == ${post.author}">
             <form method="post" th:action="'/post/updatePost/' + ${post.id}">
-                <button type="submit">수정</button>
+                <input type="submit" class="modify-btn" value="수정">
             </form>
             <form method="post" th:action="'/post/deletePost/' + ${post.id}" onsubmit="return confirmDeletion();">
-                <button type="submit">삭제</button>
+                <input type="submit" class="delete-btn" value="삭제">
             </form>
         </div>
     </div>
 
-    <div class="post-details">
-        <h1 th:text="${post.title}"></h1>
-        <ul>
-            <li>
-                <strong>작성자: </strong>
-                <span th:text="${post.author}"></span>
-            </li>
-            <li>
-                <strong>작성일: </strong>
-                <span th:text="${post.created_date}"></span>
-            </li>
-            <li>
-                <strong>수정일: </strong>
-                <span th:text="${post.updated_date}"></span>
-            </li>
-            <li>
-                <strong>내용: </strong>
-                <div class="post-content" th:utext="${post.content}"></div>
-            </li>
-        </ul>
-    </div>
+    <form class="post-form">
+        <div>
+<!--            <strong>제목: </strong>-->
+            <strong><input type="text" th:value="${post.title}" readonly></strong>
+        </div>
+        <div>
+<!--            <span>작성자: </span>-->
+<!--            created by: <input type="text" th:value="${post.author}" readonly>-->
+            <span th:text="'created by: ' + ${post.author}"></span>
+            <span th:text="${post.created_date} + ' (' + ${post.updated_date} + ')'" class="date-for-right"></span>
+            <br>
+            <span th:text="'category: '"></span>
+        </div>
+        <hr>
+<!--        <div>-->
+<!--            <span>작성일 (수정): </span>-->
+<!--            <input type="text" th:value="${post.created_date} + ' (' + ${post.updated_date} + ')'" readonly>-->
+<!--        </div>-->
+        <div>
+<!--            <span>내용: </span>-->
+            <div class="post-content" th:utext="${post.content}"></div>
+            <hr>
+        </div>
+    </form>
 
     <div class="comments">
         <h3>댓글</h3>

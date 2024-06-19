@@ -234,3 +234,52 @@ form.form-styled input[type="submit"] {
 form.form-styled input[type="submit"]:hover {
     background-color: #0056b3;
 }
+
+/* simpleMDE textarea resize */
+.CodeMirror {
+    height: 500px;
+}
+
+.post-form strong {
+    font-size: 1.5em;
+}
+.post-form span {
+    font-size: 1.2em;
+}
+.post-form input[type="text"] {
+    display: block;
+    width: 60%;
+    height: 40px;
+    font-size: 1.5em;
+    border: none;
+    outline: none;
+    background-color: #ffffe0;
+    margin: 10px 10px 10px 0;
+    border-radius: 10px;
+    /*box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);*/
+}
+.post-form .post-content {
+    background-color: white;
+    border-radius: 10px;
+    min-height: 500px;
+    /*box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);*/
+}
+
+.create-btn, .modify-btn, .delete-btn {
+    font-size: 1.2em;
+    padding: 10px 20px;
+    background-color: #98accf;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 5px;
+}
+.create-btn:hover, .modify-btn:hover, .delete-btn:hover {
+    background-color: #0056b3;
+}
+
+.date-for-right {
+    float: right;
+}
