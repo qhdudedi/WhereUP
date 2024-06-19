@@ -1,3 +1,6 @@
+server:
+  port: 9000
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -21,7 +24,7 @@ aws:
     bucket-name: ${AWS_S3_BUCKET_NAME}
     url: ${AWS_S3_URL}
   cloudfront:
-    url: ${AWS_CLOUDFRONT_URL}
+        url: ${AWS_CLOUDFRONT_URL}
 
 kakao:
   client-id: ${KAKAO_CLIENT_ID}
