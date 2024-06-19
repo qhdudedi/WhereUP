@@ -3,7 +3,7 @@
 REPOSITORY=/home/ubuntu/test
 PROJECT_NAME=WhereUP
 
-echo "> Build 파일 copy"
+echo "> Build 파일 복사"
 
 cp $REPOSITORY/deploy/*.jar $REPOSITORY/
 
