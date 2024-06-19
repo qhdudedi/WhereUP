@@ -1,30 +1,27 @@
 document.addEventListener('DOMContentLoaded', function() {
-    /** 날짜 한국으로 변경*/
-        // function formatDateToKst(date) {
-        //   var kstDate = new Date(date.getTime() + (9 * 60 * 60 * 1000));
-        //   return kstDate.toISOString().slice(0, 10);
-        // }
-    var calendarEl = document.getElementById('calendar');
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView : 'dayGridMonth'
-        , timeZone: 'Asia/Seoul'
-        , headerToolbar: {
+    let calendarEl = document.getElementById('calendar');
+    let calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        timeZone: 'Asia/Seoul',
+        headerToolbar: {
             right: 'today prev,next'
-        }
-        , dayMaxEventRows: 4
-        , droppable: false
-        , height: $(window).height() * 0.83
-        , contentHeight: $(window).height() * 0.83
-        , aspectRatio: 2
-        , locale : 'ko'
-        , selectable: true
-        , events: function(fetchInfo, successCallback, failureCallback) {
-            // 서버에서 이벤트 데이터를 가져옵니다.
+        },
+        dayMaxEventRows: 4,
+        droppable: false,
+        height: $(window).height() * 0.83,
+        contentHeight: $(window).height() * 0.83,
+        aspectRatio: 2,
+        locale: 'ko',
+        selectable: true,
+        eventContent: function(arg) {
+            return { html: '<div>' + arg.event.title + '</div>' };
+        },
+        events: function(fetchInfo, successCallback, failureCallback) {
             $.ajax({
-                url: '/calendar/events', // 서버 API 엔드포인트
+                url: '/calendar/events',
                 method: 'GET',
                 success: function(data) {
-                    var events = data.map(function(event) {
+                    let events = data.map(function(event) {
                         return {
                             id: event.id,
                             title: event.title,
@@ -39,115 +36,111 @@ document.addEventListener('DOMContentLoaded', function() {
                     failureCallback("FAIL");
                 }
             });
-        }
-        , select: function (info) {
+        },
+        eventContent: function(arg) {
+            let titleElement = document.createElement('div');
+            titleElement.innerHTML = arg.event.title;
+            return { domNodes: [titleElement] };
+        },
+        select: function(info) {
             $('#modalTitle').text('Create Event');
             $('#eventId').val('');
             $('#title').val('');
             $('#summary').val('');
-            // $('#startDate').val(formatDateToKst(new Date(info.start)));
-            // $('#endDate').val(formatDateToKst(new Date(info.end)));
             $('#startDate').val(info.startStr);
             $('#endDate').val(info.endStr);
             $('#eventModal').show();
-        }
-        , editable: true
-        , eventClick: function (info) {
-            var event = info.event;
+        },
+        editable: true
+        ,eventClick: function(info) {
+            let event = info.event;
             $('#modalTitle').text('Edit Event');
             $('#eventId').val(event.id);
             $('#title').val(event.title);
             $('#summary').val(event.extendedProps.summary);
-            // $('#startDate').val(formatDateToKst(new Date(event.start)));
-            // $('#endDate').val(formatDateToKst(new Date(event.end)));
-            var startDate = new Date(event.start).toISOString().slice(0, 10);
-            var endDate = event.end ? new Date(event.end).toISOString().slice(0, 10) : '';
-            $('#startDate').val(startDate);
-            $('#endDate').val(endDate);
+            $('#startDate').val(new Date(event.start).toISOString().slice(0, 10));
+            $('#endDate').val(event.end ? new Date(event.end).toISOString().slice(0, 10) : '');
             $('#deleteEventBtn').show();
             $('#eventModal').show();
         }
     });
     calendar.render();
 
-  // var initialEventCount = calendar.getEvents().length;
-    // 모달 닫기 기능
-    $('.close').on('click', function () {
+    $('.close').on('click', function() {
         $('#eventModal').hide();
-        $('#deleteEventBtn').hide()
+        $('#deleteEventBtn').hide();
     });
-    // 모달 폼 제출
-    $('#eventForm').on('submit', function (e) {
-        e.preventDefault();
-        var eventId = $('#eventId').val();
-        var title = $('#title').val();
-        var summary = $('#summary').val();
-        var startDate = $('#startDate').val();
-        var endDate = $('#endDate').val();
 
-        var eventData = {
+    $('#eventForm').on('submit', function(e) {
+        e.preventDefault();
+        let eventId = $('#eventId').val();
+        let title = $('#title').val();
+        let summary = $('#summary').val();
+        let startDate = $('#startDate').val();
+        let endDate = $('#endDate').val();
+
+        // 기본 시간 값을 설정
+        let startTime = '08:00:00'; // 기본 시작 시간
+        let endTime = '23:59:59'; // 기본 종료 시간
+
+        // 날짜와 시간을 결합하여 ISO 형식으로 변환
+        let startDateTime = startDate + 'T' + startTime;
+        let endDateTime = endDate + 'T' + endTime;
+
+        let eventData = {
             title: title,
             summary: summary,
-            startDate: startDate,
-            endDate: endDate
+            startDate: startDateTime,
+            endDate: endDateTime
         };
 
-        let allEvents = calendar.getEventSources();
-        console.log(allEvents);
-
         if (eventId) {
-            // 일정 수정
-            var event = calendar.getEventById(eventId);
+            let event = calendar.getEventById(eventId);
             event.setProp('title', title);
             event.setExtendedProp('summary', summary);
-            event.setStart(startDate);
-            event.setEnd(endDate);
+            event.setStart(startDateTime);
+            event.setEnd(endDateTime);
 
             $.ajax({
                 url: '/calendar/edit/' + eventId,
                 method: 'PATCH',
                 contentType: 'application/json',
                 data: JSON.stringify(eventData),
-                success: function (response) {
+                success: function(response) {
                     eventData.id = response.id;
                     calendar.refetchEvents();
                     $('#eventModal').hide();
                     $('#deleteEventBtn').hide();
-                },
-                error: function () {
-                    alert('Failed to update event.');
                 }
             });
         } else {
-            // 일정 등록
             $.ajax({
                 url: '/calendar',
                 method: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(eventData),
-                success: function (response) {
-                    eventData.id = response.id; // 서버가 반환한 ID를 사용
+                success: function(response) {
+                    eventData.id = response.id;
                     calendar.addEvent(eventData);
+                    calendar.refetchEvents();
                     $('#eventModal').hide();
                     $('#deleteEventBtn').hide();
-                    console.log(eventData)
                 },
-                error: function () {
+                error: function() {
                     alert('Failed to create event.');
                 }
             });
         }
     });
+
     $('#deleteEventBtn').on('click', function() {
-        var eventId = $('#eventId').val();
+        let eventId = $('#eventId').val();
         if (eventId) {
-            // if(confirm('일정을 삭제하시겠습니까?'))
-            // 일정 삭제
             $.ajax({
                 url: '/calendar/' + eventId,
                 method: 'DELETE',
                 success: function(response) {
-                    var event = calendar.getEventById(eventId);
+                    let event = calendar.getEventById(eventId);
                     event.remove();
                     $('#eventModal').hide();
                     $('#deleteEventBtn').hide();
