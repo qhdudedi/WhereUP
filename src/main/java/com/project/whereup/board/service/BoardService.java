@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -50,16 +51,19 @@ public class BoardService {
         List<BoardSummary> boards = keyword.isEmpty() ? boardRepository.findSummery() : search(keyword);
         return (boards.size() + howManyOnePage - 1) / howManyOnePage;
     }
+
     // end_date가 오늘보다 전이면 제외
     public List<BoardSummary> search(String keyword) {
         return boardRepository.findBoardSummariesByKeywordAftetDate(keyword, today);
     }
+
     // 지역포함 된거, 나중에 BoardSummary로 바꾸는중
     public List<BoardSummary> locSearch(String location) {
         List<BoardSummary> summaries = boardRepository.findSummariesByLocation(location, today);
         summaries = imgFromNameToUrl(summaries);
         return summaries;
     }
+
     /////일주일 전부터 일주일 후까지
     public List<BoardSummary> dateRangeBoard() {
         LocalDate startDate = today.minusWeeks(1);
@@ -80,12 +84,34 @@ public class BoardService {
         }
         return summaries;
     }
-
+    // Board 카테고리 검색
     @Transactional
     public List<Board> getBoardsByCategory(Category category) {
         List<Board> boards = boardRepository.findByCategory(category);
         // 지연 로딩된 컬렉션 초기화
         boards.forEach(board -> Hibernate.initialize(board.getBoardLikes()));
         return boards;
+    }
+
+    // Board 지역구 검색
+    @Transactional
+    public List<BoardSummary> getBoardByLocation(String locKeyword) {
+        List<Board> boardData = boardRepository.findBoardByLocationContains(locKeyword);
+
+        // 2. Board 객체를 BoardSummary 객체로 변환
+        List<BoardSummary> boardSummaryList = boardData.stream()
+                .map(board -> new BoardSummary(
+                        board.getId(),
+                        board.getSubject(),
+                        board.getStart_date(),
+                        board.getEnd_date(),
+                        board.getBrand(),
+                        board.getLocation(),
+                        board.getLink()
+                ))
+                .collect(Collectors.toList());
+
+        // imageUrl을 실제 URL로 변환
+        return imgFromNameToUrl(boardSummaryList);
     }
 }

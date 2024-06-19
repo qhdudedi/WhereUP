@@ -13,7 +13,13 @@ import java.util.List;
 
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {
+
+    //카테고리에 따른 보드 검색
     List<Board> findByCategory(Category category);
+
+    // Location 검색으로 팝업 검색
+    List<Board>findBoardByLocationContains(String locKeyword);
+
 
     // 전부 찾는거
     @Query("SELECT new com.project.whereup.board.dto.BoardSummary(b.id, b.subject, b.start_date, b.end_date, b.brand, b.location, bi.imageName) " +

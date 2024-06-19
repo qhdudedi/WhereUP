@@ -82,4 +82,10 @@ public class BoardController {
     public List<Board> getBoardsByCategory(@PathVariable Category category){
         return boardService.getBoardsByCategory(category);
     }
+    /** 지역(구)로 검색*/
+    @GetMapping("/byLocKeyword/{locKeyword}")
+    @ResponseBody
+    public List<BoardSummary> getBoardByLocKeyword(@PathVariable String locKeyword){
+        return boardService.getBoardByLocation(locKeyword);
+    }
 }
