@@ -14,32 +14,31 @@
 
 </head>
 <body>
-   <header th:replace="~{fragments/header::header}"></header>
+리<header th:replace="~{fragments/header::header}"></header>
 <div class="body-container">
     <main>
         <div class="main-container">
-            <section class="content">
+            <section class="content" th:each="board: ${summariesTop}" th:id="'section-' + ${board.id}">
                 <div class="text-content">
-                    <div class ="text-c">
+                    <div class="text-c">
                         <span class="label">POP-UP STORE</span>
                     </div>
                     <div class="h1-box">
-<!--                        <h1 th:text="${board.subject}" ></h1>-->
-                        <h1>A Cloud Traveler : 구름 위를 걷는 기분</h1>
+                        <h1 th:text="${board.subject}"></h1>
                     </div>
-<!--                    <p th:text="${board.description}"></p>-->
-                    <p>누구나 한번쯤은 상상해봤을 구름 속 세상. 플램피시트러스의 24SS Cloud Collection과 함께 상상 속 구름 여행을 떠나는 기차에 올라타 도착하는 순간까지 기분 좋은 설렘을 느껴보세요.</p>
-<!--                    <p th:text="${board.start_date} + ' ~ ' + ${board.end_date}"></p>-->
-                    <p>24.05.30 - 24.07.30 </p>
+                    <p th:text="${board.description}"></p>
+                    <p th:text="${board.start_date} + ' ~ ' + ${board.end_date}"></p>
                 </div>
                 <div class="image-content">
-                    <img src="/img/whereup.png" alt="팝업이미지">
+                    <img th:src="${board.imageUrl}">
                 </div>
             </section>
+            <a class="main-prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="main-next" onclick="plusSlides(1)">&#10095;</a>
         </div>
     </main>
     <!-- MENU ICON Section -->
-    <div class ="content-container">
+    <div class="content-container">
         <section class="options">
             <div class="option" onclick="location.href='/board/boardList?page=1';">
                 <img src="/img/icon/map.png" alt="Location Icon">
@@ -54,33 +53,35 @@
         </section>
 
     </div>
-
     <!-- Popup Stores Section -->
-    <section class="popup-stores">
-        <div class="store">
-            <img src="/image/pop/flct_1.jpg">
-            <div class="store-details">
-                <h2>A Cloud Traveler : 구름 위를 걷는 기분</h2>
-                <p>24.04.23 - 24.07.28</p>
-            </div>
-        </div>
-        <div class="store">
-            <img src="/image/pop/flct_2.jpg">
-            <div class="store-details">
-                <h2>팝업스토어 타이틀 더미</h2>
-                <p>24.0</p>
-            </div>
-        </div>
-        <div class="store">
-            <img src="/image/pop/flct_3.jpg" alt="Store Image 3">
-            <div class="store-details">
-                <h2>팝업스토어 더미 데이터</h2>
-                <p>~ 04. 30</p>
-            </div>
-        </div>
-    </section>
 </div>
 <footer th:replace="~{fragments/footer::footer}"></footer>
 </body>
+<script>
+    let currentIndex = 0;
+
+    function showSlide(index) {
+        let slides = document.querySelectorAll('.content');
+        if (index >= slides.length) {
+            currentIndex = 0;
+        } else if (index < 0) {
+            currentIndex = slides.length - 1;
+        } else {
+            currentIndex = index;
+        }
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === currentIndex);
+        });
+    }
+
+    function plusSlides(n) {
+        showSlide(currentIndex + n);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        showSlide(currentIndex);
+    });
+
+</script>
 
 </html>

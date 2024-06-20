@@ -1,5 +1,6 @@
 package com.project.whereup.user.controller;
 
+import com.project.whereup.board.dto.BoardDesc;
 import com.project.whereup.board.dto.BoardRequestDto;
 import com.project.whereup.board.dto.BoardSummary;
 import com.project.whereup.board.service.BoardLikeService;
@@ -28,6 +29,9 @@ public class UserViewController {
 
     @GetMapping("/")
     public String main(Model model) {
+        List<BoardDesc> summariesTop = boardService.mainTopSlide(4);
+        model.addAttribute("summariesTop", summariesTop);
+
         List<BoardSummary> summaries = boardService.dateRangeBoard();
         model.addAttribute("summaries", summaries);
 

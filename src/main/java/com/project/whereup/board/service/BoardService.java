@@ -3,6 +3,7 @@ package com.project.whereup.board.service;
 import com.project.whereup.board.domain.Board;
 import com.project.whereup.board.domain.BoardImage;
 import com.project.whereup.board.domain.Category;
+import com.project.whereup.board.dto.BoardDesc;
 import com.project.whereup.board.dto.BoardSummary;
 import com.project.whereup.board.repository.BoardImageRepository;
 import com.project.whereup.board.repository.BoardRepository;
@@ -10,6 +11,9 @@ import com.project.whereup.s3.service.S3Service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Hibernate;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -113,5 +117,26 @@ public class BoardService {
 
         // imageUrl을 실제 URL로 변환
         return imgFromNameToUrl(boardSummaryList);
+    }
+    public List<BoardDesc> mainTopSlide(int howMany) {
+        LocalDate today = LocalDate.now();
+        LocalDate startDate = today.minusDays(20);
+        LocalDate endDate = today.plusDays(20);
+        Pageable pageable = PageRequest.of(0, howMany);
+        Page<BoardDesc> pageSummaries = boardRepository.findDateRangeBoard(startDate, endDate, pageable);
+        List<BoardDesc> summaries = pageSummaries.getContent();
+
+        if (!summaries.isEmpty()) {
+            System.out.println(summaries.get(0).getSubject());
+        }
+
+        for (BoardDesc summary : summaries) {
+            if (summary.getImageUrl() != null) {
+                summary.setImageUrl(s3Service.getImageUrl(summary.getImageUrl()));
+            } else {
+                summary.setImageUrl(s3Service.getImageUrl("whereup.png"));
+            }
+        }
+        return summaries;
     }
 }
