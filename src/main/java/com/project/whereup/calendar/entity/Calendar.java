@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -24,10 +24,10 @@ public class Calendar {
         private String title;
 
         @Column(name="startDate")
-        private LocalDate startDate;
+        private LocalDateTime startDate;
 
         @Column(name="endDate")
-        private LocalDate endDate;
+        private LocalDateTime endDate;
 
         @Column(name="summary")
         private String summary;
@@ -37,7 +37,7 @@ public class Calendar {
         @JoinColumn(name = "user_id")
         private User user;
 
-        public void edit(String title, String summary, LocalDate startDate, LocalDate endDate){
+        public void edit(String title, String summary, LocalDateTime startDate, LocalDateTime endDate){
                 this.title = title;
                 this.summary = summary;
                 this.startDate = startDate;
