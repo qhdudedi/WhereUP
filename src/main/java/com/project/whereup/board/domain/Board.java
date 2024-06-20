@@ -38,6 +38,9 @@ public class Board {
     @Column(name = "link", nullable = false)
     private String link;
 
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BoardLike> boardLikes;
 

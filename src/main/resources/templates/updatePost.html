@@ -19,20 +19,23 @@
             <li>updatePost</li>
         </ul>
     </div>
-    <form id="postForm" method="post" action="/post/updatePost">
+    <form id="postForm" method="post" action="/post/updatePost" class="post-form">
         <input type="hidden" name="id" id="id" th:value="${post.id}">
         <input type="hidden" name="created_date" id="created_date" th:value="${post.created_date}">
-        <h4>제목: <input type="text" name="title" id="title" th:value="${post.title}"></h4>
         <div>
-            <strong>작성자: </strong>
+            <strong>제목: </strong>
+            <input type="text" name="title" id="title" th:value="${post.title}">
+        </div>
+        <div>
+            <span>작성자: </span>
             <input type="text" name="author" id="author" th:value="${post.author}" readonly>
         </div>
         <div>
-            <strong>내용: </strong>
+            <span>내용: </span>
             <textarea class="simplemde" name="content" id="content" th:text="${post.content}"></textarea>
         </div>
         <input type="file" id="imageUpload" style="display:none" accept="image/*">
-        <input type="submit" value="submit">
+        <input type="submit" value="수정" class="modify-btn">
     </form>
 </div>
 <footer th:replace="~{fragments/footer::footer}"></footer>

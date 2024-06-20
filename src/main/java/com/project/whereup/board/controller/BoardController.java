@@ -2,6 +2,7 @@ package com.project.whereup.board.controller;
 
 import com.project.whereup.board.domain.Board;
 import com.project.whereup.board.domain.BoardImage;
+import com.project.whereup.board.domain.Category;
 import com.project.whereup.board.dto.BoardSummary;
 import com.project.whereup.board.service.BoardLikeService;
 import com.project.whereup.board.service.BoardService;
@@ -75,5 +76,16 @@ public class BoardController {
         }
         return "locationBoard";
     }
-
+    /**Category로 검색*/
+    @GetMapping("/byCategory/{category}")
+    @ResponseBody
+    public List<Board> getBoardsByCategory(@PathVariable Category category){
+        return boardService.getBoardsByCategory(category);
+    }
+    /** 지역(구)로 검색*/
+    @GetMapping("/byLocKeyword/{locKeyword}")
+    @ResponseBody
+    public List<BoardSummary> getBoardByLocKeyword(@PathVariable String locKeyword){
+        return boardService.getBoardByLocation(locKeyword);
+    }
 }
