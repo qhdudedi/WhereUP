@@ -15,7 +15,7 @@
 <div class="container">
     <div class="header-list">
         <ul>
-            <li><a href="/post/postList?page=1">postList</a></li>
+            <li><a href="/post/postList?page=1">목록</a></li>
             <li th:text="${post.id}"></li>
         </ul>
         <div class="btn-container" th:if="${user} != null and ${user} == ${post.author}">
@@ -30,24 +30,16 @@
 
     <form class="post-form">
         <div>
-<!--            <strong>제목: </strong>-->
             <strong><input type="text" th:value="${post.title}" readonly></strong>
         </div>
         <div>
-<!--            <span>작성자: </span>-->
-<!--            created by: <input type="text" th:value="${post.author}" readonly>-->
             <span th:text="'created by: ' + ${post.author}"></span>
-            <span th:text="${post.created_date} + ' (' + ${post.updated_date} + ')'" class="date-for-right"></span>
+            <span th:text="${post.updated_date}" class="date-for-right"></span>
             <br>
             <span th:text="'category: '"></span>
         </div>
         <hr>
-<!--        <div>-->
-<!--            <span>작성일 (수정): </span>-->
-<!--            <input type="text" th:value="${post.created_date} + ' (' + ${post.updated_date} + ')'" readonly>-->
-<!--        </div>-->
         <div>
-<!--            <span>내용: </span>-->
             <div class="post-content" th:utext="${post.content}"></div>
             <hr>
         </div>
@@ -60,16 +52,15 @@
                 <input type="hidden" id="postId" name="postId" th:value="${post.id}">
                 <textarea id="text" name="text"></textarea>
                 <div class="form-buttons">
-                    <input type="submit" value="제출">
+                    <input type="submit" value="등록">
                 </div>
             </form>
         </div>
-        <div th:each="comment, iterStat : ${comments}" class="comment-item">
+        <div th:each="comment : ${comments}" class="comment-item">
             <div class="comment-item-header">
                 <div>
-                    <a th:text="${comment.user}"></a>
-                    <a th:text="${comment.created_date}"></a>
-                    <a th:text="${comment.updated_date}"></a>
+                    <a class="comment-user" th:text="${comment.user}"></a>
+                    <a class="comment-date" th:text="${comment.updated_date}"></a>
                 </div>
                 <div th:if="${comment.user} == ${user}" th:id="${comment.id} + '-btn-area'" class="btn-area">
                     <a href="javascript:void(0)" th:id="${comment.id} + '-edit'" th:attr="onclick=|editComment(${comment.id})|">수정</a>

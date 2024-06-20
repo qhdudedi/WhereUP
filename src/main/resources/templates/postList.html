@@ -12,24 +12,22 @@
 <body>
 <header th:replace="~{fragments/header::header}"></header>
 <div class="container">
+    <div class="re-container">
     <div class="header-list">
         <ul>
-            <li><a th:href="'/post/postList?page=1'">PostList</a></li>
+            <li><a th:href="'/post/postList?page=1'">목록</a></li>
             <div th:if="${detail} == All">
-                <li th:text="'page(' + ${page} + ')'"></li>
             </div>
             <div th:if="${detail} == Search">
                 <li><a th:text="${detail} + '(' + ${keyword} + ')'"  th:href="'/post/search/' + ${keyword} + '?page=1'"></a></li>
-                <li th:text="'page(' + ${page} + ')'"></li>
             </div>
             <div th:if="${detail} == MyPost">
                 <li><a th:text="${detail} + '(' + ${author} + ')'"  th:href="'/post/MyPost?page=1'"></a></li>
-                <li th:text="'page(' + ${page} + ')'"></li>
             </div>
         </ul>
 
         <div class="btn-container" th:if="${user} != null">
-            <input type="button" value="create" onclick="location.href='/post/newPost'" class="create-btn">
+            <input type="button" value="글 작성" onclick="location.href='/post/newPost'" class="create-btn">
         </div>
     </div>
     <div class="post-container">
@@ -41,6 +39,7 @@
                 <h6 th:text="${post.created_date}"></h6>
             </div>
         </div>
+    </div>
     </div>
     <div class="page-list">
         <ul>
