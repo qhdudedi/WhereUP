@@ -1,13 +1,9 @@
 package com.project.whereup.user.controller;
 
-import com.project.whereup.user.dto.request.UserRequestDto;
-import com.project.whereup.user.entity.User;
 import com.project.whereup.user.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -20,11 +16,6 @@ public class UserApiController {
 
     private final UserService userService;
 
-    @PostMapping("/signup")
-    public ResponseEntity<?> signup(@Valid UserRequestDto requestDto) {
-        userService.save(requestDto);
-        return ResponseEntity.ok("success");
-    }
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
@@ -42,19 +33,20 @@ public class UserApiController {
         boolean nicknameDuplicate = userService.checkNicknameDuplicate(nickname);
         return ResponseEntity.ok(nicknameDuplicate);
     }
-
-    @PatchMapping("/edit/mypage")
-    public ResponseEntity<User> updateMyPage(@RequestBody UserRequestDto userRequestDto) {
-        User updatedUser = userService.updateMyPage(userRequestDto);
-        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
-    }
-    @PostMapping("/edit/mypage")
-    public ResponseEntity<User> updateMyPagePost(@ModelAttribute UserRequestDto userRequestDto) {
-        return updateMyPage(userRequestDto);
-    }
-
-//    @GetMapping("/mypage/likeBoard")
+    //    @GetMapping("/mypage/likeBoard")
 //    public List<BoardRequestDto> getMyLikeBoards(){
 //        return boardLikeService.findBoardByUser();
 //    }
+
+//    @PatchMapping("/edit/mypage")
+//    public ResponseEntity<User> updateMyPage(@RequestBody UserRequestDto userRequestDto) {
+//        User updatedUser = userService.updateMyPage(userRequestDto);
+//        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+//    }
+//    @PostMapping("/edit/mypage")
+//    public ResponseEntity<User> updateMyPagePost(@ModelAttribute UserRequestDto userRequestDto) {
+//        return updateMyPage(userRequestDto);
+//    }
+
+
 }
