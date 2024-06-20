@@ -8,6 +8,8 @@ import com.project.whereup.board.service.BoardService;
 import com.project.whereup.post.dto.PostSummary;
 import com.project.whereup.post.service.PostService;
 import com.project.whereup.oauth.kakao.KakaoService;
+import com.project.whereup.telegram.domain.TelegramUserInfo;
+import com.project.whereup.telegram.service.TelegramService;
 import com.project.whereup.user.entity.User;
 import com.project.whereup.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,7 @@ public class UserViewController {
     private final UserService userService;
     private final PostService postService;
     private final BoardService boardService;
+    private final TelegramService telegramService;
 
     @GetMapping("/")
     public String main(Model model) {
@@ -64,6 +67,9 @@ public class UserViewController {
 
         List<BoardRequestDto> likeBoards = boardLikeService.findBoardByUser();  // 관심 팝업 목록
         model.addAttribute("likeBoards", likeBoards);
+
+        TelegramUserInfo telegramUserInfo = telegramService.findUserInfo(loggedInUser.getId());
+        model.addAttribute("telegramUserInfo", telegramUserInfo);
         return "mypage";
     }
 }
