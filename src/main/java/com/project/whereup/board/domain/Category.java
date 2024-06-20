@@ -1,6 +1,5 @@
 package com.project.whereup.board.domain;
 
-import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
