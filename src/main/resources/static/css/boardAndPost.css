@@ -23,7 +23,7 @@ body, html {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 .header-list ul {
     list-style: none;
@@ -38,7 +38,7 @@ body, html {
     position: relative;
 }
 .header-list ul li::after {
-    content: '>';
+    content: ' > ';
     position: absolute;
     right: -10px;
     top: 0;
@@ -48,7 +48,8 @@ body, html {
 }
 .header-list ul li a {
     text-decoration: none;
-    color: #007bff;
+    color: black;
+    font-weight: bold;
 }
 
 header-list button {
@@ -65,7 +66,12 @@ header-list button {
 .header-list button:hover {
     background-color: #0056b3;
 }
-
+.header-list .btn-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
 .page-list {
     display: flex;
     justify-content: center;
@@ -82,7 +88,7 @@ header-list button {
 }
 .page-list a {
     text-decoration: none;
-    font-size: 2em;
+    font-size: 1.2em;
     color: #000;
 }
 .page-list a:hover {
