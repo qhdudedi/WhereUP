@@ -37,3 +37,6 @@ kakao:
   client-authentication-method: client_secret_post # 인가코드로 엑세스 토근 요청할 때 방법 정의
   authorization-grant-type: authorization_code
   redirect-uri: ${KAKAO_REDIRECT_URI}
+
+telegram:
+  send-url: ${TELEGRAM_SEND_URL}
