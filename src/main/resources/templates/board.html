@@ -11,7 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-<header th:replace="fragments/header::header"></header>
+<header th:replace="~{fragments/header::header}"></header>
 <div class="container">
     <div class="header-list">
         <ul>
@@ -30,7 +30,7 @@
         </div>
         <div class="content">
             <h1 th:text="${board.subject}"></h1>
-            <p th:text="${board.description}"></p>
+            <pre th:text="${board.description}"></pre>
             <div class="details">
                 <ul>
                     <li>
@@ -66,7 +66,7 @@
         </div>
     </div>
 </div>
-<footer th:replace="fragments/footer::footer"></footer>
+<footer th:replace="~{fragments/footer::footer}"></footer>
 <script src="/js/whereup-boardImgNext.js"></script>
 <script>
     $(document).ready(function () {
