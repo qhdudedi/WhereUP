@@ -139,4 +139,8 @@ public class BoardService {
         }
         return summaries;
     }
+
+    public void save(Board board) {
+        boardRepository.save(board);
+    }
 }

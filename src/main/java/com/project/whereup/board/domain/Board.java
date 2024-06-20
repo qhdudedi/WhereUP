@@ -45,7 +45,7 @@ public class Board {
     private List<BoardLike> boardLikes;
 
     @Builder
-    public Board(String subject, String description, String location, LocalDate start_date, LocalDate end_date, String brand, Boolean ticket, String link) {
+    public Board(String subject, String description, String location, LocalDate start_date, LocalDate end_date, String brand, Boolean ticket, String link, Category category) {
         this.subject = subject;
         this.description = description;
         this.location = location;
@@ -54,6 +54,7 @@ public class Board {
         this.brand = brand;
         this.ticket = ticket;
         this.link = link;
+        this.category = category;
     }
 
 }

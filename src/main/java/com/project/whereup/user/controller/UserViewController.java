@@ -9,6 +9,8 @@ import com.project.whereup.post.dto.PostSummary;
 import com.project.whereup.post.service.PostService;
 import com.project.whereup.oauth.kakao.KakaoService;
 import com.project.whereup.user.dto.request.UserRequestDto;
+import com.project.whereup.telegram.domain.TelegramUserInfo;
+import com.project.whereup.telegram.service.TelegramService;
 import com.project.whereup.user.entity.User;
 import com.project.whereup.user.service.UserService;
 import jakarta.validation.Valid;
@@ -30,6 +32,7 @@ public class UserViewController {
     private final UserService userService;
     private final PostService postService;
     private final BoardService boardService;
+    private final TelegramService telegramService;
 
     @GetMapping("/")
     public String main(Model model) {
@@ -75,6 +78,7 @@ public class UserViewController {
         return "index";
     }
 
+
     @PatchMapping("/edit/mypage")
     public String updateMyPage(@RequestBody UserRequestDto userRequestDto, RedirectAttributes redirectAttributes) {
         User updatedUser = userService.updateMyPage(userRequestDto);
@@ -84,6 +88,14 @@ public class UserViewController {
     @PostMapping("/edit/mypage")
     public String updateMyPagePost(@ModelAttribute UserRequestDto userRequestDto, RedirectAttributes redirectAttributes) {
         return updateMyPage(userRequestDto, redirectAttributes);
+      
+        List<BoardRequestDto> likeBoards = boardLikeService.findBoardByUser();  // 관심 팝업 목록
+        model.addAttribute("likeBoards", likeBoards);
+
+        TelegramUserInfo telegramUserInfo = telegramService.findUserInfo(loggedInUser.getId());
+        model.addAttribute("telegramUserInfo", telegramUserInfo);
+        return "mypage";
+
     }
 
 }
