@@ -25,8 +25,8 @@
         </ul>
     </div>
     <div class="board-container">
-        <div th:each="board, iterStat : ${summaries}" class="board-item">
-            <img th:src="${images[iterStat.index]}">
+        <div th:each="board : ${summaries}" class="board-item">
+            <img th:src="${board.imageUrl}">
             <div class="details">
                 <pre><a th:href="'/board/' + ${board.id}" th:text="${board.subject}"></a></pre>
                 <h6 th:text="${board.start_date} + ' ~ ' + ${board.end_date}"></h6>

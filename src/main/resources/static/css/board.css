@@ -121,6 +121,7 @@
     flex: 1;
     min-width: 300px;
     margin: 10px;
+    overflow: hidden;
 }
 
 .content-wrapper .content h1 {
@@ -129,10 +130,12 @@
     margin-bottom: 20px;
 }
 
-.content-wrapper .content p {
-    font-size: 1.2em;
+.content-wrapper .content pre {
+    font-size: 1.0em;
     color: #555;
     margin-bottom: 20px;
+    white-space: pre-wrap;
+    font-family: 'Gowun Dodum', sans-serif;
 }
 
 .content-wrapper .details ul {

@@ -15,22 +15,23 @@
 <div class="container">
     <div class="header-list">
         <ul>
-            <li><a href="/post/postList?page=1">PostList</a></li>
-            <li>newPost</li>
+            <li><a href="/post/postList?page=1">목록</a></li>
+            <li>새로운 글</li>
         </ul>
     </div>
-    <form id="postForm" method="post" action="/post/newPost">
-        <h4>제목: <input type="text" name="title" id="title"></h4>
+    <form id="postForm" method="post" action="/post/newPost" class="post-form">
         <div>
-            <strong>작성자: </strong>
-            <input type="text" name="author" id="author" th:value="${author}" readonly>
+            <input type="text" name="title" id="title">
         </div>
         <div>
-            <strong>내용: </strong>
+            <span> <input type="text" name="author" id="author" th:value="${author}" readonly> </span>
+
+        </div>
+        <div>
             <textarea class="simplemde" name="content" id="content"></textarea>
         </div>
         <input type="file" id="imageUpload" style="display:none" accept="image/*">
-        <input type="submit" value="submit">
+        <input type="submit" value="등록" class="create-btn">
     </form>
 </div>
 <footer th:replace="~{fragments/footer::footer}"></footer>
