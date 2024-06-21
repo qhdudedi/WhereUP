@@ -114,7 +114,14 @@ public class BoardService {
                         board.getLink()
                 ))
                 .collect(Collectors.toList());
-
+        for (BoardSummary boardSummary : boardSummaryList) {
+            if(boardImageRepository.findByBoardIdAndImageOrder(boardSummary.getId(), 1) != null) {
+                String imgName = boardImageRepository.findByBoardIdAndImageOrder(boardSummary.getId(), 1).getImageName();
+                boardSummary.setImageUrl(imgName);
+            } else {
+                boardSummary.setImageUrl(null);
+            }
+        }
         // imageUrl을 실제 URL로 변환
         return imgFromNameToUrl(boardSummaryList);
     }
