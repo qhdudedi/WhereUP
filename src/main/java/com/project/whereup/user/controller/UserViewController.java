@@ -55,6 +55,9 @@ public class UserViewController {
 
         List<BoardRequestDto> likeBoards = boardLikeService.findBoardByUser();  // 관심 팝업 목록
         model.addAttribute("likeBoards", likeBoards);
+
+        TelegramUserInfo telegramUserInfo = telegramService.findUserInfo(loggedInUser.getId());
+        model.addAttribute("telegramUserInfo", telegramUserInfo);
         return "mypage";
     }
 
@@ -88,14 +91,6 @@ public class UserViewController {
     @PostMapping("/edit/mypage")
     public String updateMyPagePost(@ModelAttribute UserRequestDto userRequestDto, RedirectAttributes redirectAttributes) {
         return updateMyPage(userRequestDto, redirectAttributes);
-      
-        List<BoardRequestDto> likeBoards = boardLikeService.findBoardByUser();  // 관심 팝업 목록
-        model.addAttribute("likeBoards", likeBoards);
-
-        TelegramUserInfo telegramUserInfo = telegramService.findUserInfo(loggedInUser.getId());
-        model.addAttribute("telegramUserInfo", telegramUserInfo);
-        return "mypage";
-
     }
 
 }

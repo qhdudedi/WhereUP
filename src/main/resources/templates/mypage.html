@@ -199,46 +199,18 @@
     <section class="resume-section" id="alarm">
         <div class="resume-section-content">
             <h2 class="mb-5">알림서비스 정보 수정</h2>
-            <ul class="fa-ul mb-0">
-                <li>
-                    <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                    Google Analytics Certified Developer
-                </li>
-                <li>
-                    <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                    Mobile Web Specialist - Google Certification
-                </li>
-                <li>
-                    <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                    1
-                    <sup>st</sup>
-                    Place - University of Colorado Boulder - Emerging Tech Competition 2009
-                </li>
-                <li>
-                    <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                    1
-                    <sup>st</sup>
-                    Place - University of Colorado Boulder - Adobe Creative Jam 2008 (UI Design Category)
-                </li>
-                <li>
-                    <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                    2
-                    <sup>nd</sup>
-                    Place - University of Colorado Boulder - Emerging Tech Competition 2008
-                </li>
-                <li>
-                    <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                    1
-                    <sup>st</sup>
-                    Place - James Buchanan High School - Hackathon 2006
-                </li>
-                <li>
-                    <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                    3
-                    <sup>rd</sup>
-                    Place - James Buchanan High School - Hackathon 2005
-                </li>
-            </ul>
+            <!--            텔레그램 연동 방법 알려주기-->
+            <form id="telegramForm" action="/telegram/getUserInfo" method="post" class="telegramForm">
+                <input type="hidden" name="userId" th:value="${user.id}">
+                chatId: <input type="text" name="chatId" th:value="${telegramUserInfo != null ? telegramUserInfo.chatId : ''}" disabled>
+                <br>
+                <input type="checkbox" name="culture" th:text="문화" th:checked="${telegramUserInfo != null ? telegramUserInfo.culture : false}" disabled>
+                <input type="checkbox" name="fashion" th:text="패션" th:checked="${telegramUserInfo != null ? telegramUserInfo.fashion : false}" disabled>
+                <input type="checkbox" name="life" th:text="생활" th:checked="${telegramUserInfo != null ? telegramUserInfo.life : false}" disabled>
+                <br>
+                <input type="button" value="modify" onclick="enableTelegramForm('telegramForm')", id="modifyButton">
+                <input type="submit" value="submit" style="display: none;" id="submitButton">
+            </form>
         </div>
     </section>
 </div>
@@ -257,6 +229,13 @@
         document.getElementById("editButton").addEventListener("click", enableEditing);
         console.log("success");
     });
+    function enableTelegramForm(formId) {
+        let form = document.getElementById(formId);
+        let inputs = form.querySelectorAll('input[type="text"], input[type="checkbox"]');
+        inputs.forEach(input => input.disabled = false);
+        form.querySelector('#submitButton').style.display = 'inline';
+        form.querySelector('#modifyButton').style.display = 'none';
+    }
 </script>
 <script src="/js/calendar.js"></script>
 </body>
