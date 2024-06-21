@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/headerAndFooter.css">
@@ -21,29 +22,25 @@
             <section class="content" th:each="board: ${summariesTop}" th:id="'section-' + ${board.id}">
                 <div class="text-content">
                     <div class="text-c">
-                        <span class="label"> </span>
+                        <span class="label">24.06.17 ~ 24.06.23 </span>
                     </div>
-                    <span>24.06.17 ~ 24.06.23</span>
+<!--                    <span>24.06.17 ~ 24.06.23</span>-->
                     <div class="h1-box">
-                        <h1> 6월 셋째 주,<br>팝업 전시에서 <br></t>특별한 순간을 함께하세요!</h1>
+                        <h1> 6월 셋째 주,<br>팝업 스토어에서 <br> 특별한 순간을 함께 하세요!</h1>
                         <h2 th:text="${board.subject}"></h2>
                     </div>
-<!--                    <p th:text="${board.description}"></p>-->
-                     <p th:text="${board.start_date} + ' ~ ' + ${board.end_date}"></p>
+                    <p th:text="${board.start_date} + ' ~ ' + ${board.end_date}"></p>
                     <div class="buttons">
                         <a th:href="@{'/board/' + ${board.id}}">
                             <button class="btn primary-btn">자세히 보기</button>
                         </a>
-                        <a href="/board/boardList?page=1" class="btn secondary-btn">팝업스토어 전체 보기</a>
+                        <a href="/board/boardList?page=1" class="btn secondary-btn">팝업 스토어 전체 보기</a>
                     </div>
                 </div>
-
                 <div class="image-content">
                     <img th:src="${board.imageUrl}">
                 </div>
             </section>
-            <a class="main-prev" onclick="plusSlides(-1)">&#10094;</a>
-            <a class="main-next" onclick="plusSlides(1)">&#10095;</a>
         </div>
     </main>
     <!-- MENU ICON Section -->
@@ -80,11 +77,12 @@
 </div>
 <footer th:replace="~{fragments/footer::footer}"></footer>
 <script>
+    document.addEventListener('DOMContentLoaded', () => {
         // 기존 슬라이드 기능
         let currentIndex = 0;
 
         function showSlide(index) {
-            let slides = document.querySelectorAll('.content');
+            const slides = document.querySelectorAll('.content');
             if (index >= slides.length) {
                 currentIndex = 0;
             } else if (index < 0) {
@@ -97,116 +95,68 @@
             });
         }
 
-        function plusSlides(n) {
+        window.plusSlides = function(n) {
             showSlide(currentIndex + n);
-        }
-        document.addEventListener('DOMContentLoaded', () => {
-            showSlide(currentIndex);
-        });
+        };
+
+        showSlide(currentIndex);
+
+        // 5초마다 자동으로 슬라이드 전환
+        setInterval(() => {
+            plusSlides(1);
+        }, 3000); // 5000ms = 5초
 
         // 새로운 보드 슬라이드쇼 기능
-        let boardIndex = 0;
+        const boardContainer = document.querySelector('.board-container');
+        const boardSlides = Array.from(document.querySelectorAll('.board-item'));
+        const totalBoardSlides = boardSlides.length;
+        const slidesPerView = 3;
+        let boardIndex = slidesPerView;
 
-        function plusBoardSlides(n) {
+        // 슬라이드 아이템 복제
+        boardSlides.slice(0, slidesPerView).forEach(slide => {
+            boardContainer.appendChild(slide.cloneNode(true));
+        });
+        boardSlides.slice(-slidesPerView).reverse().forEach(slide => {
+            boardContainer.insertBefore(slide.cloneNode(true), boardContainer.firstChild);
+        });
+
+        boardContainer.style.transform = `translateX(${-100 / slidesPerView * boardIndex}%)`;
+
+        window.plusBoardSlides = function(n) {
             boardIndex += n;
-            const slides = document.querySelectorAll('.board-item');
-            const totalSlides = slides.length;
-            const slidesPerView = 3;
-            const maxIndex = totalSlides - slidesPerView;
+            boardContainer.style.transition = 'transform 0.5s ease-in-out';
+            boardContainer.style.transform = `translateX(${-100 / slidesPerView * boardIndex}%)`;
 
-            if (boardIndex > maxIndex) {
-                boardIndex = maxIndex;
-            }
-            if (boardIndex < 0) {
-                boardIndex = 0;
-            }
+            boardContainer.addEventListener('transitionend', onBoardTransitionEnd, { once: true });
+        };
 
-            slides.forEach((slide, i) => {
-                slide.style.transform = `translateX(${-100 * boardIndex}%)`;
-            });
+        function onBoardTransitionEnd() {
+            if (boardIndex >= totalBoardSlides + slidesPerView) {
+                boardIndex = slidesPerView;
+                boardContainer.style.transition = 'none';
+                boardContainer.style.transform = `translateX(${-100 / slidesPerView * boardIndex}%)`;
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        boardContainer.style.transition = 'transform 0.5s ease-in-out';
+                    });
+                });
+            } else if (boardIndex < slidesPerView) {
+                boardIndex = totalBoardSlides;
+                boardContainer.style.transition = 'none';
+                boardContainer.style.transform = `translateX(${-100 / slidesPerView * boardIndex}%)`;
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        boardContainer.style.transition = 'transform 0.5s ease-in-out';
+                    });
+                });
+            }
         }
 
         // 초기화
-        document.addEventListener('DOMContentLoaded', () => {
-            plusBoardSlides(0);
-        });
-    </script>
+        boardContainer.style.transition = 'none';
+        boardContainer.style.transform = `translateX(${-100 / slidesPerView * boardIndex}%)`;
+    });
+</script>
 </body>
 </html>
-    <!--    &lt;!&ndash; Popup Stores Section &ndash;&gt;-->
-<!--    <section class="popup-stores">-->
-<!--        <div class="slideshow-container">-->
-<!--            <div class="board-container">-->
-<!--                <div th:each="board : ${summaries}" class="board-item">-->
-<!--                    <img th:src="${board.imageUrl}">-->
-<!--                    <div class="details">-->
-<!--                        <h5><a th:href="'/board/' + ${board.id}" th:text="${board.subject}"></a></h5>-->
-<!--                        <h6 th:text="${board.start_date} + ' ~ ' + ${board.end_date}"></h6>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>-->
-<!--            <a class="next" onclick="plusSlides(1)">&#10095;</a>-->
-<!--        </div>-->
-<!--    </section>-->
-<!--</div>-->
-<!--<footer th:replace="~{fragments/footer::footer}"></footer>-->
-<!--</body>-->
-<!--<script>-->
-<!--    let currentIndex = 0;-->
-
-<!--    function showSlide(index) {-->
-<!--        let slides = document.querySelectorAll('.content');-->
-<!--        if (index >= slides.length) {-->
-<!--            currentIndex = 0;-->
-<!--        } else if (index < 0) {-->
-<!--            currentIndex = slides.length - 1;-->
-<!--        } else {-->
-<!--            currentIndex = index;-->
-<!--        }-->
-<!--        slides.forEach((slide, i) => {-->
-<!--            slide.classList.toggle('active', i === currentIndex);-->
-<!--        });-->
-<!--    }-->
-<!--    function plusSlides(n) {-->
-<!--        showSlide(currentIndex + n);-->
-<!--    }-->
-<!--    document.addEventListener('DOMContentLoaded', () => {-->
-<!--        showSlide(currentIndex);-->
-<!--    });-->
-<!--</script>-->
-<!--<script>-->
-<!--    document.addEventListener('DOMContentLoaded', () => {-->
-<!--        const boardContainer = document.querySelector('.board-container');-->
-<!--        const boards = document.querySelectorAll('.board-item');-->
-<!--        const prevButton = document.querySelector('.prev');-->
-<!--        const nextButton = document.querySelector('.next');-->
-
-<!--        let currentIndex = 0;-->
-<!--        const itemsPerSlide = 3;-->
-<!--        const totalItems = boards.length;-->
-
-<!--        function updateSlidePosition() {-->
-<!--            const offset = -(currentIndex * (100 / itemsPerSlide));-->
-<!--            boardContainer.style.transform = `translateX(${offset}%)`;-->
-<!--        }-->
-<!--        prevButton.addEventListener('click', () => {-->
-<!--            if (currentIndex > 0) {-->
-<!--                currentIndex&#45;&#45;;-->
-<!--            } else {-->
-<!--                currentIndex = Math.ceil(totalItems / itemsPerSlide);-->
-<!--            }-->
-<!--            updateSlidePosition();-->
-<!--        });-->
-<!--        nextButton.addEventListener('click', () => {-->
-<!--            if (currentIndex < Math.ceil(totalItems / itemsPerSlide)) {-->
-<!--                currentIndex++;-->
-<!--            } else {-->
-<!--                currentIndex = 0;-->
-<!--            }-->
-<!--            updateSlidePosition();-->
-<!--        });-->
-<!--        updateSlidePosition();-->
-<!--    });-->
-<!--</script>-->
-
