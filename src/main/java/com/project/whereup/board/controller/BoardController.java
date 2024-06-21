@@ -65,16 +65,10 @@ public class BoardController {
         boardLikeService.createBoardLike(email, boardId);
         return "redirect:/board/" + boardId; // 좋아요 후 현재 페이지로 리다이렉트
     }
-    ///// 손봐야됨
-    @GetMapping(value = "/loc")
-    public String locationBoard(Model model) {
-        String[] locations = {"강남", "잠실", "성수"};
-        model.addAttribute("locationCount", locations.length);
-        for (String location : locations) {
-            List<BoardSummary> summaries = boardService.locSearch(location);
-            model.addAttribute(location, summaries);
-        }
-        return "locationBoard";
+    // 지역별 보기
+    @GetMapping(value = "/locationList")
+    public String locationsBoard() {
+        return "filteringBoard";
     }
     /**Category로 검색*/
     @GetMapping("/byCategory/{category}")
