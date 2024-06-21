@@ -50,15 +50,14 @@ body, html {
 }
 .text-content {
     flex: 1;
-    padding: 20px;
+    padding: 20px; !important;
     height: 100%;
 }
 .text-c {
-    text-align: center;
+    text-align: left;
     margin-bottom: 20px;
 }
 .text-c .label {
-    color: #ff3366;
     font-weight: bold;
     display: block;
     margin-bottom: 10px;
@@ -68,14 +67,21 @@ body, html {
     margin: 0 0 100px 0;
 }
 .h1-box h1 {
-    font-size: 40px;
+    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+    font-size: 5vh;
     margin: 0 0 100px 0;
-    font-family: "Black Han Sans" !important;
+    flex-shrink: 0;
+    font-weight: 600;
+    font-style: normal;
+}
+.h1-box h2 {
+    font-size: 2vh;
 }
 .buttons {
     display: flex;
     gap: 10px;
     margin: 100px 0 0 0;
+    flex-shrink: 0;
 }
 .buttons .btn {
     padding: 10px 20px;
@@ -234,7 +240,7 @@ body, html {
     border-radius: 8px;
     overflow: hidden;
     text-align: center;
-    min-width: 400px;
+    min-width: 390px;
     min-height: 300px;
 }
 
@@ -263,30 +269,6 @@ body, html {
     text-decoration: none; /* 링크의 밑줄 제거 */
     color: inherit; /* 링크의 색상 제거 */
 }
-/*.prev, .next {*/
-/*    cursor: pointer;*/
-/*    position: absolute;*/
-/*    top: 50%;*/
-/*    width: auto;*/
-/*    margin-top: -22px;*/
-/*    padding: 16px;*/
-/*    color: white;*/
-/*    font-weight: bold;*/
-/*    font-size: 20px;*/
-/*    transition: 0.6s ease;*/
-/*    border-radius: 0 3px 3px 0;*/
-/*    user-select: none;*/
-/*}*/
-
-/*.next {*/
-/*    right: 0;*/
-/*    border-radius: 3px 0 0 3px;*/
-/*}*/
-
-/*.prev {*/
-/*    left: 0;*/
-/*    border-radius: 3px 0 0 3px;*/
-/*}*/
 /* 네비게이션 버튼 */
 .prev, .next {
     cursor: pointer;
