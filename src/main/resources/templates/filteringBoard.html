@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Board</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap">
+    <link rel="stylesheet" href="/css/boardAndPost.css">
+    <link rel="stylesheet" href="/css/board.css">
+    <link rel="stylesheet" href="/css/headerAndFooter.css">
+</head>
+<body>
+<header th:replace="~{fragments/header::header}"></header>
+<div class="container">
+    <div class="header-location">
+        <ul>
+            <li><a onclick="getData('강남구'); fontChange(this)">강남구</a></li>
+            <li><a onclick="getData('송파구'); fontChange(this)">송파구</a></li>
+            <li><a onclick="getData('성동구'); fontChange(this)">성동구</a></li>
+            <li><a onclick="getData('영등포구'); fontChange(this)">영등포구</a></li>
+        </ul>
+    </div>
+    <hr class="custom-hr">
+    <div class="back-ground" id="back-ground"></div>
+    <div id="board-container" class="board-container">
+        <div th:each="board : ${location}" class="board-item">
+            <img th:src="${board.imageUrl}">
+            <div class="details">
+                <pre><a th:href="'/board/' + ${board.id}" th:text="${board.subject}"></a></pre>
+                <h6 th:text="${board.start_date} + ' ~ ' + ${board.end_date}"></h6>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{fragments/footer::footer}"></footer>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const titles = document.querySelectorAll(".title");
+        titles.forEach(title => {
+            let fontSize = parseInt(window.getComputedStyle(title).fontSize);
+            while (title.scrollWidth > title.clientWidth && fontSize > 10) {
+                fontSize--;
+                title.style.fontSize = fontSize + "px";
+            }
+        });
+    });
+    function fontChange(element) {
+        let links = document.querySelectorAll('.header-location a');
+        links.forEach(function(link) {
+            link.classList.remove('header-location-bold');
+        });
+        element.classList.add('header-location-bold');
+    }
+    function getData(location) {
+        document.getElementById('back-ground').style.display = 'none';
+        fetch(`/board/byLocKeyword/${location}`)
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('board-container');
+                container.innerHTML = '';
+
+                data.forEach(board => {
+                    const boardItem = document.createElement('div');
+                    boardItem.classList.add('board-item');
+
+                    const img = document.createElement('img');
+                    img.src = board.imageUrl;
+                    boardItem.appendChild(img);
+
+                    const details = document.createElement('div');
+                    details.classList.add('details');
+
+                    const pre = document.createElement('pre');
+                    const a = document.createElement('a');
+                    a.href = `/board/${board.id}`;
+                    a.textContent = board.subject;
+                    pre.appendChild(a);
+                    details.appendChild(pre);
+
+                    const h6Date = document.createElement('h6');
+                    h6Date.textContent = `${board.start_date} ~ ${board.end_date}`;
+                    details.appendChild(h6Date);
+
+                    boardItem.appendChild(details);
+                    container.appendChild(boardItem);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }
+</script>
+</body>
+</html>

@@ -68,7 +68,7 @@ public class BoardController {
     // 지역별 보기
     @GetMapping(value = "/locationList")
     public String locationsBoard() {
-        return "locationsBoard";
+        return "filteringBoard";
     }
     /**Category로 검색*/
     @GetMapping("/byCategory/{category}")
