@@ -6,6 +6,8 @@ import com.project.whereup.post.dto.PostSummary;
 import com.project.whereup.post.service.CommentService;
 import com.project.whereup.post.service.MarkdownService;
 import com.project.whereup.post.service.PostService;
+import com.project.whereup.user.entity.User;
+import com.project.whereup.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -23,12 +25,15 @@ public class PostController {
     private final MarkdownService markdownService;
     private final PostService postService;
     private final CommentService commentService;
-
+    private final UserService userService;
 
     // 후기 전체 보기 페이지
     @GetMapping(value = "/postList")
     public String post(Model model, Principal principal, @RequestParam int page) {
-        model.addAttribute("user", principal != null ? principal.getName() : null);
+        if(principal != null) {
+            User loggedInUser = userService.getMyPage();
+            model.addAttribute("user", loggedInUser != null ? loggedInUser.getNickname() : null);
+        }
         int howManyOnePage = 18;
         List<PostSummary> list = postService.summaryListPage("", page, howManyOnePage);
 
@@ -42,9 +47,12 @@ public class PostController {
     // 후기 상세 페이지
     @GetMapping(value = "/{postId}")
     public String viewPost(@PathVariable Long postId, Model model, Principal principal) {
-        model.addAttribute("user", principal != null ? principal.getName() : null);
+        if(principal != null) {
+            User loggedInUser = userService.getMyPage();
+            model.addAttribute("user", loggedInUser != null ? loggedInUser.getNickname() : null);
+        }
         Post post = postService.getPost(postId);
-        post.setContent(markdownService.renderMarkdownToHtml(post.getContent())); // content 마크다운 바꿔줘야됨
+        post.setContent(markdownService.renderMarkdownToHtml(post.getContent()));
         model.addAttribute("post", post);
         List<Comment> comments = commentService.getComments(postId);
         model.addAttribute("comments", comments);
@@ -53,10 +61,12 @@ public class PostController {
     // 신규 후기 작성 페이지
     @GetMapping(value = "/newPost")
     public String newPost(Model model, Principal principal) {
+        User loggedInUser = userService.getMyPage();
         if (principal == null) {
             return "redirect:/post/postList"; // 로그인 해야만 신규후기 작성 가능
         }
-        model.addAttribute("author", principal.getName());
+        System.out.println(loggedInUser.getNickname());
+        model.addAttribute("author", loggedInUser.getNickname());
         return "newPost";
     }
     // 신규 후기 작성 후 제출하고 나서 처리하는 거
