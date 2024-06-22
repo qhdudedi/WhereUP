@@ -81,9 +81,9 @@ public class BoardService {
     public List<BoardSummary> imgFromNameToUrl(List<BoardSummary> summaries) {
         for (BoardSummary summary : summaries) {
             if (summary.getImageUrl() != null) {
-                summary.setImageUrl(s3Service.getImageUrl(summary.getImageUrl()));
+                summary.setImageUrl(s3Service.getImageUrl("board/" + summary.getImageUrl()));
             } else {
-                summary.setImageUrl(s3Service.getImageUrl("whereup.png"));
+                summary.setImageUrl(s3Service.getImageUrl("admin/whereup.png"));
             }
         }
         return summaries;
@@ -139,9 +139,9 @@ public class BoardService {
 
         for (BoardDesc summary : summaries) {
             if (summary.getImageUrl() != null) {
-                summary.setImageUrl(s3Service.getImageUrl(summary.getImageUrl()));
+                summary.setImageUrl(s3Service.getImageUrl("board/" + summary.getImageUrl()));
             } else {
-                summary.setImageUrl(s3Service.getImageUrl("whereup.png"));
+                summary.setImageUrl(s3Service.getImageUrl("admin/whereup.png"));
             }
         }
         return summaries;

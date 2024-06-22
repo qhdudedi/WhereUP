@@ -31,7 +31,7 @@ public class PostController {
         model.addAttribute("user", principal != null ? principal.getName() : null);
         int howManyOnePage = 18;
         List<PostSummary> list = postService.summaryListPage("", page, howManyOnePage);
-
+        //// 썸네일 없는 애들은?
         int pageCount = postService.pageCount("",howManyOnePage);
         model.addAttribute("list", list);
         model.addAttribute("detail", "All");
