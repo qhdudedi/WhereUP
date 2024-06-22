@@ -23,13 +23,16 @@
             <div th:each="board : ${summaries}" class="board-item">
                 <img th:src="${board.imageUrl}">
                 <div class="details">
-                    <h5><a th:href="'/board/' + ${board.id}" th:text="${board.subject}"></a></h5>
+                    <pre><a th:href="'/board/' + ${board.id}" th:text="${board.subject}"></a></pre>
                     <h6 th:text="${board.start_date} + ' ~ ' + ${board.end_date}"></h6>
                 </div>
             </div>
-            <div><a  th:href="'/board/search/' + ${keyword} + '?page=1'">더보기</a></div>
         </div>
+        <button th:if="${#lists.size(summaries)} >= 6" class="board-more"><a th:href="'/board/search/' + ${keyword} + '?page=1'">더보기</a></button>
     </section>
+    <br>
+    <hr class="custom-hr">
+    <br>
     <section class="each-container">
         <div class="post-container">
             <div th:each="post : ${list}" class="post-item">
@@ -40,8 +43,8 @@
                     <h6 th:text="${post.created_date}"></h6>
                 </div>
             </div>
-            <div><a th:href="'/post/search/' + ${keyword} + '?page=1'">더보기</a></div>
         </div>
+        <button th:if="${#lists.size(list)} >= 12" class="post-more"><a th:href="'/post/search/' + ${keyword} + '?page=1'">더보기</a></button>
     </section>
 </div>
 <footer th:replace="~{fragments/footer::footer}"></footer>
