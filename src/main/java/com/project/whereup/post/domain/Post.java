@@ -29,14 +29,17 @@ public class Post {
     private LocalDate updated_date;
     @Column(name = "thumbnail")
     private String thumbnail;
+    @Column(name = "brand")
+    private String brand;
 
     @Builder
-    public Post(String author, String title, String content, LocalDate created_date, LocalDate updated_date, String thumbnail) {
+    public Post(String author, String title, String content, LocalDate created_date, LocalDate updated_date, String thumbnail, String brand) {
         this.author = author;
         this.title = title;
         this.content = content;
         this.created_date = created_date;
         this.updated_date = updated_date;
         this.thumbnail = thumbnail;
+        this.brand = brand;
     }
 }

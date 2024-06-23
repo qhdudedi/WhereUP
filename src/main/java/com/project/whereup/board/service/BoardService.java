@@ -150,4 +150,8 @@ public class BoardService {
     public void save(Board board) {
         boardRepository.save(board);
     }
+
+    public List<String> brandList() {
+        return boardRepository.findDistinctBrands();
+    }
 }
