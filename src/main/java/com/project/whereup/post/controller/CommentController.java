@@ -2,6 +2,7 @@ package com.project.whereup.post.controller;
 
 import com.project.whereup.post.domain.Comment;
 import com.project.whereup.post.service.CommentService;
+import com.project.whereup.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.time.LocalDate;
 @RequestMapping(value = "/post/comment")
 public class CommentController {
     private final CommentService commentService;
+    private final UserService userService;
 
     @PostMapping(value = "/add")
     public String addComment(@RequestParam("postId") Long postId,
@@ -21,7 +23,7 @@ public class CommentController {
                              Principal principal) {
         Comment comment = Comment.builder()
                             .postId(postId)
-                            .user(principal.getName())
+                            .user(userService.getMyPage().getNickname())
                             .text(text)
                             .created_date(LocalDate.now())
                             .updated_date(LocalDate.now()).build();
