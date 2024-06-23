@@ -233,8 +233,25 @@
 /*    min-height: 90%;*/
 /*}*/
 .custom-hr {
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin-top: 50px;
+    margin-bottom: 50px;
     height: 3px;
     background-color: black;
+}
+
+.board-more {
+    float: right;
+    height: 50px;
+    font-size: 1.5em;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #98accf;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 10px;
+}
+.board-more a {
+    color: white;
+    text-decoration: none;
 }
