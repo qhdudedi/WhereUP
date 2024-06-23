@@ -61,7 +61,6 @@
     <!-- 내 정보 수정 - 현재 정보들 보이고, 수정 버튼 클릭 시 form 페이지 이동-->
     <section class="resume-section" id="myaccount">
         <div class="resume-section-content">
-            <h2 class="mb-5">My Page</h2>
             <div class="subheading mb-3">내 정보 수정</div>
             <form method="post" th:action="@{/edit/mypage}">
                 <ul class="fa-ul mb-0">
@@ -69,9 +68,7 @@
                         <span class="fa-li"><i class="fas fa-check"></i></span>
                         <div class="form-group">
                             <div class="input-group-alternative mb-3 input-group">
-                                <div class="input-group-prepend">
-                                    <i class="ni ni-email-83"></i>
-                                </div>
+                                <label class="lb-form">이름</label>
                                 <input type="text" class="form-control" name="name" id="name" th:value="${user.name}" readonly>
                             </div>
                         </div>
@@ -80,9 +77,7 @@
                         <span class="fa-li"><i class="fas fa-check"></i></span>
                         <div class="form-group">
                             <div class="input-group-alternative mb-3 input-group">
-                                <div class="input-group-prepend">
-                                    <i class="ni ni-email-83"></i>
-                                </div>
+                                <label class="lb-form">이메일</label>
                                 <input type="text" class="form-control" name="email" id="email" th:value="${user.email}" readonly>
                             </div>
                         </div>
@@ -91,10 +86,8 @@
                         <span class="fa-li"><i class="fas fa-check"></i></span>
                         <div class="form-group">
                             <div class="input-group-alternative mb-3 input-group">
-                                <div class="input-group-prepend">
-                                    <i class="ni ni-email-83"></i>
-                                </div>
-                                <input type="password" class="form-control" name="password" id="password" th:value="${user.password}" readonly>
+                                <label class="lb-form">비밀번호</label>
+                                <input type="password" class="form-control hidden-input" name="password" id="password" th:value="${user.password}" readonly>
                             </div>
                         </div>
                     </li>
@@ -102,9 +95,7 @@
                         <span class="fa-li"><i class="fas fa-check"></i></span>
                         <div class="form-group">
                             <div class="input-group-alternative mb-3 input-group">
-                                <div class="input-group-prepend">
-                                    <i class="ni ni-hat-3"></i>
-                                </div>
+                                <label for ="nickname"  class="lb-form">닉네임</label>
                                 <input type="text" class="form-control" name="nickname" id="nickname" th:value="${user.nickname}" readonly>
                             </div>
                         </div>
@@ -113,15 +104,14 @@
                         <span class="fa-li"><i class="fas fa-check"></i></span>
                         <div class="form-group">
                             <div class="input-group-alternative mb-3 input-group">
-                                <div class="input-group-prepend">
-                                    <i class="ni ni-hat-3"></i>
-                                </div>
+                                <label for="birth" class="lb-form">생년월일</label>
                                 <input type="text" class="form-control" name="birth" id="birth" th:value="${user.birth}" readonly>
                             </div>
                         </div>
                     </li>
                 </ul>
                 <button type="button" id="editButton">수정</button>
+                <button type="submit" id="cancelButton" style="display:none;">취소</button>
                 <button type="submit" id="saveButton" style="display:none;">저장</button>
             </form>
         </div>
@@ -233,7 +223,20 @@
         function enableEditing() {
             document.getElementById("nickname").removeAttribute("readonly");
             document.getElementById("birth").removeAttribute("readonly");
+
+            // 관련된 label 요소의 글자를 bold로 변경하고 색상도 변경
+            let nicknameLabel = document.querySelector('label[for="nickname"]');
+            let birthLabel = document.querySelector('label[for="birth"]');
+
+            nicknameLabel.style.fontWeight = "bold";
+            nicknameLabel.style.color = "#565f6e"; // 원하는 색상으로 변경
+
+            birthLabel.style.fontWeight = "bold";
+            birthLabel.style.color = "#565f6e"; // 원하는 색상으로 변경
+
+
             document.getElementById("editButton").style.display = "none";
+            document.getElementById("cancelButton").style.display = "inline-block";
             document.getElementById("saveButton").style.display = "inline-block";
         }
 
