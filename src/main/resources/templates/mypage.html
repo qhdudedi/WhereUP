@@ -16,6 +16,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="/css/fullcalendar.css" rel="stylesheet"/>
     <link href="/css/mypage.css" rel="stylesheet"/>
+    <link href="/css/post.css" rel="stylesheet"/>
 
 </head>
 <body id="page-top">
@@ -28,9 +29,9 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
-            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#myaccount">내 정보 수정</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/">Main</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#schedule">내 일정</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#myaccount">내 정보 수정</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#liked">관심팝업</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#mypost">BLOG_후기</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#alarm">알림 서비스</a></li>
@@ -40,20 +41,51 @@
 <!-- Page Content-->
 <div class="container-fluid p-0">
     <!-- About-->
-    <section class="resume-section" id="about">
+<!--    <section class="resume-section" id="about">-->
+<!--        <div class="resume-section-content">-->
+<!--            <h1 class="mb-0">-->
+<!--                Clarence-->
+<!--                <span class="text-primary">Taylor</span>-->
+<!--            </h1>-->
+<!--            <div class="subheading mb-5">-->
+<!--                관심 카테고리 : 메이크업, 패션-->
+<!--                &lt;!&ndash; <a href="mailto:name@email.com">name@email.com</a> &ndash;&gt;-->
+<!--            </div>-->
+<!--            <p class="lead mb-5">My Page 입니다.</p>-->
+<!--            <div class="social-icons">-->
+<!--                <a class="social-icon" href="#!"><i class="fab fa-linkedin-in"></i></a>-->
+<!--                <a class="social-icon" href="#!"><i class="fab fa-facebook-f"></i></a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+    <!-- 내 일정 -->
+    <section class="resume-section" id="schedule">
         <div class="resume-section-content">
-            <h1 class="mb-0">
-                Clarence
-                <span class="text-primary">Taylor</span>
-            </h1>
-            <div class="subheading mb-5">
-                관심 카테고리 : 메이크업, 패션
-                <!-- <a href="mailto:name@email.com">name@email.com</a> -->
-            </div>
-            <p class="lead mb-5">My Page 입니다.</p>
-            <div class="social-icons">
-                <a class="social-icon" href="#!"><i class="fab fa-linkedin-in"></i></a>
-                <a class="social-icon" href="#!"><i class="fab fa-facebook-f"></i></a>
+            <h2 class="mb-5">MY CALENDAR</h2>
+            <div id="calendar"></div>
+            <div id="eventModal">
+                <div id="modalContent">
+                    <span class="close">&times;</span>
+                    <form id="eventForm">
+                        <input type="hidden" id="eventId">
+                        <label for="title">일정</label>
+                        <input type="text" id="title" name="title" placeholder="새로운 이벤트">
+
+                        <label for="summary">메모</label>
+                        <input type="text" id="summary" name="summary" required>
+                        <div class="date-cont">
+                            <label for="startDate"><br></label>
+                            <input type="date" id="startDate" name="startDate" required>
+
+                            <label for="endDate"> ~ </label>
+                            <input type="date" id="endDate" name="endDate" required>
+                        </div>
+                        <div class="btn-cont">
+                            <button type="submit">등록</button>
+                            <button id="deleteEventBtn" style="display: none;">삭제</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
@@ -117,38 +149,6 @@
         </div>
     </section>
     <hr class="m-0" />
-    <!-- 내 일정 -->
-    <section class="resume-section" id="schedule">
-        <div class="resume-section-content">
-            <h2 class="mb-5">MY CALENDAR</h2>
-            <div id="calendar"></div>
-            <div id="eventModal">
-                <div id="modalContent">
-                    <span class="close">&times;</span>
-                    <form id="eventForm">
-                        <input type="hidden" id="eventId">
-                        <label for="title">일정</label>
-                        <input type="text" id="title" name="title" placeholder="새로운 이벤트">
-
-                        <label for="summary">메모</label>
-                        <input type="text" id="summary" name="summary" required>
-                        <div class="date-cont">
-                            <label for="startDate"><br></label>
-                            <input type="date" id="startDate" name="startDate" required>
-
-                            <label for="endDate"> ~ </label>
-                            <input type="date" id="endDate" name="endDate" required>
-                        </div>
-                        <div class="btn-cont">
-                            <button type="submit">등록</button>
-                            <button id="deleteEventBtn" style="display: none;">삭제</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-    <hr class="m-0" />
     <!-- 관심 팝업 -->
     <section class="resume-section" id="liked">
         <div class="resume-section-content">
@@ -156,7 +156,9 @@
             <ul class="fa-ul mb-0">
                 <li th:each="board : ${likeBoards}">
                     <span class="fa-li"><i class="fas fa-check"></i></span>
-                    <span th:text="${board.subject}"></span>
+                    <span>
+                        <a th:href="'/board/'+${board.id}" th:text="${board.subject}" style="text-decoration: none"></a>
+                    </span>
                     <div>
                         <span th:text="'Start Date: ' + ${board.start_date}"></span> -
                         <span th:text="'End Date: ' + ${board.end_date}"></span>
@@ -172,7 +174,7 @@
     <!-- BLOG_후기 -->
     <section class="resume-section" id="mypost">
         <div class="resume-section-content">
-            <h2 class="mb-5">마이 후기 </h2>
+            <h2 class="mb-5">작성한 BLOG</h2>
             <div class="post-container">
                 <div th:each="post : ${list}" class="post-item">
                     <img th:src="${post.thumbnail != null ? post.thumbnail : 'https://via.placeholder.com/100x100.jpg'}">
