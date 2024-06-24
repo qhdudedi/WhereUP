@@ -2,6 +2,7 @@ package com.project.whereup.user.entity;
 
 import com.project.whereup.user.entity.eum.Role;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,8 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User {
 
     @Id
@@ -38,19 +41,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    String kakaoId;
-
-    @Builder
-    public User(Long id, String name, String email, String password, LocalDate birth, String nickname, Role role, String kakaoId) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.birth = birth;
-        this.nickname = nickname;
-        this.role = role;
-        this.kakaoId = kakaoId;
-    }
+    String provider;
+    String providerId;
 
     public void update(String name, String email, String password, LocalDate birth, String nickname){
         this.name = name;

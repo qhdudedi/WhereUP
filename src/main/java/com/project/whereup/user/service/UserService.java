@@ -1,5 +1,6 @@
 package com.project.whereup.user.service;
 
+import com.project.whereup.oauth.PrincipalDetails;
 import com.project.whereup.user.dto.CustomUserDetails;
 import com.project.whereup.user.dto.request.UserRequestDto;
 import com.project.whereup.user.entity.User;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
-
+    private final UserDetailService userDetailService;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -56,12 +58,34 @@ public class UserService {
     }
 
     // 마이페이지 정보 조회
+    @Transactional
     public User getMyPage() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        // CustomUserDetails를 사용하여 기본 사용자 정보를 가져오기
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        return userDetails.getUser();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new IllegalStateException("User is not authenticated");
+        }
+
+        Object principal = authentication.getPrincipal();
+        log.info("Principal class: {}", principal.getClass().getName());
+
+        if (principal instanceof PrincipalDetails) {
+            PrincipalDetails userDetails = (PrincipalDetails) principal;
+            log.info("Authenticated user: {}", userDetails.getUsername());
+            return userDetails.getUser();
+        } else if (principal instanceof String) {
+            try {
+                PrincipalDetails userDetails = (PrincipalDetails) userDetailService.loadUserByUsername((String) principal);
+                log.info("Authenticated user: {}", userDetails.getUsername());
+                return userDetails.getUser();
+            } catch (UsernameNotFoundException e) {
+                log.error("User not found: {}", principal);
+                throw new IllegalStateException("User not found: " + principal, e);
+            }
+        } else {
+            throw new IllegalStateException("Unexpected principal type: " + principal.getClass().getName());
+        }
     }
+
     // 마이페이지 정보 수정
     @Transactional
     public User updateMyPage(UserRequestDto userRequestDto) {

@@ -1,5 +1,6 @@
 package com.project.whereup.user.config;
 
+import com.project.whereup.oauth.PrincipalOauth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final PrincipalOauth2UserService principalOauth2UserService;
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
@@ -50,6 +53,14 @@ public class SecurityConfig {
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true) //로그아웃 시 생성된 사용자 세션도 삭제
+                )
+                .oauth2Login(oauth2 ->
+                        oauth2
+                                .loginPage("/login")
+                                .defaultSuccessUrl("/", true)  // OAuth2 로그인 성공 후 마이페이지로 리디렉션
+                                .userInfoEndpoint(userInfoEndpointConfig ->
+                                        userInfoEndpointConfig.userService(principalOauth2UserService)
+                                )
                 )
                 .exceptionHandling(exceptionHandling ->
                         exceptionHandling
