@@ -138,6 +138,11 @@
     white-space: pre-wrap;
     font-family: 'Gowun Dodum', sans-serif;
 }
+pre {
+    font-size: 3em;
+    font-family: 'Gowun Dodum', sans-serif;
+    font-weight: bold;
+}
 
 .content-wrapper .details ul {
     list-style: none;

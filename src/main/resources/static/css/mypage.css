@@ -11005,7 +11005,7 @@ section.resume-section .resume-section-content {
     background-color: #0056b3;
 }
 .post-it {
-    width: 1000px;
+    width: 60vw;
     height: 150px;
     background-color: #ffeb3b; /* 노란색 포스트잇 배경 */
     padding: 20px;

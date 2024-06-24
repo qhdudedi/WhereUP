@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Board</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -21,7 +22,10 @@
         </ul>
     </div>
     <hr class="custom-hr">
-    <div class="back-ground" id="back-ground"><p> 선택된 지역의 팝업 스토어 정보를 확인해보세요 </p></div>
+
+    <div class="back-ground" id="back-ground">
+        <p> 선택된 지역의 팝업 스토어 정보를 확인해보세요 </p>
+    </div>
     <div id="board-container" class="board-container">
         <div th:each="board : ${location}" class="board-item">
             <img th:src="${board.imageUrl}">
