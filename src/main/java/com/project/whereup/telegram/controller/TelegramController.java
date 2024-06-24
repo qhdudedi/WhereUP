@@ -8,10 +8,7 @@ import com.project.whereup.telegram.service.TelegramService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
@@ -35,7 +32,6 @@ public class TelegramController {
                     .fashion(fashion)
                     .life(life)
                     .build();
-
             telegramService.saveUserInfo(userInfo);
         } else {
             TelegramUserInfo old = telegramService.findUserInfo(userId);
@@ -46,6 +42,16 @@ public class TelegramController {
             telegramService.saveUserInfo(old);
         }
         return "redirect:/mypage";
+    }
+
+    @GetMapping(value = "/telegram/isValid/{chatId}")
+    @ResponseBody
+    public boolean checkChatId(@PathVariable String chatId) {
+        if(telegramService.findChatUserInfo(chatId) == null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @GetMapping(value = "/adminInsertBoard")
