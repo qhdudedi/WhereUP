@@ -144,6 +144,6 @@ public class PostController {
         commentService.deleteByPostId(postId);
         //////////////////// S3 삭제
 
-        return "redirect:/postList";
+        return "redirect:/postList?page=1";
     }
 }
