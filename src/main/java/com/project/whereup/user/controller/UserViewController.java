@@ -7,7 +7,6 @@ import com.project.whereup.board.service.BoardLikeService;
 import com.project.whereup.board.service.BoardService;
 import com.project.whereup.post.dto.PostSummary;
 import com.project.whereup.post.service.PostService;
-import com.project.whereup.oauth.kakao.KakaoService;
 import com.project.whereup.user.dto.request.UserRequestDto;
 import com.project.whereup.telegram.domain.TelegramUserInfo;
 import com.project.whereup.telegram.service.TelegramService;
@@ -31,7 +30,6 @@ import java.util.List;
 public class UserViewController {
 
     private final BoardLikeService boardLikeService;
-    private final KakaoService kakaoService;
     private final UserService userService;
     private final PostService postService;
     private final BoardService boardService;
@@ -81,13 +79,6 @@ public class UserViewController {
         }
         return "login";
     }
-
-    @GetMapping("/auth/kakao/callback")
-    public String kakaoCallback(String code) {
-        kakaoService.kakaoLogin(code);
-        return "index";
-    }
-
 
     @PatchMapping("/edit/mypage")
     public String updateMyPage(@RequestBody UserRequestDto userRequestDto, RedirectAttributes redirectAttributes) {

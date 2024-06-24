@@ -1,6 +1,6 @@
 package com.project.whereup.user.service;
 
-import com.project.whereup.user.dto.CustomUserDetails;
+import com.project.whereup.oauth.PrincipalDetails;
 import com.project.whereup.user.entity.User;
 import com.project.whereup.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,12 +19,10 @@ public class UserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User userData = userRepository.findByEmail(email);
 
-        if(userData != null){
-            return new CustomUserDetails(userData);
-        } else {
+        if (userData == null) {
             throw new UsernameNotFoundException("User not found with email: " + email);
         }
+        return new PrincipalDetails(userData);
     }
-
 }
 
