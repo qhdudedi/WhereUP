@@ -22,11 +22,11 @@
             <section class="content" th:each="board: ${summariesTop}" th:id="'section-' + ${board.id}">
                 <div class="text-content">
                     <div class="text-c">
-                        <span class="label">24.06.17 ~ 24.06.23 </span>
+                        <span class="label">24.06.24 ~ 24.06.30 </span>
                     </div>
                     <!--                    <span>24.06.17 ~ 24.06.23</span>-->
                     <div class="h1-box">
-                        <h1> 6월 셋째 주,<br>팝업 스토어에서 <br> 특별한 순간을 함께 하세요!</h1>
+                        <h1> 6월 넷째 주,<br>팝업 스토어에서 <br> 특별한 순간을 함께 하세요!</h1>
                         <h2 th:text="${board.subject}"></h2>
                     </div>
                     <p th:text="${board.start_date} + ' ~ ' + ${board.end_date}"></p>
