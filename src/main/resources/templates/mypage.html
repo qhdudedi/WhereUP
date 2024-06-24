@@ -186,6 +186,7 @@
                 <form id="telegramForm" action="/telegram/getUserInfo" method="post" class="telegramForm">
                     <input type="hidden" name="userId" th:value="${user.id}">
                     채팅 아이디: <input type="text" name="chatId" th:value="${telegramUserInfo != null ? telegramUserInfo.chatId : ''}" disabled>
+                    <input type="button" value="확인" onclick="validCheck()", id="checkButton">
                     <br>
                     <input type="checkbox" name="culture" th:checked="${telegramUserInfo != null ? telegramUserInfo.culture : false}" disabled>문화
                     <input type="checkbox" name="fashion" th:checked="${telegramUserInfo != null ? telegramUserInfo.fashion : false}" disabled>패션
@@ -234,6 +235,36 @@
         form.querySelector('#submitButton').style.display = 'inline';
         form.querySelector('#modifyButton').style.display = 'none';
     }
+    function validCheck() {
+        let chatId = document.querySelector('input[name="chatId"]').value;
+
+        return fetch(`/telegram/isValid/${chatId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    alert('확인완료');
+                    return true;
+                } else {
+                    alert('중복된 채팅아이디 입니다.');
+                    document.querySelector('input[name="chatId"]').value = '';
+                    return false;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                return false;
+            });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('telegramForm').onsubmit = async function(event) {
+            event.preventDefault();
+            const isValid = await validCheck('telegramForm');
+            if (isValid) {
+                this.submit();
+            }
+        }
+    });
 </script>
 <script src="/js/calendar.js"></script>
 </body>

@@ -32,6 +32,8 @@ public class TelegramService {
         return telegramUserInfoRepository.findByUserId(userId);
     }
 
+    public TelegramUserInfo findChatUserInfo(String chatId) { return telegramUserInfoRepository.findByChatId(chatId); }
+
     public void send(Board board) {
         String categoryKor = board.getCategory().toString();
         List<String> chatIds = categoryKor.equals("문화") ? telegramUserInfoRepository.findChatIdByCulture() :

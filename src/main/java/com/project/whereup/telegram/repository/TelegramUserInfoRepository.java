@@ -21,4 +21,6 @@ public interface TelegramUserInfoRepository extends JpaRepository<TelegramUserIn
 
     @Query("SELECT t.chatId FROM TelegramUserInfo t WHERE t.life is true")
     List<String> findChatIdByLife();
+
+    TelegramUserInfo findByChatId(String chatId);
 }
