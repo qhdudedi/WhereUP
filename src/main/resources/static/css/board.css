@@ -276,3 +276,8 @@ pre {
     color: white;
     text-decoration: none;
 }
+@media (max-width: 600px) {
+    .board-item .details  pre {
+        margin: 0;
+    }
+}

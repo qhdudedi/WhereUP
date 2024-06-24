@@ -70,7 +70,7 @@ body, html {
 .h1-box h1 {
     font-family: 'Spoqa Han Sans Neo', 'sans-serif';
     font-size: 5vh;
-    margin: 0 0 100px 0;
+    /*margin: 0 0 100px 0;*/
     flex-shrink: 0;
     font-weight: 600;
     font-style: normal;
@@ -319,6 +319,28 @@ body, html {
     }
     .login-logout {
         font-size: 3vw;
+    }
+}
+
+@media (max-width: 600px) {
+    .h1-box h1,
+    .buttons {
+        margin: 10px;
+    }
+    .h1-box h1 {
+        font-size: 5vw;
+    }
+    .buttons {
+        font-size: 5px;
+    }
+    .text-content p,
+    .text-c,
+    .text-c .label,
+    .text-c p {
+        margin: 0;
+    }
+    .text-content {
+        height: 70%;
     }
 }
 
