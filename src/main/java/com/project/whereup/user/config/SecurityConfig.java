@@ -33,9 +33,9 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/", "/login","/signup","/board/**","/css/**","/img/**","/js/**").permitAll()
+                                .requestMatchers("/", "/login","/signup","/board/**","/css/**","/img/**","/js/**","/postList").permitAll()
                                 .requestMatchers("/mypage").hasRole("USER")
-//                                .requestMatchers("/post/").hasRole("USER")
+                                .requestMatchers("/post").hasRole("USER")
                                 .anyRequest().authenticated()
                 )
                 //커스텀 로그인 페이지
