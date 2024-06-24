@@ -50,11 +50,13 @@ public class BoardController {
         model.addAttribute("board", board);
 
         boolean isLiked = false;
+        boolean isLoggedIn = principal != null;
         if (principal != null) {
             String email = principal.getName();
             isLiked = boardLikeService.isBoardLikedByUser(email, boardId);
         }
         model.addAttribute("isLiked", isLiked);
+        model.addAttribute("isLoggendIn", isLoggedIn);
 
         return "board";
     }
@@ -70,6 +72,7 @@ public class BoardController {
     public String locationsBoard() {
         return "filteringBoard";
     }
+
     /**Category로 검색*/
     @GetMapping("/byCategory/{category}")
     @ResponseBody

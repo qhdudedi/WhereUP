@@ -1,5 +1,9 @@
 server:
-  port: 9000
+  port: 443
+  ssl:
+    key-store: classpath:ssl/www.whereupp.com_2024052192E55.pfx
+    key-store-type: PKCS12
+    key-store-password: ${SSL_PASSWORD}
   servlet:
     encoding:
       charset: UTF-8
