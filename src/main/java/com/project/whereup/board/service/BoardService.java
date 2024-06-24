@@ -38,7 +38,7 @@ public class BoardService {
     }
 
     public List<BoardSummary> summaryListPage(String keyword, int page) {
-        int howManyOnePage = 6;
+        int howManyOnePage = 8;
         List<BoardSummary> allSummaries = keyword.isEmpty() ?
                 boardRepository.findSortedSummaries() :
                 search(keyword);
@@ -51,7 +51,7 @@ public class BoardService {
     }
 
     public int pageCount(String keyword) {
-        int howManyOnePage = 6;
+        int howManyOnePage = 8;
         List<BoardSummary> boards = keyword.isEmpty() ? boardRepository.findSummery() : search(keyword);
         return (boards.size() + howManyOnePage - 1) / howManyOnePage;
     }
