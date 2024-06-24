@@ -11005,7 +11005,7 @@ section.resume-section .resume-section-content {
     background-color: #0056b3;
 }
 .post-it {
-    width: 60vw;
+    width: 70vw;
     height: 150px;
     background-color: #ffeb3b; /* 노란색 포스트잇 배경 */
     padding: 20px;
@@ -11036,4 +11036,17 @@ section.resume-section .resume-section-content {
     text-shadow: none; /* 텍스트가 투명해도 공간을 차지하도록 설정 */
     caret-color: transparent; /* 커서를 투명하게 설정 */
     background-color: inherit; /* 배경색을 부모 요소와 동일하게 유지 */
+}
+
+@media (max-width: 800px) {
+    .post-it {
+        font-size: 13px;
+    }
+}
+@media (min-width: 801px) {
+    .post-it {
+        .post-it {
+            width: 65vw;
+        }
+    }
 }
