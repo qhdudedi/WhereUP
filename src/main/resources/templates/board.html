@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Board</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -15,7 +16,7 @@
 <div class="container">
     <div class="header-list">
         <ul>
-            <li><a href="/board/boardList?page=1">BoardList</a></li>
+            <li><a href="/board/boardList?page=1">목록</a></li>
             <li th:text="${board.id}"></li>
         </ul>
     </div>
@@ -28,7 +29,7 @@
             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
             <a class="next" onclick="plusSlides(1)">&#10095;</a>
         </div>
-<!--        <div class="vertical-line"></div>-->
+        <!--        <div class="vertical-line"></div>-->
         <div class="content">
             <h1 th:text="${board.subject}"></h1>
             <pre th:text="${board.description}"></pre>
@@ -57,7 +58,7 @@
                         </span>
                     </li>
                     <li>
-                        <button type="button" th:attr="data-board-id=${board.id}" class="like-btn">
+                        <button type="button" th:attr="data-board-id=${board.id}" th:disabled="${!isLoggendIn}" class="like-btn">
                             <i th:classappend="${isLiked} ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"
                                th:style="${isLiked} ? 'color: #e03e3e;' : 'color: #000;'"></i>
                         </button>
@@ -73,6 +74,10 @@
     $(document).ready(function () {
         $('.like-btn').on('click', function () {
             var button = $(this);
+            if(button.is(':disabled')){
+                alert("로그인이 필요합니다.");
+                return;
+            }
             var boardId = button.data('board-id');
             $.post("/board/" + boardId + "/like", function () {
                 var icon = button.find('i');

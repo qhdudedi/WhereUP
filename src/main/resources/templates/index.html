@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Popup Store</title>
     <!-- Google fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,7 +24,7 @@
                     <div class="text-c">
                         <span class="label">24.06.17 ~ 24.06.23 </span>
                     </div>
-<!--                    <span>24.06.17 ~ 24.06.23</span>-->
+                    <!--                    <span>24.06.17 ~ 24.06.23</span>-->
                     <div class="h1-box">
                         <h1> 6월 셋째 주,<br>팝업 스토어에서 <br> 특별한 순간을 함께 하세요!</h1>
                         <h2 th:text="${board.subject}"></h2>
@@ -51,7 +51,7 @@
                 <h2>지역별 팝업 스토어 보기</h2>
                 <p>원하는 지역에 팝업스토어를 확인해보세요 :0</p>
             </div>
-            <div class="option" onclick="location.href='/post/postList?page=1';">
+            <div class="option" onclick="location.href='/postList?page=1';">
                 <img src="/img/icon/review.png" alt="Review Icon">
                 <h2>팝업스토어 리뷰 보기</h2>
                 <p>사람들의 다양한 후기를 만나보세요</p>
