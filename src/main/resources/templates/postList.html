@@ -21,9 +21,6 @@
             <div th:if="${detail} == Search">
                 <li><a th:text="${detail} + '(' + ${keyword} + ')'"  th:href="'/post/search/' + ${keyword} + '?page=1'"></a></li>
             </div>
-            <div th:if="${detail} == MyPost">
-                <li><a th:text="${detail} + '(' + ${author} + ')'"  th:href="'/post/MyPost?page=1'"></a></li>
-            </div>
         </ul>
 
         <div class="btn-container" th:if="${user} != null">
@@ -44,13 +41,10 @@
     <div class="page-list">
         <ul>
             <div th:if="${detail} == All">
-                <li th:each="i : ${#numbers.sequence(1, pageCount)}"><a th:href="'/post/postList?page=' + ${i}" th:text="${i}"></a></li>
+                <li th:each="i : ${#numbers.sequence(1, pageCount)}"><a th:href="'/postList?page=' + ${i}" th:text="${i}"></a></li>
             </div>
             <div th:if="${detail} == Search">
                 <li th:each="i : ${#numbers.sequence(1, pageCount)}"><a th:href="'/post/search/'+ ${keyword} + '?page=' + ${i}" th:text="${i}"></a></li>
-            </div>
-            <div th:if="${detail} == MyPost">
-                <li th:each="i : ${#numbers.sequence(1, pageCount)}"><a th:href="'/post/myPost' + '?page=' + ${i}" th:text="${i}"></a></li>
             </div>
         </ul>
     </div>

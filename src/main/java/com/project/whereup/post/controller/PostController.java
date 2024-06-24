@@ -45,7 +45,7 @@ public class PostController {
         return "postList";
     }
     // 후기 상세 페이지
-    @GetMapping(value = "/{postId}")
+    @GetMapping(value = "/post/{postId}")
     public String viewPost(@PathVariable Long postId, Model model, Principal principal) {
         if(principal != null) {
             User loggedInUser = userService.getMyPage();
@@ -59,7 +59,7 @@ public class PostController {
         return "post";
     }
     // 신규 후기 작성 페이지
-    @GetMapping(value = "/newPost")
+    @GetMapping(value = "/post/newPost")
     public String newPost(Model model, Principal principal) {
         User loggedInUser = userService.getMyPage();
         if (principal == null) {
@@ -71,7 +71,7 @@ public class PostController {
         return "newPost";
     }
     // 신규 후기 작성 후 제출하고 나서 처리하는 거
-    @PostMapping(value = "/newPost")
+    @PostMapping(value = "/post/newPost")
     public String newPostGo(@RequestParam String title,
                             @RequestParam String content,
                             @RequestParam String author,
@@ -95,7 +95,7 @@ public class PostController {
         return "redirect:/post/" + postId;
     }
     // 후기 수정 페이지
-    @PostMapping(value = "/updatePost/{postId}")
+    @PostMapping(value = "/post/updatePost/{postId}")
     public String updatePost(@PathVariable Long postId, Model model, Principal principal) {
         Post post = postService.getPost(postId);
         if(!principal.getName().equals(post.getAuthor())) {
@@ -106,7 +106,7 @@ public class PostController {
         return "updatePost";
     }
     // 후기 수정 후 처리하는 거
-    @PostMapping(value = "/updatePost")
+    @PostMapping(value = "/post/updatePost")
     public String updatePostGo(@RequestParam Long id,
                                @RequestParam String title,
                                @RequestParam String content,
@@ -132,7 +132,7 @@ public class PostController {
         return "redirect:/post/"+id;
     }
     // 후기 삭제
-    @PostMapping("/deletePost/{postId}")
+    @PostMapping("/post/deletePost/{postId}")
     public String deletePost(@PathVariable Long postId, Principal principal) {
         Post post = postService.getPost(postId);
         if(!principal.getName().equals(post.getAuthor())) {
@@ -142,6 +142,6 @@ public class PostController {
         commentService.deleteByPostId(postId);
         //////////////////// S3 삭제
 
-        return "redirect:/post/postList";
+        return "redirect:/postList";
     }
 }
