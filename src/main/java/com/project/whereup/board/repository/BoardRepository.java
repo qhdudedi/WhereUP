@@ -76,4 +76,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
             "WHERE b.start_date BETWEEN :startDate AND :endDate " +
             "ORDER BY b.start_date ASC, b.end_date ASC")
     Page<BoardDesc> findDateRangeBoard(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate, Pageable pageable);
+    // brand만 뽑기
+    @Query("SELECT DISTINCT b.brand FROM Board b")
+    List<String> findDistinctBrands();
 }

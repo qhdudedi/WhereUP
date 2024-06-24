@@ -70,6 +70,7 @@
     flex-wrap: wrap;
     align-items: flex-start;
     padding: 20px;
+    /*gap: 5px;*/
     /*background-color: white;*/
 }
 
@@ -191,6 +192,12 @@
         font-size: 0.9em;
     }
 }
+.vertical-line {
+    width: 1px;
+    background-color: #ccc;
+    margin: 0 20px;
+    align-self: stretch;
+}
 /*!* 이미지 높이에 따라 여백을 추가하는 @supports *!*/
 /*@supports (aspect-ratio: 1 / 1) {*/
 /*    .board-item img {*/
@@ -201,40 +208,65 @@
 /*        padding-top: 20px;*/
 /*        padding-bottom: 20px;*/
 /*    }*/
-/*}*/
-.header-location {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.header-location ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-.header-location li {
-    display: inline-block;
-    margin-right: 25px;
-    font-size: 3em;
-}
-.header-location li:hover {
-    font-weight: bolder;
-    cursor: pointer;
-}
-.header-location-bold {
-    font-weight: bolder;
-}
-.header-location li:not(:last-child)::after {
-    font-weight: normal;
-    content: "|";
-    margin-left: 25px;
-}
+/*}
 /*.container {*/
 /*    min-height: 90%;*/
 /*}*/
+
+.header-location ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    padding: 0;
+}
+
+.header-location li {
+    flex: 1;
+    text-align: center;
+}
+
+.header-location a {
+    display: block;
+    padding: 15px 0;
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.header-location a:hover,
+.header-location a.header-location-bold {
+    color: #fff;
+    background-color: #004EB6;
+}
+.back-ground {
+    text-align: center;
+    padding: 20px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
 .custom-hr {
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin-top: 50px;
+    margin-bottom: 50px;
     height: 3px;
     background-color: black;
+}
+
+.board-more {
+    float: right;
+    height: 50px;
+    font-size: 1.5em;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #98accf;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 10px;
+}
+.board-more a {
+    color: white;
+    text-decoration: none;
 }

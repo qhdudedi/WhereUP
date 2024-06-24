@@ -6,10 +6,10 @@ document.addEventListener('DOMContentLoaded', function() {
         headerToolbar: {
             right: 'today prev,next'
         },
-        dayMaxEventRows: 4,
+        dayMaxEventRows: 3,
         droppable: false,
-        height: $(window).height() * 0.83,
-        contentHeight: $(window).height() * 0.83,
+        height: $(window).height() * 0.9,
+        contentHeight: $(window).height() * 0.85,
         aspectRatio: 2,
         locale: 'ko',
         selectable: true,

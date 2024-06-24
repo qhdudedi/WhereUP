@@ -23,13 +23,23 @@
         <input type="hidden" name="id" id="id" th:value="${post.id}">
         <input type="hidden" name="created_date" id="created_date" th:value="${post.created_date}">
         <div>
-            <strong>제목: </strong>
+            <span>제목: </span>
             <input type="text" name="title" id="title" th:value="${post.title}">
         </div>
         <div>
             <span>작성자: </span>
             <input type="text" name="author" id="author" th:value="${post.author}" readonly>
         </div>
+        <div>
+            <span>브랜드: </span>
+            <select th:name="brand">
+                <option th:each="brand : ${brandList}"
+                        th:value="${brand}"
+                        th:text="${brand}"
+                        th:selected="${brand} == ${post.brand} ? 'selected' : null"></option>
+            </select>
+        </div>
+        <hr class="new-post-hr">
         <div>
             <span>내용: </span>
             <textarea class="simplemde" name="content" id="content" th:text="${post.content}"></textarea>

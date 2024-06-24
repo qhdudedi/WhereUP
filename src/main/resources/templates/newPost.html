@@ -21,12 +21,20 @@
     </div>
     <form id="postForm" method="post" action="/post/newPost" class="post-form">
         <div>
+            <span>제목: </span>
             <input type="text" name="title" id="title">
         </div>
         <div>
-            <span> <input type="text" name="author" id="author" th:value="${author}" readonly> </span>
-
+            <span>작성자:</span>
+            <input type="text" name="author" id="author" th:value="${author}" readonly>
         </div>
+        <div>
+            <span>브랜드: </span>
+            <select th:name="brand" >
+                <option th:each="brand : ${brandList}" th:value="${brand}" th:text="${brand}"></option>
+            </select>
+        </div>
+        <hr class="new-post-hr">
         <div>
             <textarea class="simplemde" name="content" id="content"></textarea>
         </div>

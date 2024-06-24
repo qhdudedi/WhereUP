@@ -16,6 +16,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="/css/fullcalendar.css" rel="stylesheet"/>
     <link href="/css/mypage.css" rel="stylesheet"/>
+    <link href="/css/post.css" rel="stylesheet"/>
 
 </head>
 <body id="page-top">
@@ -28,9 +29,9 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
-            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#myaccount">내 정보 수정</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/">Main</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#schedule">내 일정</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#myaccount">내 정보 수정</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#liked">관심팝업</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#mypost">BLOG_후기</a></li>
             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#alarm">알림 서비스</a></li>
@@ -40,93 +41,23 @@
 <!-- Page Content-->
 <div class="container-fluid p-0">
     <!-- About-->
-    <section class="resume-section" id="about">
-        <div class="resume-section-content">
-            <h1 class="mb-0">
-                Clarence
-                <span class="text-primary">Taylor</span>
-            </h1>
-            <div class="subheading mb-5">
-                관심 카테고리 : 메이크업, 패션
-                <!-- <a href="mailto:name@email.com">name@email.com</a> -->
-            </div>
-            <p class="lead mb-5">My Page 입니다.</p>
-            <div class="social-icons">
-                <a class="social-icon" href="#!"><i class="fab fa-linkedin-in"></i></a>
-                <a class="social-icon" href="#!"><i class="fab fa-facebook-f"></i></a>
-            </div>
-        </div>
-    </section>
-    <hr class="m-0" />
-    <!-- 내 정보 수정 - 현재 정보들 보이고, 수정 버튼 클릭 시 form 페이지 이동-->
-    <section class="resume-section" id="myaccount">
-        <div class="resume-section-content">
-            <h2 class="mb-5">My Page</h2>
-            <div class="subheading mb-3">내 정보 수정</div>
-            <form method="post" th:action="@{/edit/mypage}">
-                <ul class="fa-ul mb-0">
-                    <li>
-                        <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <div class="form-group">
-                            <div class="input-group-alternative mb-3 input-group">
-                                <div class="input-group-prepend">
-                                    <i class="ni ni-email-83"></i>
-                                </div>
-                                <input type="text" class="form-control" name="name" id="name" th:value="${user.name}" readonly>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <div class="form-group">
-                            <div class="input-group-alternative mb-3 input-group">
-                                <div class="input-group-prepend">
-                                    <i class="ni ni-email-83"></i>
-                                </div>
-                                <input type="text" class="form-control" name="email" id="email" th:value="${user.email}" readonly>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <div class="form-group">
-                            <div class="input-group-alternative mb-3 input-group">
-                                <div class="input-group-prepend">
-                                    <i class="ni ni-email-83"></i>
-                                </div>
-                                <input type="password" class="form-control" name="password" id="password" th:value="${user.password}" readonly>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <div class="form-group">
-                            <div class="input-group-alternative mb-3 input-group">
-                                <div class="input-group-prepend">
-                                    <i class="ni ni-hat-3"></i>
-                                </div>
-                                <input type="text" class="form-control" name="nickname" id="nickname" th:value="${user.nickname}" readonly>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="fa-li"><i class="fas fa-check"></i></span>
-                        <div class="form-group">
-                            <div class="input-group-alternative mb-3 input-group">
-                                <div class="input-group-prepend">
-                                    <i class="ni ni-hat-3"></i>
-                                </div>
-                                <input type="text" class="form-control" name="birth" id="birth" th:value="${user.birth}" readonly>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                <button type="button" id="editButton">수정</button>
-                <button type="submit" id="saveButton" style="display:none;">저장</button>
-            </form>
-        </div>
-    </section>
-    <hr class="m-0" />
+<!--    <section class="resume-section" id="about">-->
+<!--        <div class="resume-section-content">-->
+<!--            <h1 class="mb-0">-->
+<!--                Clarence-->
+<!--                <span class="text-primary">Taylor</span>-->
+<!--            </h1>-->
+<!--            <div class="subheading mb-5">-->
+<!--                관심 카테고리 : 메이크업, 패션-->
+<!--                &lt;!&ndash; <a href="mailto:name@email.com">name@email.com</a> &ndash;&gt;-->
+<!--            </div>-->
+<!--            <p class="lead mb-5">My Page 입니다.</p>-->
+<!--            <div class="social-icons">-->
+<!--                <a class="social-icon" href="#!"><i class="fab fa-linkedin-in"></i></a>-->
+<!--                <a class="social-icon" href="#!"><i class="fab fa-facebook-f"></i></a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
     <!-- 내 일정 -->
     <section class="resume-section" id="schedule">
         <div class="resume-section-content">
@@ -135,26 +66,86 @@
             <div id="eventModal">
                 <div id="modalContent">
                     <span class="close">&times;</span>
-                    <h2 id="modalTitle">Create Event</h2>
                     <form id="eventForm">
                         <input type="hidden" id="eventId">
-                        <label for="title">Title:</label>
-                        <input type="text" id="title" name="title" required><br><br>
+                        <label for="title">일정</label>
+                        <input type="text" id="title" name="title" placeholder="새로운 이벤트">
 
-                        <label for="summary">Summary:</label>
-                        <input type="text" id="summary" name="summary" required><br><br>
+                        <label for="summary">메모</label>
+                        <input type="text" id="summary" name="summary" required>
+                        <div class="date-cont">
+                            <label for="startDate"><br></label>
+                            <input type="date" id="startDate" name="startDate" required>
 
-                        <label for="startDate">Start Date:</label>
-                        <input type="date" id="startDate" name="startDate" required><br><br>
-
-                        <label for="endDate">End Date:</label>
-                        <input type="date" id="endDate" name="endDate" required><br><br>
-
-                        <button type="submit">등록</button>
-                        <button id="deleteEventBtn" style="display: none;">삭제</button>
+                            <label for="endDate"> ~ </label>
+                            <input type="date" id="endDate" name="endDate" required>
+                        </div>
+                        <div class="btn-cont">
+                            <button type="submit">등록</button>
+                            <button id="deleteEventBtn" style="display: none;">삭제</button>
+                        </div>
                     </form>
                 </div>
             </div>
+        </div>
+    </section>
+    <hr class="m-0" />
+    <!-- 내 정보 수정 - 현재 정보들 보이고, 수정 버튼 클릭 시 form 페이지 이동-->
+    <section class="resume-section" id="myaccount">
+        <div class="resume-section-content">
+            <div class="subheading mb-3">내 정보 수정</div>
+            <form method="post" th:action="@{/edit/mypage}">
+                <ul class="fa-ul mb-0">
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        <div class="form-group">
+                            <div class="input-group-alternative mb-3 input-group">
+                                <label class="lb-form">이름</label>
+                                <input type="text" class="form-control" name="name" id="name" th:value="${user.name}" readonly>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        <div class="form-group">
+                            <div class="input-group-alternative mb-3 input-group">
+                                <label class="lb-form">이메일</label>
+                                <input type="text" class="form-control" name="email" id="email" th:value="${user.email}" readonly>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        <div class="form-group">
+                            <div class="input-group-alternative mb-3 input-group">
+                                <label class="lb-form">비밀번호</label>
+                                <input type="password" class="form-control hidden-input" name="password" id="password" th:value="${user.password}" readonly>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        <div class="form-group">
+                            <div class="input-group-alternative mb-3 input-group">
+                                <label for ="nickname"  class="lb-form">닉네임</label>
+                                <input type="text" class="form-control" name="nickname" id="nickname" th:value="${user.nickname}" readonly>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        <div class="form-group">
+                            <div class="input-group-alternative mb-3 input-group">
+                                <label for="birth" class="lb-form">생년월일</label>
+                                <input type="text" class="form-control" name="birth" id="birth" th:value="${user.birth}" readonly>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <button type="button" id="editButton">수정</button>
+                <button type="submit" id="cancelButton" style="display:none;">취소</button>
+                <button type="submit" id="saveButton" style="display:none;">저장</button>
+            </form>
         </div>
     </section>
     <hr class="m-0" />
@@ -165,7 +156,9 @@
             <ul class="fa-ul mb-0">
                 <li th:each="board : ${likeBoards}">
                     <span class="fa-li"><i class="fas fa-check"></i></span>
-                    <span th:text="${board.subject}"></span>
+                    <span>
+                        <a th:href="'/board/'+${board.id}" th:text="${board.subject}" style="text-decoration: none"></a>
+                    </span>
                     <div>
                         <span th:text="'Start Date: ' + ${board.start_date}"></span> -
                         <span th:text="'End Date: ' + ${board.end_date}"></span>
@@ -181,7 +174,7 @@
     <!-- BLOG_후기 -->
     <section class="resume-section" id="mypost">
         <div class="resume-section-content">
-            <h2 class="mb-5">마이 후기 </h2>
+            <h2 class="mb-5">작성한 BLOG</h2>
             <div class="post-container">
                 <div th:each="post : ${list}" class="post-item">
                     <img th:src="${post.thumbnail != null ? post.thumbnail : 'https://via.placeholder.com/100x100.jpg'}">
@@ -199,18 +192,28 @@
     <section class="resume-section" id="alarm">
         <div class="resume-section-content">
             <h2 class="mb-5">알림서비스 정보 수정</h2>
-            <!--            텔레그램 연동 방법 알려주기-->
-            <form id="telegramForm" action="/telegram/getUserInfo" method="post" class="telegramForm">
-                <input type="hidden" name="userId" th:value="${user.id}">
-                chatId: <input type="text" name="chatId" th:value="${telegramUserInfo != null ? telegramUserInfo.chatId : ''}" disabled>
-                <br>
-                <input type="checkbox" name="culture" th:text="문화" th:checked="${telegramUserInfo != null ? telegramUserInfo.culture : false}" disabled>
-                <input type="checkbox" name="fashion" th:text="패션" th:checked="${telegramUserInfo != null ? telegramUserInfo.fashion : false}" disabled>
-                <input type="checkbox" name="life" th:text="생활" th:checked="${telegramUserInfo != null ? telegramUserInfo.life : false}" disabled>
-                <br>
-                <input type="button" value="modify" onclick="enableTelegramForm('telegramForm')", id="modifyButton">
-                <input type="submit" value="submit" style="display: none;" id="submitButton">
-            </form>
+            <div class="telegramHow post-it">
+                <span class="telegramHow-title">텔레그램 알림서비스 등록 방법</span><br>
+                <span>텔레그램 가입 -> </span>
+                <span><a href="https://t.me/whereupbot" target="_blank">알림 봇 접속</a> -> </span>
+                <span>채팅 아이디 발급 -> </span>
+                <span>채팅 아이디 및 키워드 등록</span>
+            </div>
+            <hr>
+            <div class="">
+                <form id="telegramForm" action="/telegram/getUserInfo" method="post" class="telegramForm">
+                    <input type="hidden" name="userId" th:value="${user.id}">
+                    채팅 아이디: <input type="text" name="chatId" th:value="${telegramUserInfo != null ? telegramUserInfo.chatId : ''}" disabled>
+                    <br>
+                    <input type="checkbox" name="culture" th:checked="${telegramUserInfo != null ? telegramUserInfo.culture : false}" disabled>문화
+                    <input type="checkbox" name="fashion" th:checked="${telegramUserInfo != null ? telegramUserInfo.fashion : false}" disabled>패션
+                    <input type="checkbox" name="life" th:checked="${telegramUserInfo != null ? telegramUserInfo.life : false}" disabled>생활
+                    <br>
+                    <br>
+                    <input type="button" value="수정" onclick="enableTelegramForm('telegramForm')", id="modifyButton">
+                    <input type="submit" value="저장" style="display: none;" id="submitButton">
+                </form>
+            </div>
         </div>
     </section>
 </div>
@@ -222,7 +225,20 @@
         function enableEditing() {
             document.getElementById("nickname").removeAttribute("readonly");
             document.getElementById("birth").removeAttribute("readonly");
+
+            // 관련된 label 요소의 글자를 bold로 변경하고 색상도 변경
+            let nicknameLabel = document.querySelector('label[for="nickname"]');
+            let birthLabel = document.querySelector('label[for="birth"]');
+
+            nicknameLabel.style.fontWeight = "bold";
+            nicknameLabel.style.color = "#565f6e"; // 원하는 색상으로 변경
+
+            birthLabel.style.fontWeight = "bold";
+            birthLabel.style.color = "#565f6e"; // 원하는 색상으로 변경
+
+
             document.getElementById("editButton").style.display = "none";
+            document.getElementById("cancelButton").style.display = "inline-block";
             document.getElementById("saveButton").style.display = "inline-block";
         }
 

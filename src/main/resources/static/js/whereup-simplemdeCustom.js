@@ -42,7 +42,7 @@ document.getElementById('imageUpload').addEventListener('change', function(){
                             .then(response => {
                                 if (response.ok) {
                                     let cm = simplemde.codemirror;
-                                    let output = `![](${data.url.split('?')[0]})`;
+                                    let output = `![](${data.url.split('?')[0].replace('whereupp-s3.s3.ap-northeast-2.amazonaws.com', 'd1pssi2485491c.cloudfront.net')})`;
                                     cm.replaceSelection(output);
                                 } else {
                                     alert('이미지 업로드 실패');

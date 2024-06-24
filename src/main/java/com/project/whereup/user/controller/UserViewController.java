@@ -50,7 +50,7 @@ public class UserViewController {
         User loggedInUser = userService.getMyPage();                            //  유저 정보
         model.addAttribute("user",loggedInUser);
 
-        List<PostSummary> list = postService.allSummariesMyPage(loggedInUser.getEmail());
+        List<PostSummary> list = postService.allSummariesMyPage(loggedInUser.getNickname());
         model.addAttribute("list",list);
 
         List<BoardRequestDto> likeBoards = boardLikeService.findBoardByUser();  // 관심 팝업 목록
