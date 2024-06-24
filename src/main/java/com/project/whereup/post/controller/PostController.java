@@ -10,7 +10,6 @@ import com.project.whereup.post.service.PostService;
 import com.project.whereup.user.entity.User;
 import com.project.whereup.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,6 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value = "/post")
 public class PostController {
     private final MarkdownService markdownService;
     private final PostService postService;
@@ -65,7 +63,7 @@ public class PostController {
     public String newPost(Model model, Principal principal) {
         User loggedInUser = userService.getMyPage();
         if (principal == null) {
-            return "redirect:/post/postList"; // 로그인 해야만 신규후기 작성 가능
+            return "redirect:/postList"; // 로그인 해야만 신규후기 작성 가능
         }
         model.addAttribute("author", loggedInUser.getNickname());
 
