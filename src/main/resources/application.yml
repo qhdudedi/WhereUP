@@ -1,4 +1,5 @@
 server:
+  port: 443
   ssl:
     key-store: classpath:ssl/www.whereupp.com_2024052192E55.pfx
     key-store-type: PKCS12
@@ -58,8 +59,6 @@ spring:
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
-
-
 
 aws:
   access-key: ${AWS_ACCESS_KEY}
