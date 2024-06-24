@@ -96,9 +96,10 @@ public class PostController {
     }
     // 후기 수정 페이지
     @PostMapping(value = "/post/updatePost/{postId}")
-    public String updatePost(@PathVariable Long postId, Model model, Principal principal) {
+    public String updatePost(@PathVariable Long postId, Model model) {
         Post post = postService.getPost(postId);
-        if(!principal.getName().equals(post.getAuthor())) {
+        User loggingedInUser = userService.getMyPage();
+        if(!loggingedInUser.getNickname().equals(post.getAuthor())) {
             return "redirect:/post/" + postId; // 작성자와 현재 로그인 유저가 같지 않으면 수정불가
         }
         model.addAttribute("post", post);
@@ -133,9 +134,10 @@ public class PostController {
     }
     // 후기 삭제
     @PostMapping("/post/deletePost/{postId}")
-    public String deletePost(@PathVariable Long postId, Principal principal) {
+    public String deletePost(@PathVariable Long postId) {
         Post post = postService.getPost(postId);
-        if(!principal.getName().equals(post.getAuthor())) {
+        User loggingedInUser = userService.getMyPage();
+        if(!loggingedInUser.getNickname().equals(post.getAuthor())) {
             return "redirect:/post/" + postId; // 작성자와 현재 로그인 유저가 같지 않으면 삭제불가
         }
         postService.delete(postId);
