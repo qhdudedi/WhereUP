@@ -1,7 +1,6 @@
 package com.project.whereup.user.service;
 
 import com.project.whereup.oauth.PrincipalDetails;
-import com.project.whereup.user.dto.CustomUserDetails;
 import com.project.whereup.user.dto.request.UserRequestDto;
 import com.project.whereup.user.entity.User;
 import com.project.whereup.user.repository.UserRepository;
@@ -97,7 +96,7 @@ public class UserService {
     }
     // 사용자 세션 인증 정보 업데이트
     private void updateAuthentication(User user) {
-        CustomUserDetails userDetails = new CustomUserDetails(user);
+        PrincipalDetails userDetails = new PrincipalDetails(user);
         log.info("Updating authentication for user: {}", userDetails);
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         log.info("New authentication: {}", authentication);
