@@ -1993,7 +1993,7 @@ progress {
 }
 
 .form-control {
-    display: block;
+    display: inline-block;
     width: 100%;
     padding: 0.375rem 0.75rem;
     font-size: 1rem;
@@ -2006,9 +2006,11 @@ progress {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    border-radius: 0.375rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    border: none;
+    border-bottom: 1px solid #ccc;
 }
+
 @media (prefers-reduced-motion: reduce) {
     .form-control {
         transition: none;
@@ -2501,7 +2503,7 @@ textarea.form-control-lg {
     display: flex;
     flex-wrap: wrap;
     align-items: stretch;
-    width: 100%;
+    width: 50%;
 }
 .input-group > .form-control,
 .input-group > .form-select,
@@ -10970,4 +10972,68 @@ section.resume-section .resume-section-content {
         padding-top: 5rem;
         padding-bottom: 5rem;
     }
+}
+
+
+.telegramHow-title {
+    font-size: 2em;
+}
+.telegramHow {
+    font-size: 1.3em;
+}
+.telegramHow a {
+    color: lightblue;
+}
+.telegramForm {
+    font-size: 2em;
+}
+.telegramForm input[type="checkbox"] {
+    transform: scale(2);
+    vertical-align: middle;
+    margin: 0 10px 10px;
+}
+.telegramForm input[type="button"],
+.telegramForm input[type="submit"] {
+    background-color: #98accf;
+    color: white;
+    margin: 10px 10px 10px 0;
+    border: none;
+    border-radius: 4px;
+}
+.telegramForm input[type="button"]:hover,
+.telegramForm input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+.post-it {
+    width: 1000px;
+    height: 150px;
+    background-color: #ffeb3b; /* 노란색 포스트잇 배경 */
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+    transform: rotate(-3deg);
+}
+
+.post-it::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    background-color: lightyellow;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+    /*transform: rotate(45deg);*/
+    transform-origin: bottom left;
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+}
+.lb-form{
+    margin-right: 10px;
+}
+.hidden-input{
+    color: transparent; /* 텍스트 색상을 투명하게 설정 */
+    text-shadow: none; /* 텍스트가 투명해도 공간을 차지하도록 설정 */
+    caret-color: transparent; /* 커서를 투명하게 설정 */
+    background-color: inherit; /* 배경색을 부모 요소와 동일하게 유지 */
 }

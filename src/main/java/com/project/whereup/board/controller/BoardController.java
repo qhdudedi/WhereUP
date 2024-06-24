@@ -44,7 +44,7 @@ public class BoardController {
         String[] img_url = new String[imgList.size()];
         for (int i = 0; i < img_url.length; i++) {
             String key = imgList.get(i).getImageName();
-            img_url[i] = s3Service.getImageUrl(key);
+            img_url[i] = s3Service.getImageUrl("board/" + key);
         }
         model.addAttribute("img_url", img_url);
         model.addAttribute("board", board);

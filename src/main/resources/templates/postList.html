@@ -32,7 +32,7 @@
     </div>
     <div class="post-container">
         <div th:each="post : ${list}" class="post-item">
-            <img th:src="${post.thumbnail != null ? post.thumbnail : '/img/whereup.png'}">
+            <img th:src="${post.thumbnail != null ? post.thumbnail : 'https://d1pssi2485491c.cloudfront.net/admin/whereup.png'}">
             <div class="details">
                 <h5 ><a th:href="'/post/' + ${post.id}" th:text="${post.title}"></a></h5>
                 <h6 th:text="${post.author}"></h6>

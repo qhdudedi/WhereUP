@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>회원가입</title>
     <link href="/css/origin.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script>
         function checkNickname() {
             const nickname = document.getElementById('nickname').value;
@@ -44,28 +45,28 @@
                                     <a href="#pablo" class="btn-neutral btn-icon mr-4 btn btn-default"><span
                                             class="btn-inner--icon mr-1">
                                                 <img src="/img/naver.png"></span>
-                                      <span class="btn-inner--text">NAVER</span>
+                                        <span class="btn-inner--text">NAVER</span>
                                     </a>
                                     <a href="#pablo" class="btn-neutral btn-icon mr-4 btn btn-default">
-                                      <span class="btn-inner--icon mr-1"> <img src="/img/kakao.png"> </span>
-                                      <span class="btn-inner--text">KAKAO</span>
+                                        <span class="btn-inner--icon mr-1"> <img src="/img/kakao.png"> </span>
+                                        <span class="btn-inner--text">KAKAO</span>
                                     </a>
                                 </div>
                             </div>
                             <div class="px-lg-5 py-lg-5 card-body">
-                                <div class="text-center text-muted mb-4"><small>Or sign up with credentials</small>
+                                <div class="text-center text-muted mb-4"><small>또는 계정으로 가입하기</small>
                                 </div>
                                 <form th:action="@{/signup}" method="post" >
                                     <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}" />
-<!--                                <form role="form" class="">-->
+                                    <!--                                <form role="form" class="">-->
                                     <div class="form-group">
                                         <div class="input-group-alternative mb-3 input-group">
                                             <div class="input-group-prepend">
                                                     <span class="input-group-text">
-                                                         <img src="/img/icon/user.png"></span><i class="ni ni-hat-3"></i>
+                                                        <i class="fa-solid fa-user fa-lg"></i>
                                                     </span>
                                             </div>
-                                            <input name = "name" placeholder="Name" type="text" class="form-control">
+                                            <input name = "name" placeholder="이름" type="text" class="form-control">
                                         </div>
                                     </div>
 
@@ -73,30 +74,30 @@
                                         <div class="input-group-alternative mb-3 input-group">
                                             <div class="input-group-prepend">
                                                     <span class="input-group-text">
-                                                         <img src="/img/icon/mail.png"></span><i class="ni ni-email-83"></i>
-                                                    </span>
+                                                        <i class="fa-solid fa-envelope fa-lg"></i></span><i class="ni ni-email-83"></i>
+                                                </span>
                                             </div>
-                                            <input name = "email" placeholder="Email" type="email" class="form-control">
+                                            <input name = "email" placeholder="이메일" type="email" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="input-group-alternative input-group">
                                             <div class="input-group-prepend">
                                                     <span class="input-group-text">
-                                                         <img src="/img/icon/lock.png"></span><i class="ni ni-lock-circle-open"></i>
+                                                        <i class="fa-solid fa-lock fa-lg"></i>
                                                     </span>
                                             </div>
-                                            <input name = "password" placeholder="Password" autocomplete="off" type="password" class="form-control">
+                                            <input name = "password" placeholder="비밀번호" autocomplete="off" type="password" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="input-group-alternative mb-3 input-group">
                                             <div class="input-group-prepend">
                                                     <span class="input-group-text">
-                                                         <img src="/img/icon/smile.png"></span><i class="ni ni-hat-3"></i>
+                                                        <i class="fa-solid fa-pen fa-lg"></i>
                                                     </span>
                                             </div>
-                                            <input name="nickname" id="nickname" placeholder="Nickname" type="text" class="form-control">
+                                            <input name="nickname" id="nickname" placeholder="닉네임" type="text" class="form-control">
                                             <div class="input-group-append">
                                                 <button type="button" class="btn btn-secondary" onclick="checkNickname()">중복확인</button>
                                             </div>
@@ -107,16 +108,11 @@
                                         <div class="input-group-alternative mb-3 input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">
-                                                         <img src="/img/icon/calendar.png"></span><i class="ni ni-hat-3"></i>
+                                                    <i class="fa-solid fa-calendar-days fa-lg"></i>
                                                 </span>
                                             </div>
                                             <input name = "birth" placeholder="Birth" type="date" class="form-control">
                                         </div>
-                                    </div>
-                                    <div class="text-muted font-italic">
-                                        <!-- <small>password strength: <span
-                                                class="text-success font-weight-700">strong</span>
-                                        </small> -->
                                     </div>
                                     <div class="text-center">
                                         <button type="submit" class="mt-4 btn btn-primary">회원가입</button>
@@ -132,42 +128,6 @@
             </div>
         </section>
     </main>
-    <footer data-include-path="./common/footer.html"></footer>
-    <footer include-html="/common/footer.html"></footer>
 </div>
-<script>
-
-<script src="/argon-design-system-react/static/js/2.41848f9e.chunk.js"></script>
-<script src="/argon-design-system-react/static/js/main.8a3b53c3.chunk.js"></script>
-<script type="text/javascript" id="">function setCookie(a, d, c) {
-    var b = new Date;
-    b.setTime(b.getTime() + 864E5 * c);
-    c = "expires\x3d" + b.toUTCString();
-    document.cookie = a + "\x3d" + d + ";" + c + ";path\x3d/"
-}
-
-function readDomain() {
-    domain = window.location.hostname;
-    if ("hrm.newflex.co.kr" == domain) {
-        console.log("Remove the script");
-        var a = document.createElement("div");
-        a.setAttribute("id", "pls-contact-me-on-email");
-        a.innerHTML = "\x3ch1\x3ePlease Remove the Stolen Google Analytics from \x3ca href\x3d'https://www.creative-tim.com/?ref\x3dstolen-website' target\x3d'_blank' '\x3ecreative-tim.com\x3c/a\x3e Please send an email to beni@creative-tim.com to help you remove our scripts.\x3c/h1\x3e";
-        document.body.insertBefore(a,
-            document.body.firstChild)
-    }
-}
-
-function readCookie(a) {
-    a += "\x3d";
-    for (var d = document.cookie.split(";"), c = 0; c < d.length; c++) {
-        for (var b = d[c]; " " == b.charAt(0);) b = b.substring(1, b.length);
-        if (0 == b.indexOf(a)) return b.substring(a.length, b.length)
-    }
-    return null
-}
-</script>
-
 </body>
-
 </html>
