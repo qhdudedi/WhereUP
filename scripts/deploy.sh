@@ -46,4 +46,6 @@ sudo nohup java -jar \
     -Dspring.config.location=classpath:/application.yml \
     $JAR_NAME > $REPOSITORY/nohup.out 2>&1 &
 
-aws s3 cp "$JAR_NAME" "s3://whereupp-s3/backup/$(date "+%Y%m%d_%H%M%S")_$(basename "$JAR_NAME")"
+TZ='Asia/Seoul' aws s3 cp "$JAR_NAME" "s3://whereupp-s3/backup/$(date "+%Y%m%d_%H%M%S")_$(basename "$JAR_NAME")"
+
+#aws s3 cp "$JAR_NAME" "s3://whereupp-s3/backup/$(date "+%Y%m%d_%H%M%S")_$(basename "$JAR_NAME")"
