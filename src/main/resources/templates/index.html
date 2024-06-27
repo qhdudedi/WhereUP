@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Popup Store</title>
+    <!-- Google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/headerAndFooter.css">
+
+</head>
+<body>
+<header th:replace="~{fragments/header::header}"></header>
+<div class="body-container">
+    <main>
+        <div class="main-container">
+            <section class="content" th:each="board: ${summariesTop}" th:id="'section-' + ${board.id}">
+                <div class="text-content">
+                    <div class="text-c">
+                        <span class="label">24.06.24 ~ 24.06.30 </span>
+                    </div>
+                    <!--                    <span>24.06.17 ~ 24.06.23</span>-->
+                    <div class="h1-box">
+                        <h1> 6월 넷째 주,<br>팝업 스토어에서 <br> 특별한 순간을 함께 하세요!</h1>
+                        <h2 th:text="${board.subject}"></h2>
+                    </div>
+                    <p th:text="${board.start_date} + ' ~ ' + ${board.end_date}"></p>
+                    <div class="buttons">
+                        <a th:href="@{'/board/' + ${board.id}}">
+                            <button class="btn primary-btn">자세히 보기</button>
+                        </a>
+                        <a href="/board/boardList?page=1" class="btn secondary-btn">팝업 스토어 전체 보기</a>
+                    </div>
+                </div>
+                <div class="image-content">
+                    <img th:src="${board.imageUrl}">
+                </div>
+            </section>
+        </div>
+    </main>
+    <!-- MENU ICON Section -->
+    <div class="content-container">
+        <section class="options">
+            <div class="option" onclick="location.href='/board/locationList';">
+                <img src="/img/icon/map.png" alt="Location Icon">
+                <h2>지역별 팝업 스토어 보기</h2>
+                <p>원하는 지역에 팝업스토어를 확인해보세요 :0</p>
+            </div>
+            <div class="option" onclick="location.href='/postList?page=1';">
+                <img src="/img/icon/review.png" alt="Review Icon">
+                <h2>팝업스토어 리뷰 보기</h2>
+                <p>사람들의 다양한 후기를 만나보세요</p>
+            </div>
+        </section>
+
+    </div>
+    <section class="popup-stores">
+        <div class="slideshow-container">
+            <div class="board-container">
+                <div th:each="board : ${summaries}" class="board-item">
+                    <img th:src="${board.imageUrl}">
+                    <div class="details">
+                        <h5><a th:href="'/board/' + ${board.id}" th:text="${board.subject}"></a></h5>
+                        <h6 th:text="${board.start_date} + ' ~ ' + ${board.end_date}"></h6>
+                    </div>
+                </div>
+            </div>
+            <a class="prev" onclick="plusBoardSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusBoardSlides(1)">&#10095;</a>
+        </div>
+    </section>
+</div>
+<footer th:replace="~{fragments/footer::footer}"></footer>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // 기존 슬라이드 기능
+        let currentIndex = 0;
+
+        function showSlide(index) {
+            const slides = document.querySelectorAll('.content');
+            if (index >= slides.length) {
+                currentIndex = 0;
+            } else if (index < 0) {
+                currentIndex = slides.length - 1;
+            } else {
+                currentIndex = index;
+            }
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === currentIndex);
+            });
+        }
+
+        window.plusSlides = function(n) {
+            showSlide(currentIndex + n);
+        };
+
+        showSlide(currentIndex);
+
+        // 5초마다 자동으로 슬라이드 전환
+        setInterval(() => {
+            plusSlides(1);
+        }, 3000); // 5000ms = 5초
+
+        // 새로운 보드 슬라이드쇼 기능
+        const boardContainer = document.querySelector('.board-container');
+        const boardSlides = Array.from(document.querySelectorAll('.board-item'));
+        const totalBoardSlides = boardSlides.length;
+        const slidesPerView = 3;
+        let boardIndex = slidesPerView;
+
+        // 슬라이드 아이템 복제
+        boardSlides.slice(0, slidesPerView).forEach(slide => {
+            boardContainer.appendChild(slide.cloneNode(true));
+        });
+        boardSlides.slice(-slidesPerView).reverse().forEach(slide => {
+            boardContainer.insertBefore(slide.cloneNode(true), boardContainer.firstChild);
+        });
+
+        boardContainer.style.transform = `translateX(${-100 / slidesPerView * boardIndex}%)`;
+
+        window.plusBoardSlides = function(n) {
+            boardIndex += n;
+            boardContainer.style.transition = 'transform 0.5s ease-in-out';
+            boardContainer.style.transform = `translateX(${-100 / slidesPerView * boardIndex}%)`;
+
+            boardContainer.addEventListener('transitionend', onBoardTransitionEnd, { once: true });
+        };
+
+        function onBoardTransitionEnd() {
+            if (boardIndex >= totalBoardSlides + slidesPerView) {
+                boardIndex = slidesPerView;
+                boardContainer.style.transition = 'none';
+                boardContainer.style.transform = `translateX(${-100 / slidesPerView * boardIndex}%)`;
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        boardContainer.style.transition = 'transform 0.5s ease-in-out';
+                    });
+                });
+            } else if (boardIndex < slidesPerView) {
+                boardIndex = totalBoardSlides;
+                boardContainer.style.transition = 'none';
+                boardContainer.style.transform = `translateX(${-100 / slidesPerView * boardIndex}%)`;
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        boardContainer.style.transition = 'transform 0.5s ease-in-out';
+                    });
+                });
+            }
+        }
+
+        // 초기화
+        boardContainer.style.transition = 'none';
+        boardContainer.style.transform = `translateX(${-100 / slidesPerView * boardIndex}%)`;
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>post</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/boardAndPost.css">
+    <link rel="stylesheet" href="/css/post.css">
+    <link rel="stylesheet" href="/css/headerAndFooter.css">
+</head>
+
+<body>
+<header th:replace="~{fragments/header::header}"></header>
+<div class="container">
+    <div class="header-list">
+        <ul>
+            <li><a href="/postList?page=1">목록</a></li>
+            <li th:text="${post.id}"></li>
+        </ul>
+        <div class="btn-container" th:if="${user} != null and ${user} == ${post.author}">
+            <form method="post" th:action="'/post/updatePost/' + ${post.id}">
+                <input type="submit" class="modify-btn" value="수정">
+            </form>
+            <form method="post" th:action="'/post/deletePost/' + ${post.id}" onsubmit="return confirmDeletion();">
+                <input type="submit" class="delete-btn" value="삭제">
+            </form>
+        </div>
+    </div>
+
+    <form class="post-form">
+        <div>
+            <strong><input type="text" th:value="${post.title}" readonly></strong>
+        </div>
+        <div>
+            <span th:text="'created by: ' + ${post.author}"></span>
+            <span th:text="${post.updated_date}" class="date-for-right"></span>
+            <br>
+            <span th:text="'brand: ' + ${post.brand}"></span>
+        </div>
+        <hr>
+        <div>
+            <div class="post-content" th:utext="${post.content}"></div>
+            <hr>
+        </div>
+    </form>
+
+    <div class="comments">
+        <h3>댓글</h3>
+        <div th:if="${user} != null" id="add-form" class="comment-item">
+            <form id="commentForm" action="/post/comment/add" method="post">
+                <input type="hidden" id="postId" name="postId" th:value="${post.id}">
+                <textarea id="text" name="text"></textarea>
+                <div class="form-buttons">
+                    <input type="submit" value="등록">
+                </div>
+            </form>
+        </div>
+        <div th:each="comment : ${comments}" class="comment-item">
+            <div class="comment-item-header">
+                <div>
+                    <a class="comment-user" th:text="${comment.user}"></a>
+                    <a class="comment-date" th:text="${comment.updated_date}"></a>
+                </div>
+                <div th:if="${comment.user} == ${user}" th:id="${comment.id} + '-btn-area'" class="btn-area">
+                    <a href="javascript:void(0)" th:id="${comment.id} + '-edit'" th:attr="onclick=|editComment(${comment.id})|">수정</a>
+                    <a th:href="'/post/comment/delete/' + ${comment.id}" th:id="${comment.id} + '-delete'" onclick="return confirmDeletion();">삭제</a>
+                </div>
+            </div>
+            <div th:id="${comment.id} + '-comment-area'">
+                <p th:text="${comment.text}" th:id="${comment.id} + '-text'"></p>
+            </div>
+            <div th:id="${comment.id} + '-edit-area'" style="display:none;">
+                <form id="editForm-${comment.id}" action="/post/comment/edit" method="post">
+                    <input type="hidden" th:id="${comment.id} + '-id'" name="commentId" th:value="${comment.id}">
+                    <textarea th:id="${comment.id} + '-textarea'" name="commentText"></textarea>
+                    <div class="form-buttons">
+                        <input type="submit" value="제출">
+                        <input type="button" value="취소" th:attr="onclick=|cancelComment(${comment.id})|">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{fragments/footer::footer}"></footer>
+<script src="/js/whereup-postWithComment.js"></script>
+</body>
+</html>

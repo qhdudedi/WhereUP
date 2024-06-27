@@ -1,0 +1,52 @@
+package com.project.whereup.user.controller;
+
+import com.project.whereup.user.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequiredArgsConstructor
+//@RequestMapping(value = "/api/user")
+public class UserApiController {
+
+    private final UserService userService;
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
+        return "redirect:/login";
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> delete(@PathVariable Long userId){
+        userService.deleteById(userId);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/check-nickname")
+    public ResponseEntity<Boolean> checkNickname(@RequestParam String nickname){
+        boolean nicknameDuplicate = userService.checkNicknameDuplicate(nickname);
+        return ResponseEntity.ok(nicknameDuplicate);
+    }
+    //    @GetMapping("/mypage/likeBoard")
+//    public List<BoardRequestDto> getMyLikeBoards(){
+//        return boardLikeService.findBoardByUser();
+//    }
+
+//    @PatchMapping("/edit/mypage")
+//    public ResponseEntity<User> updateMyPage(@RequestBody UserRequestDto userRequestDto) {
+//        User updatedUser = userService.updateMyPage(userRequestDto);
+//        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+//    }
+//    @PostMapping("/edit/mypage")
+//    public ResponseEntity<User> updateMyPagePost(@ModelAttribute UserRequestDto userRequestDto) {
+//        return updateMyPage(userRequestDto);
+//    }
+
+
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div id="header-container" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <header th:fragment="header">
+        <a class="logo" href="/">
+            <img src="/img/nav_icon.png" alt="Logo">
+        </a>
+        <form class="search-container" action="/search" method="get">
+            <input id="searchToggle" type="checkbox">
+            <label for="searchToggle" class="search-icon">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </label>
+            <input type="text" name="keyword" placeholder="Search...">
+
+        </form>
+        <nav class="login-logout">
+            <th:block sec:authorize="isAnonymous()">
+                <!-- 인증 받지 않음 -->
+                <a href="/login"> 로그인</a>
+                <a href="/signup"> 회원가입</a>
+            </th:block>
+
+            <th:block sec:authorize="isAuthenticated()">
+                <!-- 인증 받음 -->
+                <a href="/logout" class="icons me-2 ms-2">로그아웃</a>
+                <a href="/mypage" class="icons me-2 ms-2">내 정보</a>
+            </th:block>
+        </nav>
+
+    </header>
+</div>
+</html>

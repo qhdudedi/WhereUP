@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>회원가입</title>
+    <link href="/css/origin.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function checkNickname() {
+            const nickname = document.getElementById('nickname').value;
+            if (nickname) {
+                fetch('/check-nickname?nickname=' + encodeURIComponent(nickname))
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data) {
+                            alert('중복된 닉네임입니다.');
+                        } else {
+                            alert('사용가능한 닉네임입니다.');
+                        }
+                    })
+                    .catch(error => {
+                        alert('Error checking nickname');
+                    });
+            }
+        }
+    </script>
+</head>
+
+<body>
+<div id="root">
+    <header class="header-global">
+
+    </header>
+    <main>
+        <section class="section section-shaped section-lg">
+            <div class="shape bg-gradient-default"></div>
+            <div class="pt-lg-7 container">
+                <div class="justify-content-center row">
+                    <div class="col-lg-5">
+                        <div class="bg-secondary shadow border-0 card">
+                            <div class="bg-white pb-5 card-header">
+                                <div class="text-muted  text-center mb-3"><small>Sign up with</small></div>
+                                <div class="text-center">
+                                    <a href="/oauth2/authorization/naver" class="btn-neutral btn-icon mr-4 btn btn-default"><span
+                                            class="btn-inner--icon mr-1">
+                                                <img src="/img/naver.png"></span>
+                                        <span class="btn-inner--text">NAVER</span>
+                                    </a>
+                                    <a href="/oauth2/authorization/kakao" class="btn-neutral btn-icon mr-4 btn btn-default">
+                                        <span class="btn-inner--icon mr-1"> <img src="/img/kakao.png"> </span>
+                                        <span class="btn-inner--text">KAKAO</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="px-lg-5 py-lg-5 card-body">
+                                <div class="text-center text-muted mb-4"><small>또는 계정으로 가입하기</small>
+                                </div>
+                                <form th:action="@{/signup}" method="post" >
+                                    <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}" />
+                                    <!--                                <form role="form" class="">-->
+                                    <div class="form-group">
+                                        <div class="input-group-alternative mb-3 input-group">
+                                            <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="fa-solid fa-user fa-lg"></i>
+                                                    </span>
+                                            </div>
+                                            <input name = "name" placeholder="이름" type="text" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="input-group-alternative mb-3 input-group">
+                                            <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="fa-solid fa-envelope fa-lg"></i></span><i class="ni ni-email-83"></i>
+                                                </span>
+                                            </div>
+                                            <input name = "email" placeholder="이메일" type="email" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group-alternative input-group">
+                                            <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="fa-solid fa-lock fa-lg"></i>
+                                                    </span>
+                                            </div>
+                                            <input name = "password" placeholder="비밀번호" autocomplete="off" type="password" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group-alternative mb-3 input-group">
+                                            <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="fa-solid fa-pen fa-lg"></i>
+                                                    </span>
+                                            </div>
+                                            <input name="nickname" id="nickname" placeholder="닉네임" type="text" class="form-control">
+                                            <div class="input-group-append">
+                                                <button type="button" class="btn btn-secondary" onclick="checkNickname()">중복확인</button>
+                                            </div>
+                                            <p style="color: red;"><span th:if="${nicknameDuplicate}" th:text="'Nickname ' + ${nickname} + ' is already taken'"></span></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group-alternative mb-3 input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fa-solid fa-calendar-days fa-lg"></i>
+                                                </span>
+                                            </div>
+                                            <input name = "birth" placeholder="Birth" type="date" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="mt-4 btn btn-primary">회원가입</button>
+                                    </div>
+                                </form>
+                                <p style ="color:red;">
+                                    <span th:text="${errorMessage}"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+</body>
+</html>

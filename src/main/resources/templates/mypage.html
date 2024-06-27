@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<title>MyPage</title>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.min.js'></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="/css/fullcalendar.css" rel="stylesheet"/>
+    <link href="/css/mypage.css" rel="stylesheet"/>
+    <link href="/css/post.css" rel="stylesheet"/>
+
+</head>
+<body id="page-top">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+    <a class="navbar-brand js-scroll-trigger" href="#page-top">
+        <span class="d-block d-lg-none">Clarence Taylor</span>
+        <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="/img/icon/user.png" alt="..." /></span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/">Main</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#schedule">내 일정</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#myaccount">내 정보 수정</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#liked">관심팝업</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#mypost">BLOG_후기</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#alarm">알림 서비스</a></li>
+        </ul>
+    </div>
+</nav>
+<!-- Page Content-->
+<div class="container-fluid p-0">
+    <!-- 내 일정 -->
+    <section class="resume-section" id="schedule">
+        <div class="resume-section-content">
+            <h2 class="mb-5">MY CALENDAR</h2>
+            <div id="calendar"></div>
+            <div id="eventModal">
+                <div id="modalContent">
+                    <span class="close">&times;</span>
+                    <form id="eventForm">
+                        <input type="hidden" id="eventId">
+                        <label for="title">일정</label>
+                        <input type="text" id="title" name="title" placeholder="새로운 이벤트">
+
+                        <label for="summary">메모</label>
+                        <input type="text" id="summary" name="summary" required>
+                        <div class="date-cont">
+                            <label for="startDate"><br></label>
+                            <input type="date" id="startDate" name="startDate" required>
+
+                            <label for="endDate"> ~ </label>
+                            <input type="date" id="endDate" name="endDate" required>
+                        </div>
+                        <div class="btn-cont">
+                            <button type="submit">등록</button>
+                            <button id="deleteEventBtn" style="display: none;">삭제</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr class="m-0" />
+    <!-- 내 정보 수정 - 현재 정보들 보이고, 수정 버튼 클릭 시 form 페이지 이동-->
+    <section class="resume-section" id="myaccount">
+        <div class="resume-section-content">
+            <div class="subheading mb-3">내 정보 수정</div>
+            <form method="post" th:action="@{/edit/mypage}">
+                <ul class="fa-ul mb-0">
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        <div class="form-group">
+                            <div class="input-group-alternative mb-3 input-group">
+                                <label class="lb-form">이름</label>
+                                <input type="text" class="form-control" name="name" id="name" th:value="${user.name}" readonly>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        <div class="form-group">
+                            <div class="input-group-alternative mb-3 input-group">
+                                <label class="lb-form">이메일</label>
+                                <input type="text" class="form-control" name="email" id="email" th:value="${user.email}" readonly>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        <div class="form-group">
+                            <div class="input-group-alternative mb-3 input-group">
+                                <label class="lb-form">비밀번호</label>
+                                <input type="password" class="form-control hidden-input" name="password" id="password" th:value="${user.password}" readonly>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        <div class="form-group">
+                            <div class="input-group-alternative mb-3 input-group">
+                                <label for ="nickname"  class="lb-form">닉네임</label>
+                                <input type="text" class="form-control" name="nickname" id="nickname" th:value="${user.nickname}" readonly>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="fa-li"><i class="fas fa-check"></i></span>
+                        <div class="form-group">
+                            <div class="input-group-alternative mb-3 input-group">
+                                <label for="birth" class="lb-form">생년월일</label>
+                                <input type="text" class="form-control" name="birth" id="birth" th:value="${user.birth}" readonly>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <button type="button" id="editButton">수정</button>
+                <button type="submit" id="cancelButton" style="display:none;">취소</button>
+                <button type="submit" id="saveButton" style="display:none;">저장</button>
+            </form>
+        </div>
+    </section>
+    <hr class="m-0" />
+    <!-- 관심 팝업 -->
+    <section class="resume-section" id="liked">
+        <div class="resume-section-content">
+            <h2 class="mb-5">관심 팝업</h2>
+            <ul class="fa-ul mb-0">
+                <li th:each="board : ${likeBoards}">
+                    <span class="fa-li"><i class="fas fa-check"></i></span>
+                    <span>
+                        <a th:href="'/board/'+${board.id}" th:text="${board.subject}" style="text-decoration: none"></a>
+                    </span>
+                    <div>
+                        <span th:text="'Start Date: ' + ${board.start_date}"></span> -
+                        <span th:text="'End Date: ' + ${board.end_date}"></span>
+                    </div>
+                    <div>
+                        <span th:text="'Brand: ' + ${board.brand}"></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <hr class="m-0" />
+    <!-- BLOG_후기 -->
+    <section class="resume-section" id="mypost">
+        <div class="resume-section-content">
+            <h2 class="mb-5">작성한 BLOG</h2>
+            <div class="post-container">
+                <div th:each="post : ${list}" class="post-item">
+                    <img th:src="${post.thumbnail != null ? post.thumbnail : 'https://via.placeholder.com/100x100.jpg'}">
+                    <div class="details">
+                        <h5><a th:href="'/post/' + ${post.id}" th:text="${post.title}"></a></h5>
+                        <h6 th:text="${post.author}"></h6>
+                        <h6 th:text="${post.created_date}"></h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr class="m-0" />
+    <!-- 알림 서비스 -->
+    <section class="resume-section" id="alarm">
+        <div class="resume-section-content">
+            <h2 class="mb-5">알림서비스 정보 수정</h2>
+            <div class="telegramHow post-it">
+                <span class="telegramHow-title">텔레그램 알림서비스 등록 방법</span><br>
+                <span>텔레그램 가입 -> </span>
+                <span><a href="https://t.me/whereupbot" target="_blank">알림 봇 접속</a> -> </span>
+                <span>채팅 아이디 발급 -> </span>
+                <span>채팅 아이디 및 키워드 등록</span>
+            </div>
+            <hr>
+            <div class="">
+                <form id="telegramForm" action="/telegram/getUserInfo" method="post" class="telegramForm">
+                    <input type="hidden" name="userId" th:value="${user.id}">
+                    채팅 아이디: <input type="text" name="chatId" th:value="${telegramUserInfo != null ? telegramUserInfo.chatId : ''}" disabled>
+                    <input type="button" value="확인" onclick="validCheck()", id="checkButton">
+                    <br>
+                    <input type="checkbox" name="culture" th:checked="${telegramUserInfo != null ? telegramUserInfo.culture : false}" disabled>문화
+                    <input type="checkbox" name="fashion" th:checked="${telegramUserInfo != null ? telegramUserInfo.fashion : false}" disabled>패션
+                    <input type="checkbox" name="life" th:checked="${telegramUserInfo != null ? telegramUserInfo.life : false}" disabled>생활
+                    <br>
+                    <br>
+                    <input type="button" value="수정" onclick="enableTelegramForm('telegramForm')", id="modifyButton">
+                    <input type="submit" value="저장" style="display: none;" id="submitButton">
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Custom JavaScript -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        function enableEditing() {
+            document.getElementById("nickname").removeAttribute("readonly");
+            document.getElementById("birth").removeAttribute("readonly");
+
+            // 관련된 label 요소의 글자를 bold로 변경하고 색상도 변경
+            let nicknameLabel = document.querySelector('label[for="nickname"]');
+            let birthLabel = document.querySelector('label[for="birth"]');
+
+            nicknameLabel.style.fontWeight = "bold";
+            nicknameLabel.style.color = "#565f6e"; // 원하는 색상으로 변경
+
+            birthLabel.style.fontWeight = "bold";
+            birthLabel.style.color = "#565f6e"; // 원하는 색상으로 변경
+
+
+            document.getElementById("editButton").style.display = "none";
+            document.getElementById("cancelButton").style.display = "inline-block";
+            document.getElementById("saveButton").style.display = "inline-block";
+        }
+
+        document.getElementById("editButton").addEventListener("click", enableEditing);
+        console.log("success");
+    });
+    function enableTelegramForm(formId) {
+        let form = document.getElementById(formId);
+        let inputs = form.querySelectorAll('input[type="text"], input[type="checkbox"]');
+        inputs.forEach(input => input.disabled = false);
+        form.querySelector('#submitButton').style.display = 'inline';
+        form.querySelector('#modifyButton').style.display = 'none';
+    }
+    function validCheck() {
+        let chatId = document.querySelector('input[name="chatId"]').value;
+
+        return fetch(`/telegram/isValid/${chatId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    alert('확인완료');
+                    return true;
+                } else {
+                    alert('중복된 채팅아이디 입니다.');
+                    document.querySelector('input[name="chatId"]').value = '';
+                    return false;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                return false;
+            });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('telegramForm').onsubmit = async function(event) {
+            event.preventDefault();
+            const isValid = await validCheck('telegramForm');
+            if (isValid) {
+                this.submit();
+            }
+        }
+    });
+</script>
+<script src="/js/calendar.js"></script>
+</body>
+</html>
+

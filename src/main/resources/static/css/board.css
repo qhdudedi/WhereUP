@@ -1,0 +1,278 @@
+.board-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 10px;
+    justify-content: center;
+}
+
+.board-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.board-item img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+/*.board-item img.small{*/
+/*    padding-top: 20px;*/
+/*    padding-bottom: 20px;*/
+/*}*/
+
+.board-item .details {
+    text-align: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.board-item .details  pre {
+    margin: 0;
+    color: #000000;
+    font-size: 1.25em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    white-space: pre-wrap; /* 줄바꿈과 공백을 그대로 유지 */
+    word-wrap: break-word; /* 단어가 길면 자동으로 줄바꿈 */
+    text-decoration: none;
+}
+
+.board-item .details h6 {
+    margin: 0;
+    padding-top: 5px;
+    font-size: 1em;
+    color: #555;
+}
+
+.board-item .details a {
+    text-decoration: none;
+    color: #000000;
+}
+.board-item {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+    box-sizing: border-box;
+    margin: 0 auto;
+    height: 450px;
+}
+.content-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    padding: 20px;
+    /*gap: 5px;*/
+    /*background-color: white;*/
+}
+
+.content-wrapper .slideshow-container {
+    position: relative;
+    flex: 1;
+    min-width: 300px;
+    margin: 10px;
+}
+
+.content-wrapper .slideshow-image {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: contain;/** 컨테이너에 이미지 맞추기 */
+    /*object-fit: cover;*/
+    display: none;
+}
+
+.content-wrapper .slideshow-image.active {
+    display: block;
+}
+
+.content-wrapper .prev, .content-wrapper .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    user-select: none;
+    /*background-color: rgba(0, 0, 0, 0.5);*/
+    transform: translateY(-50%);
+}
+
+.content-wrapper .next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.content-wrapper .prev {
+    left: 0;
+    border-radius: 0 3px 3px 0;
+}
+
+.content-wrapper .content {
+    flex: 1;
+    min-width: 300px;
+    margin: 10px;
+    overflow: hidden;
+}
+
+.content-wrapper .content h1 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.content-wrapper .content pre {
+    font-size: 1.0em;
+    color: #555;
+    margin-bottom: 20px;
+    white-space: pre-wrap;
+    font-family: 'Gowun Dodum', sans-serif;
+}
+pre {
+    font-size: 3em;
+    font-family: 'Gowun Dodum', sans-serif;
+    font-weight: bold;
+}
+
+.content-wrapper .details ul {
+    list-style: none;
+    padding: 0;
+}
+
+.content-wrapper .details ul li {
+    margin-bottom: 10px;
+    text-align: left;
+}
+.content-wrapper .details ul li strong {
+    color: #333;
+}
+.content-wrapper .details ul li span {
+    color: #555;
+}
+.content-wrapper .details ul li a {
+    color: #007bff;
+    text-decoration: none;
+}
+.content-wrapper .details ul li button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: auto;
+    display: flex; /* Flexbox 적용 */
+    align-items: center; /* 세로 중앙 정렬 */
+    justify-content: flex-end; /* 아이콘을 오른쪽으로 정렬 */
+}
+.content-wrapper .details ul li button i {
+    font-size: 40px;
+}
+
+@media (max-width: 900px) {
+    .content-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+    .content-wrapper .content h1 {
+        font-size: 1.75em;
+    }
+    .content-wrapper .content p {
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 600px) {
+    .content-wrapper .content h1 {
+        font-size: 1.5em;
+    }
+    .content-wrapper .content p {
+        font-size: 0.9em;
+    }
+}
+.vertical-line {
+    width: 1px;
+    background-color: #ccc;
+    margin: 0 20px;
+    align-self: stretch;
+}
+/*!* 이미지 높이에 따라 여백을 추가하는 @supports *!*/
+/*@supports (aspect-ratio: 1 / 1) {*/
+/*    .board-item img {*/
+/*        aspect-ratio: 4 / 5; !* 기본 비율 설정 *!*/
+/*    }*/
+/*    .board-item img.small {*/
+/*        aspect-ratio: auto; !* 작아질 때 자동으로 비율 설정 *!*/
+/*        padding-top: 20px;*/
+/*        padding-bottom: 20px;*/
+/*    }*/
+/*}
+/*.container {*/
+/*    min-height: 90%;*/
+/*}*/
+
+.header-location ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    padding: 0;
+}
+
+.header-location li {
+    flex: 1;
+    text-align: center;
+}
+
+.header-location a {
+    display: block;
+    padding: 15px 0;
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.header-location a:hover,
+.header-location a.header-location-bold {
+    color: #fff;
+    background-color: #004EB6;
+}
+.back-ground {
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 20px;
+    min-height: 50vh;
+    align-items: center;
+    font-size: 1.5em;
+}
+.custom-hr {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    height: 3px;
+    background-color: black;
+}
+
+.board-more {
+    float: right;
+    height: 50px;
+    font-size: 1.5em;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #98accf;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 10px;
+}
+.board-more a {
+    color: white;
+    text-decoration: none;
+}
