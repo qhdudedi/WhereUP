@@ -6,6 +6,11 @@ WhereUP은 수도권 내 팝업 스토어 정보를 제공해주는 서비스입
 팝업 스토어 정보는 주로 SNS를 통해 이루어짐에 있어서 정보 접근의 제한성과 짧은 기간에서 놓치는 정보의 휘발성을 보완하고자 서비스를 제공하게 되었습니다.
 
 ---
+## 개발환경
+- **Version : Java 17** 
+- **IDE : IntelliJ & VSCode**
+
+
 
 ## Stacks
 
@@ -36,6 +41,7 @@ WhereUP은 수도권 내 팝업 스토어 정보를 제공해주는 서비스입
 ![Notion](https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white)
 ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white)
 ![Github](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)
+---
 
 ## 주요 기능
 
@@ -48,177 +54,33 @@ WhereUP은 수도권 내 팝업 스토어 정보를 제공해주는 서비스입
 - 지역별 필터링 옵션
 
 ### ⭐️ 팝업 스토어 후기 및 커뮤니티 기능
-- Markdown 형식으로 팝업 방문 후기를 남기며 커뮤니티 형성
+- SimpleMD API를 이용한 Markdown 형식 제공
+- 팝업 방문 후기를 남기며 커뮤니티 형성
 
 ### ⭐️ 일정 관리 기능
+- FullCalendar API를 이용한 캘린더 기능 구현
 - 가고자 하는 팝업 일정 등록 및 관리
 
 ### ⭐️ 알림 서비스 
-- 관심 카테고리를 등록하여, 신규 팝업 등록 알람이
+- 관심 카테고리를 등록하여, 관심 카테고리에 해당하는 신규 팝업 등록 시, 알림
 ---
-## 아키텍쳐
 
+## 👉 Quick Start
 
-### 디렉토리 구조
+### 1. Git Clone
+```shell
+https://github.com/qhdudedi/WhereUP.git
 ```
-📦 WhereUP
-├─ .gitignore
-├─ README.md
-├─ build.gradle
-├─ gradle
-│  └─ wrapper
-│     ├─ gradle-wrapper.jar
-│     └─ gradle-wrapper.properties
-├─ gradlew
-├─ gradlew.bat
-├─ scripts
-│  └─ deploy.sh
-├─ settings.gradle
-└─ src
-   ├─ main
-   │  ├─ java
-   │  │  └─ com
-   │  │     └─ project
-   │  │        └─ whereup
-   │  │           ├─ WhereUpApplication.java
-   │  │           ├─ board
-   │  │           │  ├─ controller
-   │  │           │  │  └─ BoardController.java
-   │  │           │  ├─ domain
-   │  │           │  │  ├─ Board.java
-   │  │           │  │  ├─ BoardImage.java
-   │  │           │  │  ├─ BoardLike.java
-   │  │           │  │  └─ Category.java
-   │  │           │  ├─ dto
-   │  │           │  │  ├─ BoardDesc.java
-   │  │           │  │  ├─ BoardRequestDto.java
-   │  │           │  │  └─ BoardSummary.java
-   │  │           │  ├─ repository
-   │  │           │  │  ├─ BoardImageRepository.java
-   │  │           │  │  ├─ BoardLikeRepository.java
-   │  │           │  │  └─ BoardRepository.java
-   │  │           │  └─ service
-   │  │           │     ├─ BoardLikeService.java
-   │  │           │     └─ BoardService.java
-   │  │           ├─ calendar
-   │  │           │  ├─ controller
-   │  │           │  │  ├─ CalendarApiController.java
-   │  │           │  │  └─ CalendarViewController.java
-   │  │           │  ├─ dto
-   │  │           │  │  └─ CalendarRequestDto.java
-   │  │           │  ├─ entity
-   │  │           │  │  └─ Calendar.java
-   │  │           │  ├─ repository
-   │  │           │  │  └─ CalendarRepository.java
-   │  │           │  └─ service
-   │  │           │     └─ CalendarService.java
-   │  │           ├─ oauth
-   │  │           │  ├─ KakaoUserInfo.java
-   │  │           │  ├─ NaverUserInfo.java
-   │  │           │  ├─ OAuth2Response.java
-   │  │           │  ├─ PrincipalDetails.java
-   │  │           │  └─ PrincipalOauth2UserService.java
-   │  │           ├─ post
-   │  │           │  ├─ controller
-   │  │           │  │  ├─ CommentController.java
-   │  │           │  │  └─ PostController.java
-   │  │           │  ├─ domain
-   │  │           │  │  ├─ Comment.java
-   │  │           │  │  └─ Post.java
-   │  │           │  ├─ dto
-   │  │           │  │  └─ PostSummary.java
-   │  │           │  ├─ repository
-   │  │           │  │  ├─ CommentRepository.java
-   │  │           │  │  └─ PostRepository.java
-   │  │           │  └─ service
-   │  │           │     ├─ CommentService.java
-   │  │           │     ├─ MarkdownService.java
-   │  │           │     └─ PostService.java
-   │  │           ├─ s3
-   │  │           │  ├─ config
-   │  │           │  │  └─ S3Config.java
-   │  │           │  ├─ controller
-   │  │           │  │  └─ S3Controller.java
-   │  │           │  └─ service
-   │  │           │     └─ S3Service.java
-   │  │           ├─ search
-   │  │           │  └─ controller
-   │  │           │     └─ SearchController.java
-   │  │           ├─ telegram
-   │  │           │  ├─ controller
-   │  │           │  │  └─ TelegramController.java
-   │  │           │  ├─ domain
-   │  │           │  │  └─ TelegramUserInfo.java
-   │  │           │  ├─ repository
-   │  │           │  │  └─ TelegramUserInfoRepository.java
-   │  │           │  └─ service
-   │  │           │     └─ TelegramService.java
-   │  │           └─ user
-   │  │              ├─ config
-   │  │              │  └─ SecurityConfig.java
-   │  │              ├─ controller
-   │  │              │  ├─ UserApiController.java
-   │  │              │  └─ UserViewController.java
-   │  │              ├─ dto
-   │  │              │  └─ request
-   │  │              │     └─ UserRequestDto.java
-   │  │              ├─ entity
-   │  │              │  ├─ User.java
-   │  │              │  └─ eum
-   │  │              │     └─ Role.java
-   │  │              ├─ repository
-   │  │              │  └─ UserRepository.java
-   │  │              └─ service
-   │  │                 ├─ UserDetailService.java
-   │  │                 └─ UserService.java
-   │  └─ resources
-   │     ├─ application.yml
-   │     ├─ ssl
-   │     │  └─ www.whereupp.com_2024052192E55.pfx
-   │     ├─ static
-   │     │  ├─ css
-   │     │  │  ├─ board.css
-   │     │  │  ├─ boardAndPost.css
-   │     │  │  ├─ fullcalendar.css
-   │     │  │  ├─ headerAndFooter.css
-   │     │  │  ├─ main.css
-   │     │  │  ├─ mypage.css
-   │     │  │  ├─ origin.css
-   │     │  │  └─ post.css
-   │     │  ├─ img
-   │     │  │  ├─ icon
-   │     │  │  │  ├─ map.png
-   │     │  │  │  ├─ review.png
-   │     │  │  │  └─ user.png
-   │     │  │  ├─ kakao.png
-   │     │  │  ├─ nav_icon.png
-   │     │  │  ├─ naver.png
-   │     │  │  └─ whereup.png
-   │     │  ├─ js
-   │     │  │  ├─ calendar.js
-   │     │  │  ├─ whereup-boardImgNext.js
-   │     │  │  ├─ whereup-postValidCheck.js
-   │     │  │  ├─ whereup-postWithComment.js
-   │     │  │  └─ whereup-simplemdeCustom.js
-   │     │  └─ kakao_login_m.png
-   │     └─ templates
-   │        ├─ adminInsertBoard.html
-   │        ├─ board.html
-   │        ├─ boardList.html
-   │        ├─ calendar.html
-   │        ├─ filteringBoard.html
-   │        ├─ fragments
-   │        │  ├─ footer.html
-   │        │  └─ header.html
-   │        ├─ index.html
-   │        ├─ login.html
-   │        ├─ mypage.html
-   │        ├─ newPost.html
-   │        ├─ post.html
-   │        ├─ postList.html
-   │        ├─ search.html
-   │        ├─ signup.html
-   │        └─ updatePost.html
-   
-```
-©generated by [Project Tree Generator](https://woochanleee.github.io/project-tree-generator)
+
+### 2. application.properties
+`application.yml` 파일을 설정해주세요.
+
+### 3. Run Application
+
+---
+
+## 📃 Commit Message Convention
+- feat : 기능 추가
+- fix : 버그 수정 ( 기능 등 수정하는 모든 과정들 )
+- design : view 수정 ( html, css 등 view 관련 모든 과정들 )
+- chore : 문서 작성
